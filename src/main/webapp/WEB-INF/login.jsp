@@ -20,9 +20,6 @@
     </form>
     <c:if test="${error != null}">
         ${error.getMessage()}
-        <%--<%--%>
-            <%--request.getSession().removeAttribute("error");--%>
-        <%--%>--%>
         <c:remove var="error" scope="session"/>
     </c:if>
 </body>

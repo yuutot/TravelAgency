@@ -51,10 +51,10 @@ public class ResultSetToObjectConverter {
     }
 
     private static void parseResultSetColumn(Field field, Object obj, ResultSet rs, String tableName) {
-        String columnName = tableName + "." + (field.getAnnotation(Column.class) != null ? field.getAnnotation(Column.class).value() : "id");
+        String columnName = tableName + "." + (field.isAnnotationPresent(Column.class) ? field.getAnnotation(Column.class).value() : "id");
         try {
             Object value;
-            if (field.getAnnotation(Enum.class) != null) {
+            if (field.isAnnotationPresent(Enum.class)) {
                 value = parseEnum(field, rs, columnName);
             } else if (DaoUtils.isEntity(field)) {
                 value = parseObject(field, rs, columnName);

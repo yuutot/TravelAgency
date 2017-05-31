@@ -39,7 +39,7 @@ public abstract class TableCreator {
     List<String> getFields(Class<?> entity) {
         Field[] fields = entity.getDeclaredFields();
         List<String> fieldsName = Arrays.stream(fields)
-                .filter(field -> field.getAnnotation(Column.class) != null)
+                .filter(field -> field.isAnnotationPresent(Column.class))
                 .map(this::createSqlQueryLineForField)
                 .collect(Collectors.toList());
         fieldsName.add(0, "id " + FieldType.INTEGER.getTypeNameForLength(10) + " NOT NULL PRIMARY KEY AUTO_INCREMENT");
@@ -49,7 +49,7 @@ public abstract class TableCreator {
     private List<String> createForeignKeysForEntity() {
         return fKeys
                 .stream()
-                .filter(field -> field.getAnnotation(ManyToOne.class) != null)
+                .filter(field -> field.isAnnotationPresent(ManyToOne.class))
                 .map(this::createSqlQueryForeignKey)
                 .collect(Collectors.toList());
     }

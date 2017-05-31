@@ -18,8 +18,8 @@ public class ObjectToMapConverter {
         Field[] fields = clazz.getDeclaredFields();
 
         Arrays.stream(fields)
-                .filter(f -> f.getAnnotation(Column.class) != null &&
-                        f.getAnnotation(Id.class) == null)
+                .filter(f -> f.isAnnotationPresent(Column.class) &&
+                        !f.isAnnotationPresent(Id.class))
                 .peek(f -> f.setAccessible(true))
                 .forEach(f -> parseObjectField(f, object, result));
         return result;
