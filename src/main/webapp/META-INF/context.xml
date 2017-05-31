@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path = "/">
+    <Resource
+            name="jdbc/travel"
+            author="Container"
+            type="javax.sql.DataSource"
+            maxTotal="100"
+            maxIdle="50"
+            maxWaitMilis="10000"
+            username="root"
+            password="root"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/travel?useSSL=false&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
+    />
+    <Resource
+            name="jdbc/test"
+            author="Container"
+            type="javax.sql.DataSource"
+            maxTotal="100"
+            maxIdle="50"
+            maxWaitMilis="10000"
+            username="sa"
+            password=""
+            driverClassName="org.h2.Driver"
+            url="jdbc:h2:~/test"
+    />
+</Context>
