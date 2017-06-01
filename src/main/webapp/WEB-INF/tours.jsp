@@ -32,6 +32,9 @@
 <c:if test="${success != null}">
     Заявка под номером ${success} была принята! С Вами свяжется наш менеджер.
 </c:if>
+<c:if test="${error != null}">
+    ${error}
+</c:if>
 <br/>
 <c:forEach var="tour" items="${tours}">
     ${tour}
@@ -42,12 +45,12 @@
     </c:if>
     <br/>
 </c:forEach>
-<form action="/execute" method="post">
+<form action="/tours" method="get">
     <input type="hidden" name="command" value="tours">
-        <c:forEach var="city" items="${cities}">
-            <input type="radio" name="city" value="${city.getId()}"> ${city.getName()}
-            <br/>
-        </c:forEach>
+    <c:forEach var="city" items="${cities}">
+        <input type="radio" name="city" value="${city.getId()}"> ${city.getName()}
+        <br/>
+    </c:forEach>
     <input type="number" name="min_cost">
     <input type="number" name="max_cost">
     <input type="submit" value="Submit">
