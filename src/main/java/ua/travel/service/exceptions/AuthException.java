@@ -12,7 +12,6 @@ public class AuthException extends Exception {
     private String login;
     private String password;
 
-
     public AuthException(String message) {
         super(message);
     }

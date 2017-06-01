@@ -45,7 +45,7 @@ public class DaoUtils {
         return getClassesInPackage(InitializeListener.class.getAnnotation(EntityScan.class).value()).contains(field.getType());
     }
 
-    public static Integer putValuesToStatement(Map<String, Object> map, PreparedStatement statement) throws SQLException {
+    public static void putValuesToStatement(Map<String, Object> map, PreparedStatement statement) throws SQLException {
         Integer position = 1;
         for (String keys : map.keySet()) {
             Object value = map.get(keys);
@@ -64,6 +64,5 @@ public class DaoUtils {
             }
             statement.setObject(position++, value);
         }
-        return position;
     }
 }

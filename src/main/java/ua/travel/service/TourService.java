@@ -49,12 +49,12 @@ public class TourService {
     }
 
     public List<Tour> getToursByParams(String cityId, String costMin, String costMax) throws ServiceException {
-        if((costMin == null && costMax != null) ||(costMin != null && costMax == null)){
+        if((costMin.isEmpty() && !costMax.isEmpty()) ||(!costMin.isEmpty() && costMax.isEmpty())){
             throw new ServiceException("You must specify the minimum and maximum price");
         }
-        if(cityId != null){
+        if(!cityId.isEmpty()){
             City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(()->new ServiceException("Cant find city by id: " + cityId));
-            if(costMin != null){
+            if(!costMin.isEmpty()){
                 return tourRepository.findByCityAndCost(city, Double.parseDouble(costMin), Double.parseDouble(costMax));
             } else {
                 return tourRepository.findByCity(city);
@@ -62,5 +62,9 @@ public class TourService {
         } else {
             return tourRepository.findByPrice(Double.parseDouble(costMin), Double.parseDouble(costMax));
         }
+    }
+
+    public Tour getTourById(String id) throws ServiceException {
+        return tourRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find tour by id: " + id));
     }
 }

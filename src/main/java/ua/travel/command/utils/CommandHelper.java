@@ -3,7 +3,7 @@ package ua.travel.command.utils;
 import ua.travel.command.*;
 import ua.travel.command.page.ErrorCommand;
 import ua.travel.command.page.HomeCommand;
-import ua.travel.command.page.TourCommand;
+import ua.travel.command.TourCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -32,10 +32,12 @@ public class CommandHelper {
         pageCommands.put("/", new HomeCommand());
         pageCommands.put("/error", new ErrorCommand());
         pageCommands.put("/tours", new TourCommand());
+        pageCommands.put("/order", new OrderCommand());
 
         executeCommands = new HashMap<>();
         executeCommands.put("login", new AuthCommand());
         executeCommands.put("register", new RegisterCommand());
+        executeCommands.put("tours", new TourCommand());
     }
 
     public PageCommand getPageCommand(HttpServletRequest request) {

@@ -18,7 +18,6 @@
         <button type="button">
             <a href="/login?logout">Выход</a>
         </button>
-        <a href="/order">Заказы</a>
     </c:when>
     <c:otherwise>
         <button type="button">
@@ -29,6 +28,10 @@
         </button>
     </c:otherwise>
 </c:choose>
-<a href="/tours">Туры</a>
+<br/>
+<c:forEach var="order" items="${orders}">
+    ${order}
+    <br/>
+</c:forEach>
 </body>
 </html>

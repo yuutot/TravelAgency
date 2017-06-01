@@ -69,6 +69,9 @@ public class ResultSetToObjectConverter {
             if (field.getType().equals(Long.class) && value != null) {
                 value = new Long((Integer) value);
             }
+            if (field.getType().equals(Double.class) && value != null) {
+                value = ((int)(((float)value) * 100)) / 100.0;
+            }
             field.set(obj, value);
 
         } catch (IllegalArgumentException | IllegalAccessException | SQLException | SecurityException e) {
@@ -76,6 +79,7 @@ public class ResultSetToObjectConverter {
         }
     }
 
+    //todo NotNull annotation
     private static Object parseObject(Field field, ResultSet rs, String columnName) {
         try {
             Long value = rs.getLong(columnName);

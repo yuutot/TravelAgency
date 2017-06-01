@@ -10,7 +10,7 @@
             username="root"
             password="root"
             driverClassName="com.mysql.cj.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/travel?useSSL=false&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
+            url="jdbc:mysql://localhost:3306/travel?useSSL=false&amp;characterEncoding=cp1251&amp;serverTimezone=UTC"
     />
     <Resource
             name="jdbc/test"

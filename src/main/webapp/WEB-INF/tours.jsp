@@ -18,7 +18,6 @@
         <button type="button">
             <a href="/login?logout">Выход</a>
         </button>
-        <a href="/order">Заказы</a>
     </c:when>
     <c:otherwise>
         <button type="button">
@@ -29,6 +28,29 @@
         </button>
     </c:otherwise>
 </c:choose>
-<a href="/tours">Туры</a>
+<br/>
+<c:if test="${success != null}">
+    Заявка под номером ${success} была принята! С Вами свяжется наш менеджер.
+</c:if>
+<br/>
+<c:forEach var="tour" items="${tours}">
+    ${tour}
+    <c:if test="${user != null}">
+        <button type="button">
+            <a href="/order?id=${tour.getId()}">Заказ</a>
+        </button>
+    </c:if>
+    <br/>
+</c:forEach>
+<form action="/execute" method="post">
+    <input type="hidden" name="command" value="tours">
+        <c:forEach var="city" items="${cities}">
+            <input type="radio" name="city" value="${city.getId()}"> ${city.getName()}
+            <br/>
+        </c:forEach>
+    <input type="number" name="min_cost">
+    <input type="number" name="max_cost">
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

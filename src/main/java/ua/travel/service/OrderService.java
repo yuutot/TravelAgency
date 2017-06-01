@@ -10,6 +10,7 @@ import ua.travel.entity.enums.OrderStatus;
 import ua.travel.service.exceptions.ServiceException;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by yuuto on 5/26/17.
@@ -38,4 +39,10 @@ public class OrderService {
         order.setTour(tour);
         return orderRepository.save(order);
     }
+
+    public List<Order> getOrdersByUser(Long userId) throws ServiceException {
+        User user = userRepository.findById(userId).orElseThrow(()->new ServiceException("Cant find user by id: " + userId));
+        return orderRepository.findByUser(user);
+    }
+
 }
