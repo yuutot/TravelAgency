@@ -13,9 +13,7 @@ import ua.travel.service.exceptions.ServiceException;
 import java.util.Date;
 import java.util.List;
 
-import static ua.travel.command.utils.StringUtils.isEmptyString;
-import static ua.travel.command.utils.ValidatorUtils.isValidDouble;
-import static ua.travel.command.utils.ValidatorUtils.isValidLong;
+import static ua.travel.command.utils.ValidatorUtils.*;
 
 /**
  * Created by yuuto on 5/26/17.

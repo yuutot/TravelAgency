@@ -12,4 +12,8 @@ public class ValidatorUtils {
     public static boolean isValidDouble(String value){
         return value.matches("\\d*[.]?\\d*");
     }
+
+    public static boolean isEmptyString(String str){
+        return str == null || str.isEmpty();
+    }
 }
