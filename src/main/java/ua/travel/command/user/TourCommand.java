@@ -32,14 +32,14 @@ public class TourCommand implements PageCommand {
             try {
                 Tour tour = tourService.getTourById(id);
                 request.setAttribute("tour", tour);
-                request.getRequestDispatcher("WEB-INF/tour.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/tour.jsp").forward(request, response);
             } catch (ServiceException e) {
                 tours = tourService.getTours();
                 List<City> cities = cityService.getAllCities();
                 request.setAttribute("cities", cities);
                 request.setAttribute("error", e.getMessage());
                 request.setAttribute("tours", tours);
-                request.getRequestDispatcher("WEB-INF/tours.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/tours.jsp").forward(request, response);
             }
             return;
         }
@@ -59,6 +59,6 @@ public class TourCommand implements PageCommand {
         List<City> cities = cityService.getAllCities();
         request.setAttribute("cities", cities);
         request.setAttribute("tours", tours);
-        request.getRequestDispatcher("WEB-INF/tours.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/tours.jsp").forward(request, response);
     }
 }

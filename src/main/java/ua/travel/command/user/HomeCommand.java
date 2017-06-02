@@ -14,6 +14,6 @@ public class HomeCommand implements PageCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
     }
 }

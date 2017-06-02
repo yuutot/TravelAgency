@@ -11,6 +11,6 @@ import java.io.IOException;
 public class ErrorCommand implements PageCommand {
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("WEB-INF/error.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
     }
 }

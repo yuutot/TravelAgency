@@ -34,6 +34,6 @@ public class AdminHomeCommand implements PageCommand {
             List<Order> newOrders = orderService.getOrdersByStatus(OrderStatus.NEW);
             request.setAttribute("newOrders", newOrders);
         }
-        request.getRequestDispatcher("/WEB-INF/admin/home.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/home.jsp").forward(request,response);
     }
 }

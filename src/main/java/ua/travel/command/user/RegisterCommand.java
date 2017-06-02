@@ -39,7 +39,7 @@ public class RegisterCommand implements PageCommand, ExecuteCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("WEB-INF/register.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/register.jsp").forward(request, response);
     }
 
 }

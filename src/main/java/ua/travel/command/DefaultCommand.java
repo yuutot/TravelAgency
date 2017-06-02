@@ -24,6 +24,6 @@ public class DefaultCommand implements ExecuteCommand, PageCommand {
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("error", "Page not found: " + command);
-        request.getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/404.jsp").forward(request, response);
     }
 }

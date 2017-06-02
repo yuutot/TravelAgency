@@ -42,6 +42,6 @@ public class AuthCommand implements PageCommand, ExecuteCommand {
             return;
         }
 
-        request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
     }
 }

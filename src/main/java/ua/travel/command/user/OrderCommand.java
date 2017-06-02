@@ -28,15 +28,15 @@ public class OrderCommand implements PageCommand {
             if (id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)) {
                 Long orderId = orderService.bookTour(Long.parseLong(id), user.getId());
                 request.setAttribute("success", orderId);
-                request.getRequestDispatcher("WEB-INF/success.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/success.jsp").forward(request, response);
             } else {
                 List<Order> orders = orderService.getOrdersByUser(user.getId());
                 request.setAttribute("orders", orders);
-                request.getRequestDispatcher("WEB-INF/orders.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/orders.jsp").forward(request, response);
             }
         } catch (ServiceException e) {
             request.setAttribute("error", e);
-            request.getRequestDispatcher("WEB-INF/error.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
         }
     }
 }

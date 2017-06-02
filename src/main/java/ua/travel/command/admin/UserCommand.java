@@ -25,10 +25,10 @@ public class UserCommand implements PageCommand {
             try {
                 User user = userService.getUserById(id);
                 request.setAttribute("user", user);
-                request.getRequestDispatcher("/WEB-INF/admin/user.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/admin/user.jsp").forward(request,response);
             } catch (ServiceException e) {
                 request.setAttribute("error", e);
-                request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request,response);
             }
             return;
         }
