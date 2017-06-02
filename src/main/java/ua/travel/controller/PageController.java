@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by yuuto on 5/30/17.
  */
-@WebServlet("/")
+@WebServlet(name = "pageController", urlPatterns = "/")
 public class PageController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by yuuto on 5/26/17.
  */
-@WebServlet("/execute")
+@WebServlet(name = "executeController",urlPatterns = "/execute")
 public class ExecuteController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CommandHelper helper = CommandHelper.newInstance();

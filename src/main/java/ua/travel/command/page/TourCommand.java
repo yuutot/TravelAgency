@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static ua.travel.command.utils.StringUtils.isEmptyString;
-import static ua.travel.command.utils.ValidatorUtils.isValidDouble;
-import static ua.travel.command.utils.ValidatorUtils.isValidLong;
+import static ua.travel.command.utils.ValidatorUtils.isEmptyString;
 
 /**
  * Created by yuuto on 5/30/17.
