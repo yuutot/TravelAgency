@@ -11,13 +11,21 @@ import java.util.Optional;
 public class UserTypeService {
 
     private static UserTypeService userTypeService;
-    private UserTypeRepository userTypeRepository = UserTypeRepository.newInstance();
+    private UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
 
-    public static synchronized UserTypeService newInstance() {
-        if(userTypeService == null){
-            userTypeService = new UserTypeService();
+    private UserTypeService(){}
+
+    public static UserTypeService getInstance() {
+        UserTypeService localInstance = userTypeService;
+        if (localInstance == null) {
+            synchronized (UserTypeService.class) {
+                localInstance = userTypeService;
+                if (localInstance == null) {
+                    userTypeService = localInstance = new UserTypeService();
+                }
+            }
         }
-        return userTypeService;
+        return localInstance;
     }
 
     public UserType createUserType(String type){

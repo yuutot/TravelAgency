@@ -24,11 +24,17 @@ public class UserTypeRepository extends BaseRepository<UserType> {
 
     private UserTypeRepository(){}
 
-    public static synchronized UserTypeRepository newInstance() {
-        if (userTypeRepository == null) {
-            userTypeRepository = new UserTypeRepository();
+    public static UserTypeRepository getInstance() {
+        UserTypeRepository localInstance = userTypeRepository;
+        if (localInstance == null) {
+            synchronized (UserTypeRepository.class) {
+                localInstance = userTypeRepository;
+                if (localInstance == null) {
+                    userTypeRepository = localInstance = new UserTypeRepository();
+                }
+            }
         }
-        return userTypeRepository;
+        return localInstance;
     }
 
     public Optional<UserType> findByType(String type) {

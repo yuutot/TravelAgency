@@ -20,8 +20,8 @@ import static ua.travel.command.utils.ValidatorUtils.isEmptyString;
  */
 public class TourCommand implements PageCommand {
 
-    private TourService tourService = TourService.newInstance();
-    private CityService cityService = CityService.newInstance();
+    private TourService tourService = TourService.getInstance();
+    private CityService cityService = CityService.getInstance();
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

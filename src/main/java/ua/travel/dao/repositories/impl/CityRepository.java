@@ -8,7 +8,6 @@ import ua.travel.dao.builders.SelectQueryBuilder;
 import ua.travel.dao.converters.ResultSetToObjectConverter;
 import ua.travel.dao.repositories.BaseRepository;
 import ua.travel.entity.City;
-import ua.travel.entity.UserType;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,11 +24,17 @@ public class CityRepository extends BaseRepository<City> {
 
     private CityRepository(){}
 
-    public static synchronized CityRepository newInstance() {
-        if (cityRepository == null) {
-            cityRepository = new CityRepository();
+    public static CityRepository getInstance() {
+        CityRepository localInstance = cityRepository;
+        if (localInstance == null) {
+            synchronized (CityRepository.class) {
+                localInstance = cityRepository;
+                if (localInstance == null) {
+                    cityRepository = localInstance = new CityRepository();
+                }
+            }
         }
-        return cityRepository;
+        return localInstance;
     }
 
     public Optional<City> findByName(String name) {

@@ -18,15 +18,23 @@ import java.util.List;
 public class OrderService {
 
     private static OrderService orderService;
-    private TourRepository tourRepository = TourRepository.newInstance();
-    private UserRepository userRepository = UserRepository.newInstance();
-    private OrderRepository orderRepository = OrderRepository.newInstance();
+    private TourRepository tourRepository = TourRepository.getInstance();
+    private UserRepository userRepository = UserRepository.getInstance();
+    private OrderRepository orderRepository = OrderRepository.getInstance();
 
-    public static synchronized OrderService newInstance() {
-        if(orderService == null){
-            orderService = new OrderService();
+    private OrderService(){}
+
+    public static OrderService getInstance() {
+        OrderService localInstance = orderService;
+        if (localInstance == null) {
+            synchronized (OrderService.class) {
+                localInstance = orderService;
+                if (localInstance == null) {
+                    orderService = localInstance = new OrderService();
+                }
+            }
         }
-        return orderService;
+        return localInstance;
     }
 
     public Long bookTour(Long tourId, Long userId) throws ServiceException {

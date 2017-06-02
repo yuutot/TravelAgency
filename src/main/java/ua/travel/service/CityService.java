@@ -12,13 +12,22 @@ import java.util.Optional;
 public class CityService {
 
     private static CityService cityService;
-    private CityRepository cityRepository = CityRepository.newInstance();
+    private CityRepository cityRepository = CityRepository.getInstance();
 
-    public static synchronized CityService newInstance() {
-        if(cityService == null){
-            cityService = new CityService();
+    private CityService() {
+    }
+
+    public static CityService getInstance() {
+        CityService localInstance = cityService;
+        if (localInstance == null) {
+            synchronized (CityService.class) {
+                localInstance = cityService;
+                if (localInstance == null) {
+                    cityService = localInstance = new CityService();
+                }
+            }
         }
-        return cityService;
+        return localInstance;
     }
 
     public City createCity(String name){

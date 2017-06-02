@@ -14,15 +14,23 @@ import java.util.List;
 public class HotelService {
 
     private static HotelService hotelService;
-    private CityRepository cityRepository = CityRepository.newInstance();
-    private HotelRepository hotelRepository = HotelRepository.newInstance();
-    private CityService cityService = CityService.newInstance();
+    private CityRepository cityRepository = CityRepository.getInstance();
+    private HotelRepository hotelRepository = HotelRepository.getInstance();
+    private CityService cityService = CityService.getInstance();
 
-    public static synchronized HotelService newInstance() {
-        if(hotelService == null){
-            hotelService = new HotelService();
+    private HotelService(){}
+
+    public static HotelService getInstance() {
+        HotelService localInstance = hotelService;
+        if (localInstance == null) {
+            synchronized (HotelService.class) {
+                localInstance = hotelService;
+                if (localInstance == null) {
+                    hotelService = localInstance = new HotelService();
+                }
+            }
         }
-        return hotelService;
+        return localInstance;
     }
 
     public Hotel createHotel(String cityName, String name, Integer star, String photoUrl){

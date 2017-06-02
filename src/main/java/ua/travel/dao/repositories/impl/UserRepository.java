@@ -22,13 +22,20 @@ public class UserRepository extends BaseRepository<User> {
 
     private static UserRepository userRepository;
 
-    private UserRepository(){}
+    private UserRepository() {
+    }
 
-    public static synchronized UserRepository newInstance() {
-        if (userRepository == null) {
-            userRepository = new UserRepository();
+    public static UserRepository getInstance() {
+        UserRepository localInstance = userRepository;
+        if (localInstance == null) {
+            synchronized (UserRepository.class) {
+                localInstance = userRepository;
+                if (localInstance == null) {
+                    userRepository = localInstance = new UserRepository();
+                }
+            }
         }
-        return userRepository;
+        return localInstance;
     }
 
     public Optional<User> findByLogin(String login) {

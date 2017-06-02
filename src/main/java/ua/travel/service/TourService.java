@@ -21,15 +21,23 @@ import static ua.travel.command.utils.ValidatorUtils.*;
 public class TourService {
 
     private static TourService tourService;
-    private HotelRepository hotelRepository = HotelRepository.newInstance();
-    private TourRepository tourRepository = TourRepository.newInstance();
-    private CityRepository cityRepository = CityRepository.newInstance();
+    private HotelRepository hotelRepository = HotelRepository.getInstance();
+    private TourRepository tourRepository = TourRepository.getInstance();
+    private CityRepository cityRepository = CityRepository.getInstance();
 
-    public static synchronized TourService newInstance() {
-        if (tourService == null) {
-            tourService = new TourService();
+    private TourService(){}
+
+    public static TourService getInstance() {
+        TourService localInstance = tourService;
+        if (localInstance == null) {
+            synchronized (TourService.class) {
+                localInstance = tourService;
+                if (localInstance == null) {
+                    tourService = localInstance = new TourService();
+                }
+            }
         }
-        return tourService;
+        return localInstance;
     }
 
     public Tour createTour(TourType tourType, Date dateTo, Date dateFrom, Double cost, String description, TransportType transportType, Long hotelId) throws ServiceException {

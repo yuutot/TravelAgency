@@ -12,14 +12,22 @@ import ua.travel.service.exceptions.ServiceException;
 public class UserService {
 
     private static UserService userService;
-    private UserRepository userRepository = UserRepository.newInstance();
-    private UserTypeService userTypeService = UserTypeService.newInstance();
+    private UserRepository userRepository = UserRepository.getInstance();
+    private UserTypeService userTypeService = UserTypeService.getInstance();
 
-    public static synchronized UserService newInstance() {
-        if(userService == null){
-            userService = new UserService();
+    private UserService(){}
+
+    public static UserService getInstance() {
+        UserService localInstance = userService;
+        if (localInstance == null) {
+            synchronized (UserService.class) {
+                localInstance = userService;
+                if (localInstance == null) {
+                    userService = localInstance = new UserService();
+                }
+            }
         }
-        return userService;
+        return localInstance;
     }
 
     public User authUser(String login, String password) throws AuthException {

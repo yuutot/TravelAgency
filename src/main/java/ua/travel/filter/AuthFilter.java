@@ -23,7 +23,7 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         User user = (User) request.getSession().getAttribute("user");
-        SecurityContext securityContext = SecurityContext.newInstance();
+        SecurityContext securityContext = SecurityContext.getInstance();
         if(securityContext.checkUserCredentials(request, user)){
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

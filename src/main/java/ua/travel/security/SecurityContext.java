@@ -16,11 +16,17 @@ public class SecurityContext {
 
     private SecurityContext() {}
 
-    public synchronized static SecurityContext newInstance(){
-        if(securityContext == null){
-            securityContext = new SecurityContext();
+    public static SecurityContext getInstance() {
+        SecurityContext localInstance = securityContext;
+        if (localInstance == null) {
+            synchronized (SecurityContext.class) {
+                localInstance = securityContext;
+                if (localInstance == null) {
+                    securityContext = localInstance = new SecurityContext();
+                }
+            }
         }
-        return securityContext;
+        return localInstance;
     }
 
     public SecurityContext addCredentials(String command, String... userTypes){

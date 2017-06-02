@@ -26,11 +26,17 @@ public class HotelRepository extends BaseRepository<Hotel> {
 
     private HotelRepository(){}
 
-    public static synchronized HotelRepository newInstance() {
-        if (hotelRepository == null) {
-            hotelRepository = new HotelRepository();
+    public static HotelRepository getInstance() {
+        HotelRepository localInstance = hotelRepository;
+        if (localInstance == null) {
+            synchronized (HotelRepository.class) {
+                localInstance = hotelRepository;
+                if (localInstance == null) {
+                    hotelRepository = localInstance = new HotelRepository();
+                }
+            }
         }
-        return hotelRepository;
+        return localInstance;
     }
 
     public List<Hotel> findByCity(City city){

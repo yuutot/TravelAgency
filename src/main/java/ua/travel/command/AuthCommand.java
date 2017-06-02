@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class AuthCommand implements PageCommand, ExecuteCommand {
 
-    private UserService userService = UserService.newInstance();
+    private UserService userService = UserService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

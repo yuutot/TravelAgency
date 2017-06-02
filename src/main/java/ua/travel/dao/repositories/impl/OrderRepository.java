@@ -26,11 +26,17 @@ public class OrderRepository extends BaseRepository<Order> {
 
     private OrderRepository(){}
 
-    public static synchronized OrderRepository newInstance(){
-        if(orderRepository == null){
-            orderRepository = new OrderRepository();
+    public static OrderRepository getInstance() {
+        OrderRepository localInstance = orderRepository;
+        if (localInstance == null) {
+            synchronized (OrderRepository.class) {
+                localInstance = orderRepository;
+                if (localInstance == null) {
+                    orderRepository = localInstance = new OrderRepository();
+                }
+            }
         }
-        return orderRepository;
+        return localInstance;
     }
 
     public List<Order> findByUser(User user){

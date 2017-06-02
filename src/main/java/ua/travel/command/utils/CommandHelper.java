@@ -18,11 +18,17 @@ public class CommandHelper {
     private Map<String, PageCommand> pageCommands;
     private Map<String, ExecuteCommand> executeCommands;
 
-    public synchronized static CommandHelper newInstance() {
-        if (commandHelper == null) {
-            commandHelper = new CommandHelper();
+    public static CommandHelper getInstance() {
+        CommandHelper localInstance = commandHelper;
+        if (localInstance == null) {
+            synchronized (CommandHelper.class) {
+                localInstance = commandHelper;
+                if (localInstance == null) {
+                    commandHelper = localInstance = new CommandHelper();
+                }
+            }
         }
-        return commandHelper;
+        return localInstance;
     }
 
     private CommandHelper() {

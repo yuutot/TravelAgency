@@ -84,7 +84,7 @@ public class ResultSetToObjectConverter {
         try {
             Long value = rs.getLong(columnName);
             Class<?> repository = Class.forName("ua.travel.dao.repositories.impl."+ field.getType().getSimpleName() + "Repository");
-            BaseRepository baseRepository = (BaseRepository) repository.getMethod("newInstance").invoke(repository);
+            BaseRepository baseRepository = (BaseRepository) repository.getMethod("getInstance").invoke(repository);
             return baseRepository.findById(value).get();
         } catch (InvocationTargetException | ClassNotFoundException | IllegalAccessException | SQLException | NoSuchMethodException e) {
             e.printStackTrace();

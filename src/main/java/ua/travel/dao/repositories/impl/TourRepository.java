@@ -27,11 +27,17 @@ public class TourRepository extends BaseRepository<Tour> {
 
     private TourRepository(){}
 
-    public static synchronized TourRepository newInstance() {
-        if (tourRepository == null) {
-            tourRepository = new TourRepository();
+    public static TourRepository getInstance() {
+        TourRepository localInstance = tourRepository;
+        if (localInstance == null) {
+            synchronized (TourRepository.class) {
+                localInstance = tourRepository;
+                if (localInstance == null) {
+                    tourRepository = localInstance = new TourRepository();
+                }
+            }
         }
-        return tourRepository;
+        return localInstance;
     }
 
     public List<Tour> findByPrice(double min, double max) {

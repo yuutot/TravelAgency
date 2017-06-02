@@ -2,12 +2,8 @@ package ua.travel.command;
 
 import ua.travel.command.utils.ValidatorUtils;
 import ua.travel.entity.Order;
-import ua.travel.entity.Tour;
 import ua.travel.entity.User;
 import ua.travel.service.OrderService;
-import ua.travel.service.TourService;
-import ua.travel.service.UserService;
-import ua.travel.service.exceptions.AuthException;
 import ua.travel.service.exceptions.ServiceException;
 
 import javax.servlet.ServletException;
@@ -21,7 +17,7 @@ import java.util.List;
  */
 public class OrderCommand implements PageCommand {
 
-    private OrderService orderService = OrderService.newInstance();
+    private OrderService orderService = OrderService.getInstance();
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
