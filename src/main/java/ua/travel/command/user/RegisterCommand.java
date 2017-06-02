@@ -1,5 +1,7 @@
-package ua.travel.command;
+package ua.travel.command.user;
 
+import ua.travel.command.ExecuteCommand;
+import ua.travel.command.PageCommand;
 import ua.travel.entity.User;
 import ua.travel.service.UserService;
 import ua.travel.service.exceptions.ServiceException;

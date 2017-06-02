@@ -18,16 +18,20 @@ public class InitializeListener implements ServletContextListener {
 
     @Override
     public final void contextInitialized(ServletContextEvent sce) {
-        TableCreator tableCreator = TableCreatorFactory.getTableCreator(DataSourceType.MYSQL, getClass().getAnnotation(EntityScan.class).value());
-        tableCreator.createTableForEntity();
-        SecurityContext securityContext = SecurityContext.getInstance();
-        securityContext
+
+        TableCreatorFactory
+                .getTableCreator(DataSourceType.MYSQL, getClass().getAnnotation(EntityScan.class).value())
+                .createTableForEntity();
+
+        SecurityContext.getInstance()
                 .addCredentials("/login", "all")
                 .addCredentials("/register", "all")
                 .addCredentials("/", "all")
                 .addCredentials("/error", "all")
                 .addCredentials("/tours", "all")
-                .addCredentials("/order", "user")
+                .addCredentials("/order", "user", "admin")
+                .addCredentials("/admin", "admin")
+                .addCredentials("/admin/user", "admin")
                 .addCredentials("login", "all")
                 .addCredentials("register", "all");
     }

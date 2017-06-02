@@ -1,5 +1,6 @@
-package ua.travel.command;
+package ua.travel.command.user;
 
+import ua.travel.command.PageCommand;
 import ua.travel.command.utils.ValidatorUtils;
 import ua.travel.entity.Order;
 import ua.travel.entity.User;

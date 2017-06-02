@@ -9,6 +9,7 @@ import ua.travel.dao.converters.ResultSetToObjectConverter;
 import ua.travel.dao.repositories.BaseRepository;
 import ua.travel.entity.Order;
 import ua.travel.entity.User;
+import ua.travel.entity.enums.OrderStatus;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,6 +49,23 @@ public class OrderRepository extends BaseRepository<Order> {
                 .where()
                 .addCondition("user_id", Condition.EVEN, user.getId(), Order.class)
                 .build();
+        return executeSelectQuery(query);
+    }
+
+    public List<Order> findByStatus(OrderStatus status){
+        SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
+        String query = selectQueryBuilder
+                .addField("*")
+                .from()
+                .addTable(Order.class.getAnnotation(Table.class).value())
+                .where()
+                .addCondition("status", Condition.EVEN, status.toString(), Order.class)
+                .build();
+        return executeSelectQuery(query);
+
+    }
+
+    private List<Order> executeSelectQuery(String query){
         List<Order> entities = new LinkedList<>();
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement();

@@ -53,4 +53,8 @@ public class UserService {
         user.setId(userRepository.save(user));
         return user;
     }
+
+    public User getUserById(String id) throws ServiceException {
+        return userRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find user by id: " + id));
+    }
 }

@@ -1,6 +1,7 @@
-package ua.travel.command.page;
+package ua.travel.command.user;
 
 import ua.travel.command.PageCommand;
+import ua.travel.command.utils.ValidatorUtils;
 import ua.travel.entity.City;
 import ua.travel.entity.Tour;
 import ua.travel.service.CityService;
@@ -26,6 +27,22 @@ public class TourCommand implements PageCommand {
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Tour> tours;
+        String id = request.getParameter("id");
+        if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
+            try {
+                Tour tour = tourService.getTourById(id);
+                request.setAttribute("tour", tour);
+                request.getRequestDispatcher("WEB-INF/tour.jsp").forward(request, response);
+            } catch (ServiceException e) {
+                tours = tourService.getTours();
+                List<City> cities = cityService.getAllCities();
+                request.setAttribute("cities", cities);
+                request.setAttribute("error", e.getMessage());
+                request.setAttribute("tours", tours);
+                request.getRequestDispatcher("WEB-INF/tours.jsp").forward(request, response);
+            }
+            return;
+        }
         String city = request.getParameter("city");
         String costMin = request.getParameter("min_cost");
         String costMax = request.getParameter("max_cost");

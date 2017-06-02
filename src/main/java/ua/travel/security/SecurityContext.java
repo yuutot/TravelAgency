@@ -44,6 +44,6 @@ public class SecurityContext {
         } else {
             credentials = rights.get(url);
         }
-        return credentials != null && credentials.contains("all") || user != null && credentials != null && credentials.contains(user.getUserType().getType());
+        return credentials == null || credentials.contains("all") || user != null && credentials.contains(user.getUserType().getType());
     }
 }

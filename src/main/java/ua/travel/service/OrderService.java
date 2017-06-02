@@ -53,4 +53,12 @@ public class OrderService {
         return orderRepository.findByUser(user);
     }
 
+    public List<Order> getOrdersByStatus(OrderStatus status){
+        return orderRepository.findByStatus(status);
+    }
+
+    public List<Order> getOrders() {
+        return orderRepository.findAll();
+    }
+
 }

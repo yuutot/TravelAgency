@@ -1,4 +1,4 @@
-package ua.travel.command.page;
+package ua.travel.command.user;
 
 import ua.travel.command.PageCommand;
 
@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by yuuto on 5/30/17.
+ * Created by yuuto on 5/29/17.
  */
-public class ErrorCommand implements PageCommand {
+public class HomeCommand implements PageCommand {
+
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("WEB-INF/error.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
     }
 }

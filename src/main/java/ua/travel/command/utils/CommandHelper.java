@@ -1,9 +1,10 @@
 package ua.travel.command.utils;
 
 import ua.travel.command.*;
-import ua.travel.command.page.ErrorCommand;
-import ua.travel.command.page.HomeCommand;
-import ua.travel.command.page.TourCommand;
+import ua.travel.command.ErrorCommand;
+import ua.travel.command.admin.AdminHomeCommand;
+import ua.travel.command.admin.UserCommand;
+import ua.travel.command.user.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class CommandHelper {
         pageCommands.put("/error", new ErrorCommand());
         pageCommands.put("/tours", new TourCommand());
         pageCommands.put("/order", new OrderCommand());
+        pageCommands.put("/admin", new AdminHomeCommand());
+        pageCommands.put("/admin/user", new UserCommand());
 
         executeCommands = new HashMap<>();
         executeCommands.put("login", new AuthCommand());
