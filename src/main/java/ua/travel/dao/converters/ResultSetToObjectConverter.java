@@ -72,6 +72,9 @@ public class ResultSetToObjectConverter {
             if (field.getType().equals(Double.class) && value != null) {
                 value = ((int)(((float)value) * 100)) / 100.0;
             }
+            if (field.getType().equals(Boolean.class) && value != null) {
+                value =  (int)value != 0;
+            }
             field.set(obj, value);
 
         } catch (IllegalArgumentException | IllegalAccessException | SQLException | SecurityException e) {
