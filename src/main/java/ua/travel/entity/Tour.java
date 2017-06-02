@@ -45,4 +45,7 @@ public class Tour {
     @ManyToOne
     private Hotel hotel;
 
+    @Column("hot")
+    private Boolean hot;
+
 }

@@ -1,5 +1,12 @@
 package ua.travel.service;
 
+import ua.travel.command.utils.ValidatorUtils;
+import ua.travel.config.datasource.DataSourceFactory;
+import ua.travel.config.datasource.DataSourceType;
+import ua.travel.dao.annotations.Table;
+import ua.travel.dao.builders.Condition;
+import ua.travel.dao.builders.UpdateQueryBuilder;
+import ua.travel.dao.converters.ObjectToMapConverter;
 import ua.travel.dao.repositories.impl.OrderRepository;
 import ua.travel.dao.repositories.impl.TourRepository;
 import ua.travel.dao.repositories.impl.UserRepository;
@@ -9,8 +16,9 @@ import ua.travel.entity.User;
 import ua.travel.entity.enums.OrderStatus;
 import ua.travel.service.exceptions.ServiceException;
 
-import java.util.Date;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Created by yuuto on 5/26/17.
@@ -61,4 +69,25 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public void updateOrderStatus(String orderId, String status) throws ServiceException {
+        if(!ValidatorUtils.isValidLong(orderId)){
+            throw new ServiceException("Invalid order id: " + orderId);
+        }
+        OrderStatus orderStatus = OrderStatus.valueOf(status);
+        Long id = Long.parseLong(orderId);
+        Order order = orderRepository.findById(id).orElseThrow(()->new ServiceException("Cant find order by id: " + orderId));
+        order.setOrderStatus(orderStatus);
+        Map<String, Object> map = ObjectToMapConverter.parse(order, Order.class);
+        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection()) {
+            UpdateQueryBuilder updateQueryBuilder = new UpdateQueryBuilder(connection);
+            updateQueryBuilder
+                    .addTable(Order.class.getAnnotation(Table.class).value())
+                    .addValues(map)
+                    .where()
+                    .addCondition("id", Condition.EVEN, id)
+                    .execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

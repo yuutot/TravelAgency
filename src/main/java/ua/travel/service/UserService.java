@@ -39,17 +39,18 @@ public class UserService {
         }
     }
 
-    public User registerUser(String login, String password, String userType, String name, String surname, String phone) throws ServiceException {
+    public User registerUser(String login, String password, String name, String surname, String phone) throws ServiceException {
         if(userRepository.findByLogin(login).isPresent()){
             throw new ServiceException("User already exists. Login: " + login);
         }
         User user = new User();
         user.setLogin(login);
         user.setPassword(DigestUtils.md5Hex(password));
-        user.setUserType(userTypeService.createUserType(userType));
+        user.setUserType(userTypeService.createUserType("user"));
         user.setName(name);
         user.setSurname(surname);
         user.setPhone(phone);
+        user.setDiscount(0d);
         user.setId(userRepository.save(user));
         return user;
     }

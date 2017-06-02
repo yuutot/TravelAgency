@@ -40,7 +40,7 @@ public class TourService {
         return localInstance;
     }
 
-    public Tour createTour(TourType tourType, Date dateTo, Date dateFrom, Double cost, String description, TransportType transportType, Long hotelId) throws ServiceException {
+    public Tour createTour(TourType tourType, Date dateTo, Date dateFrom, Double cost, String description, TransportType transportType, Long hotelId, Boolean isHot) throws ServiceException {
         Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
         Tour tour = new Tour();
         tour.setTourType(tourType);
@@ -50,6 +50,7 @@ public class TourService {
         tour.setDescription(description);
         tour.setTransportType(transportType);
         tour.setHotel(hotel);
+        tour.setHot(isHot);
         tour.setId(tourRepository.save(tour));
         return tour;
     }

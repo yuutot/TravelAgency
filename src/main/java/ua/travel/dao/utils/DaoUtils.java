@@ -25,7 +25,7 @@ public class DaoUtils {
             return FieldType.INTEGER;
         } else if (field.getClass().equals(String.class)) {
             return FieldType.STRING;
-        } else if (field.getClass().equals(Date.class)) {
+        } else if (field.getClass().equals(Timestamp.class) || field.getClass().equals(Date.class)) {
             return FieldType.DATE;
         } else if (field.getClass().equals(Double.class)) {
             return FieldType.DOUBLE;

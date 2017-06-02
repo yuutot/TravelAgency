@@ -3,6 +3,7 @@ package ua.travel.command.utils;
 import ua.travel.command.*;
 import ua.travel.command.ErrorCommand;
 import ua.travel.command.admin.AdminHomeCommand;
+import ua.travel.command.admin.EditOrderStatusCommand;
 import ua.travel.command.admin.UserCommand;
 import ua.travel.command.user.*;
 
@@ -46,6 +47,7 @@ public class CommandHelper {
         executeCommands = new HashMap<>();
         executeCommands.put("login", new AuthCommand());
         executeCommands.put("register", new RegisterCommand());
+        executeCommands.put("edit_order_status", new EditOrderStatusCommand());
     }
 
     public PageCommand getPageCommand(HttpServletRequest request) {

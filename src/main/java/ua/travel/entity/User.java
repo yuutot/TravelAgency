@@ -36,4 +36,7 @@ public class User {
     @Column("phone")
     private String phone;
 
+    @Column("discount")
+    private Double discount;
+
 }

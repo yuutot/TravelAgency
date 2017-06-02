@@ -28,7 +28,7 @@ public class RegisterCommand implements PageCommand, ExecuteCommand {
         String phone = request.getParameter("phone");
 
         try {
-            User user = userService.registerUser(login, password, "user", name, surname, phone);
+            User user = userService.registerUser(login, password, name, surname, phone);
             request.getSession().setAttribute("user", user);
             return "/";
         } catch (ServiceException e) {
