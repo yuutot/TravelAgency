@@ -84,4 +84,14 @@ public class TourService {
     public Tour getTourById(String id) throws ServiceException {
         return tourRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ServiceException("Cant find tour by id: " + id));
     }
+
+    public void deleteTour(String id){
+        tourRepository.delete(Long.parseLong(id));
+    }
+
+    public void changeTourStatus(String id) throws ServiceException {
+        Tour tour = tourRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find tour by id: " + id));
+        tour.setHot(!tour.getHot());
+        tourRepository.update(tour);
+    }
 }

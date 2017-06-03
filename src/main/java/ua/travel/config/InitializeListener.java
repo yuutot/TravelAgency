@@ -32,6 +32,7 @@ public class InitializeListener implements ServletContextListener {
                 .addCredentials("/order", "user", "admin")
                 .addCredentials("/admin", "admin")
                 .addCredentials("/admin/user", "admin")
+                .addCredentials("/admin/editTour", "admin")
                 .addCredentials("login", "all")
                 .addCredentials("register", "all");
     }

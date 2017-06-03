@@ -13,7 +13,13 @@ public class ValidatorUtils {
         return value.matches("\\d*[.]?\\d*");
     }
 
-    public static boolean isEmptyString(String str){
-        return str == null || str.isEmpty();
+    public static boolean isEmptyString(String... str){
+        if(str.length == 0) return true;
+        for(String param : str){
+            if(param == null || param.isEmpty()){
+                return true;
+            }
+        }
+        return false;
     }
 }

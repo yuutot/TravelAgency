@@ -29,6 +29,8 @@ public class DaoUtils {
             return FieldType.DATE;
         } else if (field.getClass().equals(Double.class)) {
             return FieldType.DOUBLE;
+        } else if (field.getClass().equals(Boolean.class)) {
+            return FieldType.BOOLEAN;
         } else if(field.getClass().isEnum()) {
             return FieldType.ENUM;
         } else {

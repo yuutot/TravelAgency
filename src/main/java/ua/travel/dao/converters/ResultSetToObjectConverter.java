@@ -70,10 +70,10 @@ public class ResultSetToObjectConverter {
                 value = new Long((Integer) value);
             }
             if (field.getType().equals(Double.class) && value != null) {
-                value = ((int)(((float)value) * 100)) / 100.0;
+                value = ((int) (((float) value) * 100)) / 100.0;
             }
             if (field.getType().equals(Boolean.class) && value != null) {
-                value =  (int)value != 0;
+                value = (int) value != 0;
             }
             field.set(obj, value);
 
@@ -86,7 +86,7 @@ public class ResultSetToObjectConverter {
     private static Object parseObject(Field field, ResultSet rs, String columnName) {
         try {
             Long value = rs.getLong(columnName);
-            Class<?> repository = Class.forName("ua.travel.dao.repositories.impl."+ field.getType().getSimpleName() + "Repository");
+            Class<?> repository = Class.forName("ua.travel.dao.repositories.impl." + field.getType().getSimpleName() + "Repository");
             BaseRepository baseRepository = (BaseRepository) repository.getMethod("getInstance").invoke(repository);
             return baseRepository.findById(value).get();
         } catch (InvocationTargetException | ClassNotFoundException | IllegalAccessException | SQLException | NoSuchMethodException e) {

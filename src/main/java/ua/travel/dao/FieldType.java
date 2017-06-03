@@ -34,6 +34,11 @@ public enum  FieldType {
         public String getTypeNameForLength(Integer... length) {
             return "varchar(" + length[0] + ")";
         }
+    }, BOOLEAN{
+        @Override
+        public String getTypeNameForLength(Integer... length) {
+            return "int(2)";
+        }
     };
 
     public abstract String getTypeNameForLength(Integer... length);

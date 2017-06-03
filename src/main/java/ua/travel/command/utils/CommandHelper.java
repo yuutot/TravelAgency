@@ -4,6 +4,7 @@ import ua.travel.command.*;
 import ua.travel.command.ErrorCommand;
 import ua.travel.command.admin.AdminHomeCommand;
 import ua.travel.command.admin.EditOrderStatusCommand;
+import ua.travel.command.admin.EditTourCommand;
 import ua.travel.command.admin.UserCommand;
 import ua.travel.command.user.*;
 
@@ -43,6 +44,7 @@ public class CommandHelper {
         pageCommands.put("/order", new OrderCommand());
         pageCommands.put("/admin", new AdminHomeCommand());
         pageCommands.put("/admin/user", new UserCommand());
+        pageCommands.put("/admin/editTour", new EditTourCommand());
 
         executeCommands = new HashMap<>();
         executeCommands.put("login", new AuthCommand());
