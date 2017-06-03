@@ -2,10 +2,7 @@ package ua.travel.command.utils;
 
 import ua.travel.command.*;
 import ua.travel.command.ErrorCommand;
-import ua.travel.command.admin.AdminHomeCommand;
-import ua.travel.command.admin.EditOrderStatusCommand;
-import ua.travel.command.admin.EditTourCommand;
-import ua.travel.command.admin.UserCommand;
+import ua.travel.command.admin.*;
 import ua.travel.command.user.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +47,9 @@ public class CommandHelper {
         executeCommands.put("login", new AuthCommand());
         executeCommands.put("register", new RegisterCommand());
         executeCommands.put("edit_order_status", new EditOrderStatusCommand());
+        executeCommands.put("create_city", new CreateCityCommand());
+        executeCommands.put("create_hotel", new CreateHotelCommand());
+        executeCommands.put("create_tour", new CreateTourCommand());
     }
 
     public PageCommand getPageCommand(HttpServletRequest request) {

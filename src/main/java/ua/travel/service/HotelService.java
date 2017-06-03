@@ -33,12 +33,12 @@ public class HotelService {
         return localInstance;
     }
 
-    public Hotel createHotel(String cityName, String name, Integer star, String photoUrl){
-        City city = cityService.createCity(cityName);
+    public Hotel createHotel(String cityId, String name, String star, String photoUrl) throws ServiceException {
+        City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(()->new ServiceException("Cant find city by id: " + cityId));
         Hotel hotel = new Hotel();
         hotel.setCity(city);
         hotel.setName(name);
-        hotel.setStar(star);
+        hotel.setStar(Integer.parseInt(star));
         hotel.setPhotoUrl(photoUrl);
         hotel.setId(hotelRepository.save(hotel));
         return hotel;
@@ -47,5 +47,9 @@ public class HotelService {
     public List<Hotel> getHotelsByCity(Long cityId) throws ServiceException {
         City city = cityRepository.findById(cityId).orElseThrow(()->new ServiceException("Cant find city by id " + cityId));
         return hotelRepository.findByCity(city);
+    }
+
+    public List<Hotel> getAllHotel(){
+        return hotelRepository.findAll();
     }
 }
