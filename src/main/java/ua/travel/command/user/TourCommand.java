@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static ua.travel.command.utils.ValidatorUtils.isEmptyString;
 import static ua.travel.command.utils.ValidatorUtils.isHaveValidString;
@@ -24,6 +25,7 @@ public class TourCommand implements PageCommand {
 
     private TourService tourService = TourService.getInstance();
     private CityService cityService = CityService.getInstance();
+    private final Logger LOGGER = Logger.getLogger(TourCommand.class.getName());
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -48,6 +50,7 @@ public class TourCommand implements PageCommand {
             try {
                 tours = tourService.getToursByParams(city, costMin, costMax, type);
             } catch (ServiceException e) {
+                LOGGER.warning(e.getMessage());
                 request.setAttribute("error", e.getMessage());
                 tours = tourService.getTours();
             }
@@ -65,6 +68,7 @@ public class TourCommand implements PageCommand {
             request.setAttribute("tour", tour);
             request.getRequestDispatcher("WEB-INF/jsp/tour.jsp").forward(request, response);
         } catch (ServiceException e) {
+            LOGGER.warning(e.getMessage());
             tours = tourService.getTours();
             List<City> cities = cityService.getAllCities();
             request.setAttribute("cities", cities);

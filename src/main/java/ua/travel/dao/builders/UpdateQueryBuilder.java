@@ -7,11 +7,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/24/17.
  */
 public class UpdateQueryBuilder {
+
+    private final Logger LOGGER = Logger.getLogger(UpdateQueryBuilder.class.getName());
     private StringBuilder query;
     private Map<String, Object> map;
     private Connection connection;
@@ -68,6 +71,7 @@ public class UpdateQueryBuilder {
         try(PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS)) {
             DaoUtils.putValuesToStatement(map, preparedStatement);
             preparedStatement.executeUpdate();
+            LOGGER.info("Execute update query: " + query.toString());
         }
     }
 

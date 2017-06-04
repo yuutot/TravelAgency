@@ -17,11 +17,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/19/17.
  */
 public class OrderRepository extends BaseRepository<Order> {
+
+    private final Logger LOGGER = Logger.getLogger(OrderRepository.class.getName());
 
     private static OrderRepository orderRepository;
 
@@ -67,6 +70,7 @@ public class OrderRepository extends BaseRepository<Order> {
 
     private List<Order> executeSelectQuery(String query){
         List<Order> entities = new LinkedList<>();
+        LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -74,7 +78,7 @@ public class OrderRepository extends BaseRepository<Order> {
                 entities.add(ResultSetToObjectConverter.parseResultSetToObject(Order.class, resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return entities;
     }

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/29/17.
@@ -17,6 +18,7 @@ import java.io.IOException;
 public class AuthCommand implements PageCommand, ExecuteCommand {
 
     private UserService userService = UserService.getInstance();
+    private final Logger LOGGER = Logger.getLogger(AuthCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -29,6 +31,7 @@ public class AuthCommand implements PageCommand, ExecuteCommand {
             request.getSession().setAttribute("user", user);
             return "/";
         } catch (AuthException e) {
+            LOGGER.warning(e.getMessage());
             request.getSession().setAttribute("error", e);
             return "/login";
         }

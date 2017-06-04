@@ -4,11 +4,14 @@ import ua.travel.dao.utils.DaoUtils;
 
 import java.sql.*;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/24/17.
  */
 public class InsertQueryBuilder {
+
+    private final Logger LOGGER = Logger.getLogger(InsertQueryBuilder.class.getName());
     private StringBuilder query;
     private Map<String, Object> map;
     private Connection connection;
@@ -41,6 +44,7 @@ public class InsertQueryBuilder {
         try(PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS)) {
             DaoUtils.putValuesToStatement(map, preparedStatement);
             preparedStatement.executeUpdate();
+            LOGGER.info("Execute insert query: " + query.toString());
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getLong(1);

@@ -20,7 +20,7 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-
+//todo ~
         return "/admin";
     }
 

@@ -8,6 +8,7 @@ import ua.travel.command.user.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/29/17.
@@ -17,6 +18,8 @@ public class CommandHelper {
     private static CommandHelper commandHelper;
     private Map<String, PageCommand> pageCommands;
     private Map<String, ExecuteCommand> executeCommands;
+
+    private final Logger LOGGER = Logger.getLogger(CommandHelper.class.getName());
 
     public static CommandHelper getInstance() {
         CommandHelper localInstance = commandHelper;
@@ -59,6 +62,7 @@ public class CommandHelper {
         String url = PathUtils.getContextPath(request);
         PageCommand commandInstance = pageCommands.get(url);
         if (commandInstance == null) {
+            LOGGER.warning("Command not found: " + url);
             return new DefaultCommand(url);
         }
         return commandInstance;
@@ -68,6 +72,7 @@ public class CommandHelper {
         String command = request.getParameter("command");
         ExecuteCommand commandInstance = executeCommands.get(command);
         if (commandInstance == null) {
+            LOGGER.warning("Command not found: " + command);
             return new DefaultCommand(command);
         }
         return commandInstance;

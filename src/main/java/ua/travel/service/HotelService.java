@@ -7,16 +7,18 @@ import ua.travel.entity.Hotel;
 import ua.travel.service.exceptions.ServiceException;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/26/17.
  */
 public class HotelService {
 
+    private final Logger LOGGER = Logger.getLogger(HotelService.class.getName());
+
     private static HotelService hotelService;
     private CityRepository cityRepository = CityRepository.getInstance();
     private HotelRepository hotelRepository = HotelRepository.getInstance();
-    private CityService cityService = CityService.getInstance();
 
     private HotelService(){}
 
@@ -41,6 +43,7 @@ public class HotelService {
         hotel.setStar(Integer.parseInt(star));
         hotel.setPhotoUrl(photoUrl);
         hotel.setId(hotelRepository.save(hotel));
+        LOGGER.info(hotel.toString());
         return hotel;
     }
 

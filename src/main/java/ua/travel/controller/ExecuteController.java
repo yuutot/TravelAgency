@@ -15,9 +15,11 @@ import java.io.IOException;
  */
 @WebServlet(name = "executeController",urlPatterns = "/execute")
 public class ExecuteController extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CommandHelper helper = CommandHelper.getInstance();
-        ExecuteCommand command = helper.getExecuteCommand(request);
+        ExecuteCommand command = CommandHelper.getInstance()
+                .getExecuteCommand(request);
+
         String page = command.execute(request, response);
         response.sendRedirect(page);
     }

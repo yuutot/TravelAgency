@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 6/2/17.
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class EditTourCommand implements PageCommand {
 
     private TourService tourService = TourService.getInstance();
+    private final Logger LOGGER = Logger.getLogger(EditTourCommand.class.getName());
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,6 +34,7 @@ public class EditTourCommand implements PageCommand {
             try {
                 tourService.changeTourStatus(id);
             } catch (ServiceException e) {
+                LOGGER.warning(e.getMessage());
                 request.setAttribute("error", e);
                 request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request,response);
                 return;

@@ -13,11 +13,14 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/21/17.
  */
 public class DaoUtils {
+
+    private final static Logger LOGGER = Logger.getLogger(DaoUtils.class.getName());
 
     public static FieldType getObjectType(Object field) {
 
@@ -52,6 +55,7 @@ public class DaoUtils {
         for (String keys : map.keySet()) {
             Object value = map.get(keys);
             if (value != null) {
+                LOGGER.info(value.toString());
                 if (DaoUtils.getObjectType(value) == FieldType.OBJECT) {
                     try {
                         Field field = value.getClass().getDeclaredField("id");

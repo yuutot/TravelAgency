@@ -20,4 +20,9 @@ public class AuthException extends Exception {
         this.login = login;
         this.password = password;
     }
+
+    @Override
+    public String getMessage() {
+        return super.getMessage() + " " + login + " " + password;
+    }
 }

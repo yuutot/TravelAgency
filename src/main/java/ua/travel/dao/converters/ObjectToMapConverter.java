@@ -7,21 +7,26 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/18/17.
  */
 public class ObjectToMapConverter {
 
+    private final static Logger LOGGER = Logger.getLogger(ObjectToMapConverter.class.getName());
+
     public static <T> Map<String, Object> parse(T object, Class<?> clazz) {
         Map<String, Object> result = new HashMap<>();
         Field[] fields = clazz.getDeclaredFields();
-
+        LOGGER.info("Start parse object: " + object);
         Arrays.stream(fields)
                 .filter(f -> f.isAnnotationPresent(Column.class) &&
                         !f.isAnnotationPresent(Id.class))
                 .peek(f -> f.setAccessible(true))
                 .forEach(f -> parseObjectField(f, object, result));
+
+        LOGGER.info("Ready object: " + result);
         return result;
     }
 

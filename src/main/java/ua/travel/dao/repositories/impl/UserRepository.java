@@ -14,11 +14,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/19/17.
  */
 public class UserRepository extends BaseRepository<User> {
+
+    private final Logger LOGGER = Logger.getLogger(UserRepository.class.getName());
 
     private static UserRepository userRepository;
 
@@ -47,15 +50,16 @@ public class UserRepository extends BaseRepository<User> {
                 .where()
                 .addCondition("login", Condition.EVEN, login, User.class)
                 .build();
+        LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
             if (resultSet.next()) {
-                return Optional.of(ResultSetToObjectConverter.parseResultSetToObject(User.class, resultSet));
+                return Optional.ofNullable(ResultSetToObjectConverter.parseResultSetToObject(User.class, resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return Optional.empty();
     }

@@ -12,6 +12,7 @@ import ua.travel.service.exceptions.ServiceException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static ua.travel.command.utils.ValidatorUtils.*;
 
@@ -19,6 +20,8 @@ import static ua.travel.command.utils.ValidatorUtils.*;
  * Created by yuuto on 5/26/17.
  */
 public class TourService {
+
+    private final Logger LOGGER = Logger.getLogger(TourService.class.getName());
 
     private static TourService tourService;
     private HotelRepository hotelRepository = HotelRepository.getInstance();
@@ -53,6 +56,7 @@ public class TourService {
         tour.setHot(isHot);
         tour.setPhoto(photoUrl);
         tour.setId(tourRepository.save(tour));
+        LOGGER.info(tour.toString());
         return tour;
     }
 
@@ -75,16 +79,20 @@ public class TourService {
             City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> new ServiceException("Cant find city by id: " + cityId));
             if (!isEmptyString(costMin)) {
                 if (isCostValid) {
+                    LOGGER.info("Find by city and cost");
                     return tourRepository.findByCityAndCost(city, Double.parseDouble(costMin), Double.parseDouble(costMax), tourType);
                 }
             } else {
+                LOGGER.info("Find by city");
                 return tourRepository.findByCity(city, tourType);
             }
         } else {
             if (isCostValid) {
+                LOGGER.info("Find by cost");
                 return tourRepository.findByCost(Double.parseDouble(costMin), Double.parseDouble(costMax), tourType);
             }
         }
+        LOGGER.info("Find by type");
         return tourRepository.findByType(tourType);
     }
 

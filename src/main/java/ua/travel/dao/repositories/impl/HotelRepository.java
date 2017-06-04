@@ -16,11 +16,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/19/17.
  */
 public class HotelRepository extends BaseRepository<Hotel> {
+
+    private final Logger LOGGER = Logger.getLogger(HotelRepository.class.getName());
 
     private static HotelRepository hotelRepository;
 
@@ -49,6 +52,7 @@ public class HotelRepository extends BaseRepository<Hotel> {
                 .where()
                 .addCondition("city", Condition.EVEN, city.getId(), Hotel.class)
                 .build();
+        LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -56,7 +60,7 @@ public class HotelRepository extends BaseRepository<Hotel> {
                 hotels.add(ResultSetToObjectConverter.parseResultSetToObject(Hotel.class, resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return hotels;
     }

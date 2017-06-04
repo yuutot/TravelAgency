@@ -5,11 +5,14 @@ import ua.travel.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/31/17.
  */
 public class SecurityContext {
+
+    private final Logger LOGGER = Logger.getLogger(SecurityContext.class.getName());
 
     private static SecurityContext securityContext;
     private Map<String, List<String>> rights = new HashMap<>();
@@ -41,8 +44,10 @@ public class SecurityContext {
         if (url.equals("/execute")) {
             String command = request.getParameter("command");
             credentials = rights.get(command);
+            LOGGER.info("User " + user + " try to get access to " + command + " credentials: " + credentials);
         } else {
             credentials = rights.get(url);
+            LOGGER.info("User " + user + " try to get access to " + url + " credentials: " + credentials);
         }
         return credentials == null || credentials.contains("all") || user != null && credentials.contains(user.getUserType().getType());
     }

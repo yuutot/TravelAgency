@@ -17,12 +17,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/19/17.
  */
 public abstract class BaseRepository<T> {
     private final Class<?> clazz = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
 
     public Optional<T> findById(Long id) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
@@ -33,15 +35,16 @@ public abstract class BaseRepository<T> {
                 .where()
                 .addCondition("id", Condition.EVEN, id, clazz)
                 .build();
+        LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
             if (resultSet.next()) {
-                return Optional.of((T) ResultSetToObjectConverter.parseResultSetToObject(clazz, resultSet));
+                return Optional.ofNullable((T) ResultSetToObjectConverter.parseResultSetToObject(clazz, resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return Optional.empty();
     }
@@ -55,7 +58,7 @@ public abstract class BaseRepository<T> {
                     .addValues(map)
                     .execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return null;
     }
@@ -67,7 +70,7 @@ public abstract class BaseRepository<T> {
             field.setAccessible(true);
             id = (Long) field.get(entity);
         } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         Map<String, Object> map = ObjectToMapConverter.parse(entity, clazz);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection()) {
@@ -79,7 +82,7 @@ public abstract class BaseRepository<T> {
                     .addCondition("id", Condition.EVEN, id)
                     .execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 
@@ -91,6 +94,7 @@ public abstract class BaseRepository<T> {
                 .from()
                 .addTable(clazz.getAnnotation(Table.class).value())
                 .build();
+        LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -99,7 +103,7 @@ public abstract class BaseRepository<T> {
                 entities.add((T) ResultSetToObjectConverter.parseResultSetToObject(clazz, resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return entities;
     }
@@ -111,7 +115,7 @@ public abstract class BaseRepository<T> {
             Long id = (Long) field.get(entity);
             delete(id);
         } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 
@@ -122,11 +126,12 @@ public abstract class BaseRepository<T> {
                 .where()
                 .addCondition("id", Condition.EVEN, id)
                 .build();
+        LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
              Statement statement = connection.createStatement()) {
             statement.execute(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 }

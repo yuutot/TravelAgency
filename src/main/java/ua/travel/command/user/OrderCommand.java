@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/29/17.
  */
 public class OrderCommand implements PageCommand {
+
+    private static final Logger LOGGER = Logger.getLogger(OrderCommand.class.getName());
 
     private OrderService orderService = OrderService.getInstance();
 
@@ -26,7 +29,7 @@ public class OrderCommand implements PageCommand {
         User user = (User) request.getSession().getAttribute("user");
         try {
             if (id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)) {
-                Long orderId = orderService.bookTour(Long.parseLong(id), user.getId());
+                Long orderId = orderService.bookTour(Long.parseLong(id), user);
                 request.setAttribute("success", orderId);
                 request.getRequestDispatcher("WEB-INF/jsp/success.jsp").forward(request, response);
             } else {
@@ -35,6 +38,7 @@ public class OrderCommand implements PageCommand {
                 request.getRequestDispatcher("WEB-INF/jsp/orders.jsp").forward(request, response);
             }
         } catch (ServiceException e) {
+            LOGGER.warning(e.getMessage());
             request.setAttribute("error", e);
             request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
         }

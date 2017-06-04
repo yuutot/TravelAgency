@@ -17,8 +17,9 @@ import java.io.IOException;
 public class PageController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CommandHelper helper = CommandHelper.getInstance();
-        PageCommand command = helper.getPageCommand(request);
+        PageCommand command = CommandHelper.getInstance()
+                .getPageCommand(request);
+
         command.get(request, response);
     }
 }

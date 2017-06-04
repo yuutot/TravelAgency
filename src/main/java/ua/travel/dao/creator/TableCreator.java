@@ -17,12 +17,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
  * Created by yuuto on 5/20/17.
  */
 public abstract class TableCreator {
+
+    private final static Logger LOGGER = Logger.getLogger(TableCreator.class.getName());
 
     private List<Field> fKeys;
     final String CHARSET = "cp1251";
@@ -101,8 +104,9 @@ public abstract class TableCreator {
                 statement.addBatch(query);
             }
             statement.executeBatch();
+            LOGGER.info("Table created");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 }

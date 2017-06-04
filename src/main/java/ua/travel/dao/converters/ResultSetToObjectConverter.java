@@ -15,26 +15,26 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class ResultSetToObjectConverter {
 
+    private static final Logger LOGGER = Logger.getLogger(ResultSetToObjectConverter.class.getName());
+
     private static Map<String, Integer> columns = new HashMap<>();
 
-    private static void getColumnsFromResultSet(ResultSet rs) {
-        try {
-            ResultSetMetaData md = rs.getMetaData();
-            int count = md.getColumnCount();
+    private static void getColumnsFromResultSet(ResultSet rs) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+        int count = md.getColumnCount();
 
-            for (int i = 1; i <= count; i++) {
-                String columnName = md.getTableName(i) + "." + md.getColumnName(i);
-                columns.put(columnName, i);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (int i = 1; i <= count; i++) {
+            String columnName = md.getTableName(i) + "." + md.getColumnName(i);
+            columns.put(columnName, i);
         }
     }
 
-    public static <T> T parseResultSetToObject(Class<T> clazz, ResultSet rs) {
+    public static <T> T parseResultSetToObject(Class<T> clazz, ResultSet rs) throws SQLException {
+        LOGGER.info("Start parse rs to object");
         getColumnsFromResultSet(rs);
         try {
             T object = clazz.newInstance();
@@ -43,10 +43,12 @@ public class ResultSetToObjectConverter {
             Arrays.stream(fields)
                     .peek(f -> f.setAccessible(true))
                     .forEach(f -> parseResultSetColumn(f, object, rs, tableName));
+            LOGGER.info("Parse object complete. " + object);
             return object;
 
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e.getMessage());
+            LOGGER.warning(e.getMessage());
+            return null;
         }
     }
 
@@ -78,7 +80,7 @@ public class ResultSetToObjectConverter {
             field.set(obj, value);
 
         } catch (IllegalArgumentException | IllegalAccessException | SQLException | SecurityException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 
@@ -90,7 +92,7 @@ public class ResultSetToObjectConverter {
             BaseRepository baseRepository = (BaseRepository) repository.getMethod("getInstance").invoke(repository);
             return baseRepository.findById(value).get();
         } catch (InvocationTargetException | ClassNotFoundException | IllegalAccessException | SQLException | NoSuchMethodException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return null;
     }
@@ -106,7 +108,8 @@ public class ResultSetToObjectConverter {
         } catch (NoSuchMethodException | SecurityException |
                 SQLException | IllegalAccessException |
                 IllegalArgumentException | InvocationTargetException e) {
-            throw new RuntimeException();
+            LOGGER.warning(e.getMessage());
+            return null;
         }
     }
 }

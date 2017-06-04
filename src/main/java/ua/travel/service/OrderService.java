@@ -19,11 +19,14 @@ import ua.travel.service.exceptions.ServiceException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/26/17.
  */
 public class OrderService {
+
+    private final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 
     private static OrderService orderService;
     private TourRepository tourRepository = TourRepository.getInstance();
@@ -45,14 +48,14 @@ public class OrderService {
         return localInstance;
     }
 
-    public Long bookTour(Long tourId, Long userId) throws ServiceException {
+    public Long bookTour(Long tourId, User user) throws ServiceException {
         Tour tour = tourRepository.findById(tourId).orElseThrow(()->new ServiceException("Cant find tour by id: "+ tourId));
-        User user = userRepository.findById(userId).orElseThrow(()->new ServiceException("Cant find user by id: " + userId));
         Order order = new Order();
         order.setUser(user);
         order.setOrderStatus(OrderStatus.NEW);
         order.setDate(new Date());
         order.setTour(tour);
+        LOGGER.info("Book tour " + tourId + " by user " + user.getId());
         return orderRepository.save(order);
     }
 
@@ -77,17 +80,6 @@ public class OrderService {
         Long id = Long.parseLong(orderId);
         Order order = orderRepository.findById(id).orElseThrow(()->new ServiceException("Cant find order by id: " + orderId));
         order.setOrderStatus(orderStatus);
-        Map<String, Object> map = ObjectToMapConverter.parse(order, Order.class);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection()) {
-            UpdateQueryBuilder updateQueryBuilder = new UpdateQueryBuilder(connection);
-            updateQueryBuilder
-                    .addTable(Order.class.getAnnotation(Table.class).value())
-                    .addValues(map)
-                    .where()
-                    .addCondition("id", Condition.EVEN, id)
-                    .execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        orderRepository.update(order);
     }
 }

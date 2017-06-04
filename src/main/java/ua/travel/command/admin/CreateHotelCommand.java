@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static ua.travel.command.utils.ValidatorUtils.*;
 
@@ -23,6 +24,7 @@ public class CreateHotelCommand implements ExecuteCommand, PageCommand {
 
     private HotelService hotelService = HotelService.getInstance();
     private CityService cityService = CityService.getInstance();
+    private final Logger LOGGER = Logger.getLogger(CreateHotelCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -34,8 +36,7 @@ public class CreateHotelCommand implements ExecuteCommand, PageCommand {
             try {
                 hotelService.createHotel(city, name, star, photo);
             } catch (ServiceException e) {
-                e.printStackTrace();
-                //todo add logger
+                LOGGER.warning(e.getMessage());
             }
         }
         return "/admin";

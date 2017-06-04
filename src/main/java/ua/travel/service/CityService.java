@@ -5,12 +5,14 @@ import ua.travel.entity.City;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 5/26/17.
  */
 public class CityService {
 
+    private final Logger LOGGER = Logger.getLogger(CityService.class.getName());
     private static CityService cityService;
     private CityRepository cityRepository = CityRepository.getInstance();
 
@@ -38,6 +40,7 @@ public class CityService {
         City city = new City();
         city.setName(name);
         city.setId(cityRepository.save(city));
+        LOGGER.info(city.toString());
         return city;
     }
 

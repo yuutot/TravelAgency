@@ -2,10 +2,14 @@ package ua.travel.dao.builders;
 
 import ua.travel.dao.annotations.Table;
 
+import java.util.logging.Logger;
+
 /**
  * Created by yuuto on 5/24/17.
  */
 public class SelectQueryBuilder {
+
+    private final Logger LOGGER = Logger.getLogger(SelectQueryBuilder.class.getName());
     private StringBuilder query;
 
     public SelectQueryBuilder() {
@@ -92,6 +96,7 @@ public class SelectQueryBuilder {
     }
 
     public String build() {
+        LOGGER.info("Build select query: " + query.toString());
         if (query.toString().contains("where")) {
             return query.toString();
         } else {

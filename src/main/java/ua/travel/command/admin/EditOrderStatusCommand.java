@@ -6,6 +6,7 @@ import ua.travel.service.exceptions.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Logger;
 
 /**
  * Created by yuuto on 6/2/17.
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class EditOrderStatusCommand implements ExecuteCommand {
 
     private OrderService orderService = OrderService.getInstance();
+    private final Logger LOGGER = Logger.getLogger(EditOrderStatusCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -24,6 +26,7 @@ public class EditOrderStatusCommand implements ExecuteCommand {
         try {
             orderService.updateOrderStatus(id, status);
         } catch (ServiceException e) {
+            LOGGER.warning(e.getMessage());
             request.setAttribute("error", e);
             return "/error";
         }

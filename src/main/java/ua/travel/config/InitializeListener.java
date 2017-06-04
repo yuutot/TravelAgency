@@ -8,6 +8,9 @@ import ua.travel.security.SecurityContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.LogManager;
 
 /**
  * Created by yuuto on 5/19/17.
@@ -18,6 +21,12 @@ public class InitializeListener implements ServletContextListener {
 
     @Override
     public final void contextInitialized(ServletContextEvent sce) {
+
+        try {
+            LogManager.getLogManager().readConfiguration(getClass().getResourceAsStream("/log.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         TableCreatorFactory
                 .getTableCreator(DataSourceType.MYSQL, getClass().getAnnotation(EntityScan.class).value())
