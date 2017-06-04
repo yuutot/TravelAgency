@@ -10,6 +10,7 @@ import ua.travel.entity.enums.TourType;
 import ua.travel.entity.enums.TransportType;
 import ua.travel.service.exceptions.ServiceException;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -43,17 +44,17 @@ public class TourService {
         return localInstance;
     }
 
-    public Tour createTour(TourType tourType, Date dateTo, Date dateFrom, Double cost, String description, TransportType transportType, Long hotelId, Boolean isHot, String photoUrl) throws ServiceException {
-        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
+    public Tour createTour(String tourType, String dateFrom, String dateTo, String cost, String description, String transportType, String hotelId, String isHot, String photoUrl) throws ServiceException {
+        Hotel hotel = hotelRepository.findById(Long.parseLong(hotelId)).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
         Tour tour = new Tour();
-        tour.setTourType(tourType);
-        tour.setDateTo(dateTo);
-        tour.setDateFrom(dateFrom);
-        tour.setCost(cost);
+        tour.setTourType(TourType.valueOf(tourType));
+        tour.setDateTo(localTimeToDate(dateTo));
+        tour.setDateFrom(localTimeToDate(dateFrom));
+        tour.setCost(Double.parseDouble(cost));
         tour.setDescription(description);
-        tour.setTransportType(transportType);
+        tour.setTransportType(TransportType.valueOf(transportType));
         tour.setHotel(hotel);
-        tour.setHot(isHot);
+        tour.setHot(Boolean.valueOf(isHot));
         tour.setPhoto(photoUrl);
         tour.setId(tourRepository.save(tour));
         LOGGER.info(tour.toString());
@@ -108,5 +109,9 @@ public class TourService {
         Tour tour = tourRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find tour by id: " + id));
         tour.setHot(!tour.getHot());
         tourRepository.update(tour);
+    }
+
+    private Date localTimeToDate(String time){
+        return new Date(Timestamp.valueOf(time.replace("T", " ").concat(":00")).getTime());
     }
 }

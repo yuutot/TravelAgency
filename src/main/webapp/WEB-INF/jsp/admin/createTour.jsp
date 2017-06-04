@@ -19,8 +19,8 @@
         <option value="EXCURSION">Excursion</option>
         <option value="SHOPPING">Shopping</option>
     </select>
-    <input type="datetime" name="date_to">
-    <input type="datetime" name="date_from">
+    <input type="datetime-local" name="date_from">
+    <input type="datetime-local" name="date_to">
     <input type="number" name="cost">
     <input type="text" name="description">
     <select name="transport_type">
