@@ -66,6 +66,9 @@ public class DaoUtils {
                     }
                 } else if (DaoUtils.getObjectType(value) == FieldType.DATE) {
                     value = new Timestamp(((Date) value).getTime());
+                } else if(DaoUtils.getObjectType(value) == FieldType.STRING){
+                    statement.setString(position++, (String) value);
+                    continue;
                 }
             }
             statement.setObject(position++, value);

@@ -28,7 +28,7 @@ public abstract class TableCreator {
     private final static Logger LOGGER = Logger.getLogger(TableCreator.class.getName());
 
     private List<Field> fKeys;
-    final String CHARSET = "cp1251";
+    final String CHARSET = "utf8";
 
     private final String packageToScan;
 

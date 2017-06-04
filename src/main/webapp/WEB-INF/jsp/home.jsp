@@ -5,13 +5,21 @@
   Time: 2:11 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html" pageEncoding="utf-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="locale"/>
+
+<fmt:message key = "home.login" var =  "l_login"/>
+<fmt:message key = "home.password" var =  "l_password"/>
 <html>
 <head>
     <title>Home page</title>
 </head>
 <body>
+${l_login}
+${l_password}
 <c:choose>
     <c:when test="${user != null}">
         Добро пожаловать, ${user.getName()}!
