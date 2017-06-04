@@ -42,6 +42,9 @@ public class CommandHelper {
         pageCommands.put("/admin", new AdminHomeCommand());
         pageCommands.put("/admin/user", new UserCommand());
         pageCommands.put("/admin/editTour", new EditTourCommand());
+        pageCommands.put("/admin/createCity", new CreateCityCommand());
+        pageCommands.put("/admin/createHotel", new CreateHotelCommand());
+        pageCommands.put("/admin/createTour", new CreateTourCommand());
 
         executeCommands = new HashMap<>();
         executeCommands.put("login", new AuthCommand());

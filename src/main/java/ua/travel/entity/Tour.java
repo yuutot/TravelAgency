@@ -48,4 +48,7 @@ public class Tour {
     @Column("hot")
     private Boolean hot;
 
+    @Column("photo")
+    private String photo;
+
 }

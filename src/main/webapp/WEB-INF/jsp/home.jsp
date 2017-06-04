@@ -30,5 +30,20 @@
     </c:otherwise>
 </c:choose>
 <a href="/tours">Туры</a>
+<form action="/tours" method="get">
+    <input type="hidden" name="command" value="tours">
+    <c:forEach var="city" items="${cities}">
+        <input type="radio" name="city" value="${city.getId()}"> ${city.getName()}
+        <br/>
+    </c:forEach>
+    <select name="type">
+        <option value="REST">Rest</option>
+        <option value="EXCURSION">Excursion</option>
+        <option value="SHOPPING">Shopping</option>
+    </select>
+    <input type="number" name="min_cost">
+    <input type="number" name="max_cost">
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

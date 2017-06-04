@@ -40,7 +40,7 @@ public class TourService {
         return localInstance;
     }
 
-    public Tour createTour(TourType tourType, Date dateTo, Date dateFrom, Double cost, String description, TransportType transportType, Long hotelId, Boolean isHot) throws ServiceException {
+    public Tour createTour(TourType tourType, Date dateTo, Date dateFrom, Double cost, String description, TransportType transportType, Long hotelId, Boolean isHot, String photoUrl) throws ServiceException {
         Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
         Tour tour = new Tour();
         tour.setTourType(tourType);
@@ -51,6 +51,7 @@ public class TourService {
         tour.setTransportType(transportType);
         tour.setHotel(hotel);
         tour.setHot(isHot);
+        tour.setPhoto(photoUrl);
         tour.setId(tourRepository.save(tour));
         return tour;
     }
@@ -59,26 +60,32 @@ public class TourService {
         return tourRepository.findAll();
     }
 
-    public List<Tour> getToursByParams(String cityId, String costMin, String costMax) throws ServiceException {
+    public List<Tour> getToursByParams(String cityId, String costMin, String costMax, String type) throws ServiceException {
         if ((isEmptyString(costMin) && !isEmptyString(costMax)) || (!isEmptyString(costMin) && isEmptyString(costMax))) {
             throw new ServiceException("You must specify the minimum and maximum price");
         }
         boolean isCostValid = isValidDouble(costMin) && isValidDouble(costMax);
+        TourType tourType;
+        try{
+            tourType = TourType.valueOf(type);
+        } catch (IllegalArgumentException ex){
+            throw new ServiceException("Invalid tour type value: " + type);
+        }
         if (!isEmptyString(cityId) && isValidLong(cityId)) {
             City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> new ServiceException("Cant find city by id: " + cityId));
             if (!isEmptyString(costMin)) {
                 if (isCostValid) {
-                    return tourRepository.findByCityAndCost(city, Double.parseDouble(costMin), Double.parseDouble(costMax));
+                    return tourRepository.findByCityAndCost(city, Double.parseDouble(costMin), Double.parseDouble(costMax), tourType);
                 }
             } else {
-                return tourRepository.findByCity(city);
+                return tourRepository.findByCity(city, tourType);
             }
         } else {
             if (isCostValid) {
-                return tourRepository.findByPrice(Double.parseDouble(costMin), Double.parseDouble(costMax));
+                return tourRepository.findByCost(Double.parseDouble(costMin), Double.parseDouble(costMax), tourType);
             }
         }
-        throw new ServiceException("You entered incorrect data");
+        return tourRepository.findByType(tourType);
     }
 
     public Tour getTourById(String id) throws ServiceException {

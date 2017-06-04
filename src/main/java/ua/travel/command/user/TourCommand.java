@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static ua.travel.command.utils.ValidatorUtils.isEmptyString;
+import static ua.travel.command.utils.ValidatorUtils.isHaveValidString;
 
 /**
  * Created by yuuto on 5/30/17.
@@ -26,31 +27,26 @@ public class TourCommand implements PageCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Tour> tours;
+
         String id = request.getParameter("id");
         if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
-            try {
-                Tour tour = tourService.getTourById(id);
-                request.setAttribute("tour", tour);
-                request.getRequestDispatcher("WEB-INF/jsp/tour.jsp").forward(request, response);
-            } catch (ServiceException e) {
-                tours = tourService.getTours();
-                List<City> cities = cityService.getAllCities();
-                request.setAttribute("cities", cities);
-                request.setAttribute("error", e.getMessage());
-                request.setAttribute("tours", tours);
-                request.getRequestDispatcher("WEB-INF/jsp/tours.jsp").forward(request, response);
-            }
-            return;
+            idPresent(id, request, response);
+        }else {
+            filterTour(request,response);
         }
+    }
+
+    private void filterTour(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Tour> tours;
         String city = request.getParameter("city");
         String costMin = request.getParameter("min_cost");
         String costMax = request.getParameter("max_cost");
-        if (isEmptyString(city) && isEmptyString(costMin) && isEmptyString(costMax)) {
+        String type = request.getParameter("type");
+        if (!isHaveValidString(city, costMin, costMax, type)) {
             tours = tourService.getTours();
         } else {
             try {
-                tours = tourService.getToursByParams(city, costMin, costMax);
+                tours = tourService.getToursByParams(city, costMin, costMax, type);
             } catch (ServiceException e) {
                 request.setAttribute("error", e.getMessage());
                 tours = tourService.getTours();
@@ -60,5 +56,21 @@ public class TourCommand implements PageCommand {
         request.setAttribute("cities", cities);
         request.setAttribute("tours", tours);
         request.getRequestDispatcher("WEB-INF/jsp/tours.jsp").forward(request, response);
+    }
+
+    private void idPresent(String id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Tour> tours;
+        try {
+            Tour tour = tourService.getTourById(id);
+            request.setAttribute("tour", tour);
+            request.getRequestDispatcher("WEB-INF/jsp/tour.jsp").forward(request, response);
+        } catch (ServiceException e) {
+            tours = tourService.getTours();
+            List<City> cities = cityService.getAllCities();
+            request.setAttribute("cities", cities);
+            request.setAttribute("error", e.getMessage());
+            request.setAttribute("tours", tours);
+            request.getRequestDispatcher("WEB-INF/jsp/tours.jsp").forward(request, response);
+        }
     }
 }

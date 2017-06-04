@@ -10,13 +10,23 @@ public class ValidatorUtils {
     }
 
     public static boolean isValidDouble(String value){
-        return value.matches("\\d*[.]?\\d*");
+        return !value.isEmpty() && value.matches("\\d*[.]?\\d*");
     }
 
     public static boolean isEmptyString(String... str){
         if(str.length == 0) return true;
         for(String param : str){
             if(param == null || param.isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isHaveValidString(String... str){
+        if(str.length == 0) return true;
+        for(String param : str){
+            if(param != null && !param.isEmpty()){
                 return true;
             }
         }
