@@ -35,6 +35,7 @@
         </c:forEach>
     </select>
     <input type="checkbox" name="is_hot" value="true">
+    <input type="text" name="photo">
     <input type="submit" value="Create">
 </form>
 </body>

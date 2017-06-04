@@ -34,12 +34,13 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
         String transportType = request.getParameter("transport_type");
         String hotel = request.getParameter("hotel");
         String isHot = request.getParameter("is_hot");
-        if(isEmptyString(tourType, dateFrom, dateTo, cost, description, transportType, hotel) || !isValidDouble(cost) || !isValidLong(hotel)){
+        String photo = request.getParameter("photo");
+        if(isEmptyString(tourType, dateFrom, dateTo, cost, description, transportType, hotel, photo) || !isValidDouble(cost) || !isValidLong(hotel)){
            return "/admin/createTour";
         }
         Tour tour;
         try {
-            tour = tourService.createTour(tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, "");
+            tour = tourService.createTour(tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, photo);
         } catch (ServiceException e) {
             request.getSession().setAttribute("error", e);
             return "/error";
