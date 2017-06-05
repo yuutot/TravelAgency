@@ -1,4 +1,4 @@
 .idea
 *.iml
 target/
-src/main/webapp/img/*
+src/main/webapp/photo/*

@@ -28,7 +28,7 @@ public class FileUtils {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Part filePart = request.getPart("photo");
-        String path = "/home/yuuto/IdeaProjects/TravelAgency/src/main/webapp/img";
+        String path = "/home/yuuto/IdeaProjects/TravelAgency/src/main/webapp/photo";
         String fileName = getFileName(filePart);
         OutputStream out = new FileOutputStream(
                 new File(path + File.separator + fileName));
