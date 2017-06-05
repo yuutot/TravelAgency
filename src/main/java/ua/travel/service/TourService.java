@@ -112,7 +112,12 @@ public class TourService {
         tourRepository.update(tour);
     }
 
+    public List<Tour> getHotTours(){
+        return tourRepository.findHotTours();
+    }
+
     private Date localTimeToDate(String time){
         return new Date(Timestamp.valueOf(time.replace("T", " ").concat(":00")).getTime());
     }
+
 }

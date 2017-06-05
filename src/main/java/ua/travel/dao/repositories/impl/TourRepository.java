@@ -87,6 +87,18 @@ public class TourRepository extends BaseRepository<Tour> {
         return executeSelectQuery(query);
     }
 
+    public List<Tour> findHotTours() {
+        SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
+        String query = selectQueryBuilder
+                .addField("*")
+                .from()
+                .addTable(Tour.class.getAnnotation(Table.class).value())
+                .where()
+                .addCondition("hot", Condition.EVEN, "1", Tour.class)
+                .build();
+        return executeSelectQuery(query);
+    }
+
     public List<Tour> findByCityAndCost(City city, Double minCost, Double maxCost, TourType tourType){
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder

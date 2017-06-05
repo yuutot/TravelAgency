@@ -1,0 +1,21 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<header class="container header-page">
+    <div class="logo">
+        <a href="/">_Travel<span>Agency</span></a>
+    </div>
+    <nav class="client-menu">
+        <ul>
+            <li><a href="/tours">Туры</a></li>
+            <c:choose>
+                <c:when test="${user != null}">
+                    <li><a href="/order">Заказы</a></li>
+                    <li><a href="/login?logout">Выход</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="/login">Авторизация</a></li>
+                </c:otherwise>
+            </c:choose>
+            <li><a href="?lan=${l_language}">${l_language}</a></li>
+        </ul>
+    </nav>
+</header>

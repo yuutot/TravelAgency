@@ -8,34 +8,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="h" uri="/tld/head-tag.tld" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
+<fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateTo" />
+<fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateTo()}" var="dateFrom" />
+<fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
+<fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
 
 <fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>CNZ</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/font/css/font-awesome.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <h:head title="Tour id: ${tour.getId()}"/>
 </head>
 <body class="admin">
-<header>
-    <div class="logo">
-        <a href="/">_Travel<span>Agency</span></a>
-    </div>
-    <a href="/login?logout">Выйти</a>
-</header>
-<aside>
-    <ul>
-        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
-        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
-        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
-        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
-        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
-    </ul>
-</aside>
+<%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <div class="container">
         <div class="top-panel">
@@ -48,7 +35,7 @@
                     <a href="/admin/editTour?id=${tour.getId()}&type=hot" class="btn-primary">Изменить</a>
                 </p>
                 <p>
-                    <i class="fa fa-clock-o" aria-hidden="true"></i> ${tour.getDateFrom()} - ${tour.getDateTo()}
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> ${pDateFrom} - ${pDateTo}
                 </p>
                 <p>
                     <i class="fa fa-map-marker" aria-hidden="true"></i> ${tour.getHotel().getCity().getName()}

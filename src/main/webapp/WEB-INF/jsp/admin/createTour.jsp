@@ -8,34 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="h" uri="/tld/head-tag.tld" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>CNZ</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/font/css/font-awesome.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <h:head title="Create tour"/>
 </head>
 <body class="admin">
-<header>
-    <div class="logo">
-        <a href="/">_Travel<span>Agency</span></a>
-    </div>
-    <a href="/login?logout">Выйти</a>
-</header>
-<aside>
-    <ul>
-        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
-        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
-        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
-        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
-        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
-    </ul>
-</aside>
+<%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <div class="container">
         <form class="row" action="/execute" method="post" enctype="multipart/form-data">

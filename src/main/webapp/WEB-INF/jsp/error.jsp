@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="h" uri="/tld/head-tag.tld" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
@@ -16,11 +17,7 @@
 <fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>CNZ</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="../../font/css/font-awesome.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <h:head title="Error page"/>
 </head>
 <body>
 <header class="container header-page">

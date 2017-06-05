@@ -8,34 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="h" uri="/tld/head-tag.tld" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
-
+<fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateFrom()}" var="dateTo" />
+<fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateTo()}" var="dateFrom" />
+<fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
+<fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
 <fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>CNZ</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/font/css/font-awesome.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <h:head title="Order id: ${order.getId()}"/>
 </head>
 <body class="admin">
-<header>
-    <div class="logo">
-        <a href="/">_Travel<span>Agency</span></a>
-    </div>
-    <a href="/login?logout">Выйти</a>
-</header>
-<aside>
-    <ul>
-        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
-        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
-        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
-        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
-        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
-    </ul>
-</aside>
+<%@include file="/WEB-INF/jspf/AdminHeader.jspf" %>
 <main>
     <div class="container">
         <h2>Заказ № ${order.getId()}</h2>
@@ -43,13 +29,23 @@
             <div class="col-md-6 order-details">
                 <h2> ${order.getTour().getTitle()} </h2>
                 <p>
-                    <i class="fa fa-clock-o" aria-hidden="true"></i> ${order.getTour().getDateFrom()} - ${order.getTour().getDateTo()}
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> ${pDateFrom} - ${pDateTo}
                 </p>
                 <p>
-                    <i class="fa fa-map-marker" aria-hidden="true"></i> ${order.getTour().getHotel().getCity().getName()}
+                    <i class="fa fa-map-marker"
+                       aria-hidden="true"></i> ${order.getTour().getHotel().getCity().getName()}
                 </p>
 
-                <p class="price-page-p"> <i class="fa fa-usd" aria-hidden="true"></i> ${order.getTour().getCost()} UAH</p>
+                <p class="price-page-p"><i class="fa fa-usd" aria-hidden="true"></i>
+                    <c:choose>
+                        <c:when test="${order.getUser().getDiscount() > 0}">
+                            ${order.getTour().getCost()*(1.0-order.getUser().getDiscount()/100.0)} UAH
+                        </c:when>
+                        <c:otherwise>
+                            ${order.getTour().getCost()} UAH
+                        </c:otherwise>
+                    </c:choose>
+                </p>
 
                 <h2> Статус заказа </h2>
                 <form action="/execute?id=${order.getId()}" method="post">
@@ -65,7 +61,8 @@
             <div class="col-md-6 order-details">
                 <h2> О клиенте </h2>
                 <p>
-                    <i class="fa fa-user-circle" aria-hidden="true"></i> ${order.getUser().getName()} ${order.getUser().getSurname()}
+                    <i class="fa fa-user-circle"
+                       aria-hidden="true"></i> ${order.getUser().getName()} ${order.getUser().getSurname()}
                 </p>
                 <p>
                     <i class="fa fa-gift" aria-hidden="true"></i> Скидка ${order.getUser().getDiscount()} %
@@ -73,7 +70,8 @@
                 <p>
                     <i class="fa fa-envelope-o" aria-hidden="true"></i> ${order.getUser().getPhone()}
                 </p>
-                <a class="btn btn-sm btn-primary btn-new" href="<c:url value="/admin/user?id=${order.getUser().getId()}"/>">Подробнее</a>
+                <a class="btn btn-sm btn-primary btn-new"
+                   href="<c:url value="/admin/user?id=${order.getUser().getId()}"/>">Подробнее</a>
 
             </div>
         </div>

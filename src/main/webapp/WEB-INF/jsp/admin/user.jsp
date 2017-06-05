@@ -8,41 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="h" uri="/tld/head-tag.tld" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>CNZ</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/font/css/font-awesome.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <h:head title="User id: ${userProfile.getId()}"/>
 </head>
 <body class="admin">
-<header>
-    <div class="logo">
-        <a href="/">_Travel<span>Agency</span></a>
-    </div>
-    <a href="/login?logout">Выйти</a>
-</header>
-<aside>
-    <ul>
-        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
-        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
-        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
-        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
-        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
-    </ul>
-</aside>
+<%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <div class="container">
-        <h2>${user.getName()} ${user.getSurname()}</h2>
+        <h2>${userProfile.getName()} ${userProfile.getSurname()}</h2>
         <div class="row">
             <div class="col-md-12 order-details">
                 <p>
-                    <i class="fa fa-phone" aria-hidden="true"></i> ${user.getPhone()}
+                    <i class="fa fa-phone" aria-hidden="true"></i> ${userProfile.getPhone()}
                 </p>
             </div>
             <div class="col-md-12 order-list">
@@ -65,6 +48,10 @@
                         </td>
                     </tr>
                     <c:forEach var="order" items="${orders}">
+                        <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateFrom()}" var="dateTo" />
+                        <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateTo()}" var="dateFrom" />
+                        <fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
+                        <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
                         <tr>
                             <td>
                                 <a href="<c:url value="/admin/order?id=${order.getTour().getId()}"/>">
@@ -76,7 +63,7 @@
                                     ${order.getTour().getHotel().getCity().getName()}
                             </td>
                             <td>
-                                    ${order.getTour().getDateFrom()} - ${order.getTour().getDateTo()}
+                                    ${pDateFrom} - ${pDateTo}
                             </td>
                             <td>
                                     ${order.getTour().getCost()} UAH

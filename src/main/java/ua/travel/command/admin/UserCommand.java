@@ -32,7 +32,7 @@ public class UserCommand implements PageCommand {
                 User user = userService.getUserById(id);
                 List<Order> orders = orderService.getOrdersByUser(user.getId());
                 request.setAttribute("orders", orders);
-                request.setAttribute("user", user);
+                request.setAttribute("userProfile", user);
                 request.getRequestDispatcher("/WEB-INF/jsp/admin/user.jsp").forward(request,response);
             } catch (ServiceException e) {
                 LOGGER.warning(e.getMessage());

@@ -2,6 +2,7 @@ package ua.travel.command.user;
 
 import ua.travel.command.ExecuteCommand;
 import ua.travel.command.PageCommand;
+import ua.travel.command.utils.ValidatorUtils;
 import ua.travel.entity.User;
 import ua.travel.service.UserService;
 import ua.travel.service.exceptions.ServiceException;
@@ -28,7 +29,10 @@ public class RegisterCommand implements PageCommand, ExecuteCommand {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String phone = request.getParameter("phone");
-
+        if(ValidatorUtils.isEmptyString(login,password,name,surname,phone)){
+            request.getSession().setAttribute("error", new ServiceException("Не все поля заполнены"));
+            return "/register";
+        }
         try {
             User user = userService.registerUser(login, password, name, surname, phone);
             request.getSession().setAttribute("user", user);

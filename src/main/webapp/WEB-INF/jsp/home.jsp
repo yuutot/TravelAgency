@@ -5,41 +5,19 @@
   Time: 2:11 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html" pageEncoding="utf-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="h" uri="/tld/head-tag.tld" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>CNZ</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="../../font/css/font-awesome.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+    <h:head title="Main page"/>
 </head>
-<header class="container header-page">
-    <div class="logo">
-        <a href="/">_Travel<span>Agency</span></a>
-    </div>
-    <nav class="client-menu">
-        <ul>
-            <li><a href="/tours">Туры</a></li>
-                <c:choose>
-                    <c:when test="${user != null}">
-                        <li><a href="/order">Заказы</a></li>
-                        <li><a href="/login?logout">Выход</a></li>
-                    </c:when>
-                    <c:otherwise>
-                            <li><a href="/login">Авторизация</a></li>
-                    </c:otherwise>
-                </c:choose>
-            <li><a href="?lan=${l_language}">${l_language}</a></li>
-        </ul>
-    </nav>
-</header>
+<%@include file="/WEB-INF/jspf/UserHeader.jspf" %>
 <body class="main__body">
 <section class="top-screen">
     <div class="container">
@@ -88,7 +66,9 @@
         <div class="col-md-3 col-xs-6 col-md-preffix-1">
             <ul class="marked-list">
                 <c:forEach var="city" items="${cities}">
-                    <li><a href="<c:url value="/tours?command=tours&city=${city.getId()}&type=REST&min_cost=&max_cost="/>">— ${city.getName()}</a></li>
+                    <li>
+                        <a href="<c:url value="/tours?command=tours&city=${city.getId()}&type=REST&min_cost=&max_cost="/>">— ${city.getName()}</a>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
@@ -96,8 +76,10 @@
             <ul class="marked-list">
 
                 <li><a href="<c:url value="/tours?command=tours&city=&type=REST&min_cost=&max_cost="/>">— Rest</a></li>
-                <li><a href="<c:url value="/tours?command=tours&city=&type=EXCURSION&min_cost=&max_cost="/>">— Excursion</a></li>
-                <li><a href="<c:url value="/tours?command=tours&city=&type=SHOPPING&min_cost=&max_cost="/>">— Shopping</a></li>
+                <li><a href="<c:url value="/tours?command=tours&city=&type=EXCURSION&min_cost=&max_cost="/>">—
+                    Excursion</a></li>
+                <li><a href="<c:url value="/tours?command=tours&city=&type=SHOPPING&min_cost=&max_cost="/>">—
+                    Shopping</a></li>
             </ul>
         </div>
     </div>
@@ -107,73 +89,44 @@
 <section class="container well-sm">
     <h2>Лучшие предложения</h2>
     <div class="row">
-        <div class="col-md-4 item__tour">
-            <img src="img/1.jpg" alt="">
-            <a href="#" class="tour__details">
-                <p class="title">
-                    4-Days Tour of Amsterdam and Zaanse Schans
-                </p>
-                <p></p>
-                <p>
-                    <i class="fa fa-map-marker" aria-hidden="true"></i> Amsterdam / The Netherlands
-                </p>
-                <p>
-                    <i class="fa fa-clock-o" aria-hidden="true"></i> 03/12/12 - 04/22/22
-                </p>
-                <div class="btn-link">
-                    1000 UAN
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4 item__tour">
-            <img src="img/1.jpg" alt="">
-            <a href="#" class="tour__details">
-                <p class="title">
-                    4-Days Tour of Amsterdam and Zaanse Schans
-                </p>
-                <p></p>
-                <p>
-                    <i class="fa fa-map-marker" aria-hidden="true"></i> Amsterdam / The Netherlands
-                </p>
-                <p>
-                    <i class="fa fa-clock-o" aria-hidden="true"></i> 03/12/12 - 04/22/22
-                </p>
-                <div class="btn-link">
-                    1000 UAN
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4 item__tour">
-            <img src="img/1.jpg" alt="">
-            <a href="#" class="tour__details">
-                <p class="title">
-                    4-Days Tour of Amsterdam and Zaanse Schans
-                </p>
-                <p></p>
-                <p>
-                    <i class="fa fa-map-marker" aria-hidden="true"></i> Amsterdam / The Netherlands
-                </p>
-                <p>
-                    <i class="fa fa-clock-o" aria-hidden="true"></i> 03/12/12 - 04/22/22
-                </p>
-                <div class="btn-link">
-                    1000 UAN
-                </div>
-            </a>
-        </div>
+        <c:forEach var="tour" items="${tours}">
+            <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateTo" />
+            <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateTo()}" var="dateFrom" />
+            <fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
+            <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
+            <div class="col-md-4 item__tour">
+                <img src="/photo/${tour.getPhoto()}" alt="">
+                <a href="/tours?id=${tour.getId()}" class="tour__details">
+                    <p class="title">
+                            ${tour.getTitle()}
+                    </p>
+                    <p></p>
+                    <p>
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> ${tour.getHotel().getCity().getName()}
+                    </p>
+                    <p>
+                        <i class="fa fa-clock-o" aria-hidden="true"></i> ${pDateFrom} - ${pDateTo}
+                    </p>
+                    <div class="btn-link">
+                        <c:choose>
+                            <c:when test="${user != null && user.getDiscount() > 0}">
+                                ${tour.getCost()*(1.0-user.getDiscount()/100.0)} UAH
+                            </c:when>
+                            <c:otherwise>
+                                ${tour.getCost()} UAH
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <c:if test="${user != null}">
+                        <p>
+                            <i class="fa fa-gift" aria-hidden="true"></i> Скидка ${user.getDiscount()} %
+                        </p>
+                    </c:if>
+                </a>
+            </div>
+        </c:forEach>
     </div>
 </section>
-<footer class="container">
-    <div class="col-md-4">
-        <div class="logo">
-            <a href="/">_Travel<span>Agency</span></a>
-        </div>
-        <div class="copyright">
-            © <span id="copyright-year">2017</span> |
-            All rights reserved
-
-        </div>
-    </div>
-</footer>
+<%@include file="/WEB-INF/jspf/UserFooter.jspf" %>
 </body>
 </html>

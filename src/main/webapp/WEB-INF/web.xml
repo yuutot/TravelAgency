@@ -7,4 +7,11 @@
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri> /tld/head-tag.tld</taglib-uri>
+            <taglib-location> /tld/head-tag.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>

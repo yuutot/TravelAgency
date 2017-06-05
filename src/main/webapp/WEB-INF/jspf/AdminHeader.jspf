@@ -1,0 +1,16 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<header>
+    <div class="logo">
+        <a href="/">_Travel<span>Agency</span></a>
+    </div>
+    <a href="/login?logout">Выйти</a>
+</header>
+<aside>
+    <ul>
+        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
+        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
+        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
+        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
+        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
+    </ul>
+</aside>

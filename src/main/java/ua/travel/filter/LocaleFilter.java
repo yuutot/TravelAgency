@@ -28,8 +28,8 @@ public class LocaleFilter implements Filter {
                 request.getSession().setAttribute("locale", Locale.ENGLISH);
             }
         }
-        Locale locale = (Locale) request.getSession().getAttribute("locale");
-        if(locale == null){
+        Locale userLocale = (Locale) request.getSession().getAttribute("locale");
+        if(userLocale == null){
             request.getSession().setAttribute("locale", Locale.ENGLISH);
         }
         filterChain.doFilter(request,servletResponse);
