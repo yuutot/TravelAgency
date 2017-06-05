@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -33,6 +34,10 @@ public class AdminTourCommand implements PageCommand {
                 LOGGER.warning(e.getMessage());
                 response.sendRedirect("/admin");
             }
+        } else {
+            List<Tour> tours = tourService.getTours();
+            request.setAttribute("tours", tours);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/tours.jsp").forward(request,response);
         }
     }
 }

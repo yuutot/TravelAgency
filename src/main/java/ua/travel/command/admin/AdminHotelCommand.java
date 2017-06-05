@@ -4,6 +4,7 @@ import ua.travel.command.ExecuteCommand;
 import ua.travel.command.PageCommand;
 import ua.travel.command.utils.FileUtils;
 import ua.travel.entity.City;
+import ua.travel.entity.Hotel;
 import ua.travel.service.CityService;
 import ua.travel.service.HotelService;
 import ua.travel.service.exceptions.ServiceException;
@@ -13,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static ua.travel.command.utils.ValidatorUtils.*;
 
@@ -40,13 +43,15 @@ public class AdminHotelCommand implements ExecuteCommand, PageCommand {
                 LOGGER.warning(e.getMessage());
             }
         }
-        return "/admin";
+        return "/admin/hotels";
     }
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        List<Hotel> hotels = hotelService.getAllHotel();
         List<City> cities = cityService.getAllCities();
         request.setAttribute("cities", cities);
+        request.setAttribute("hotels", hotels);
         request.getRequestDispatcher("/WEB-INF/jsp/admin/hotels.jsp").forward(request,response);
     }
 }

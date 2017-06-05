@@ -29,7 +29,7 @@ public class DefaultCommand implements ExecuteCommand, PageCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (command.contains("img/") || command.contains("style/") || command.contains("photo/")) {
+        if (command.contains("img/") || command.contains("css/") || command.contains("photo/") || command.contains("font/")) {
             try (ServletOutputStream out = response.getOutputStream();
                  FileInputStream fin = new FileInputStream("/home/yuuto/IdeaProjects/TravelAgency/src/main/webapp" + PathUtils.getContextPath(request));
                  BufferedInputStream bin = new BufferedInputStream(fin);

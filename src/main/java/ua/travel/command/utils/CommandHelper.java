@@ -44,7 +44,9 @@ public class CommandHelper {
         pageCommands.put("/order", new OrderCommand());
         pageCommands.put("/admin", new AdminHomeCommand());
         pageCommands.put("/admin/user", new UserCommand());
+        pageCommands.put("/admin/order", new AdminOrderCommand());
         pageCommands.put("/admin/tour", new AdminTourCommand());
+        pageCommands.put("/admin/tours", new AdminTourCommand());
         pageCommands.put("/admin/editTour", new EditTourCommand());
         pageCommands.put("/admin/city", new AdminCityCommand());
         pageCommands.put("/admin/hotels", new AdminHotelCommand());

@@ -20,9 +20,9 @@ public class LocaleFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         request.setCharacterEncoding("UTF-8");
-        String localeParam = request.getParameter("len");
+        String localeParam = request.getParameter("lan");
         if(localeParam != null){
-            if(localeParam.equals("ua")){
+            if(localeParam.equals("UA")){
                 request.getSession().setAttribute("locale", new Locale("ua", "UA"));
             }else {
                 request.getSession().setAttribute("locale", Locale.ENGLISH);

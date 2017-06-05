@@ -48,6 +48,10 @@ public class OrderService {
         return localInstance;
     }
 
+    public Order getOrderById(String id) throws ServiceException {
+        return orderRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ServiceException("Cant find order by id: " + id));
+    }
+
     public Long bookTour(Long tourId, User user) throws ServiceException {
         Tour tour = tourRepository.findById(tourId).orElseThrow(()->new ServiceException("Cant find tour by id: "+ tourId));
         Order order = new Order();

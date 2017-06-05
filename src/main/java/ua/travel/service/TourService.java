@@ -44,9 +44,10 @@ public class TourService {
         return localInstance;
     }
 
-    public Tour createTour(String tourType, String dateFrom, String dateTo, String cost, String description, String transportType, String hotelId, String isHot, String photoUrl) throws ServiceException {
+    public Tour createTour(String title, String tourType, String dateFrom, String dateTo, String cost, String description, String transportType, String hotelId, String isHot, String photoUrl) throws ServiceException {
         Hotel hotel = hotelRepository.findById(Long.parseLong(hotelId)).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
         Tour tour = new Tour();
+        tour.setTitle(title);
         tour.setTourType(TourType.valueOf(tourType));
         tour.setDateTo(localTimeToDate(dateTo));
         tour.setDateFrom(localTimeToDate(dateFrom));

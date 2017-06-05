@@ -30,6 +30,7 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String title = request.getParameter("title");
         String tourType = request.getParameter("tour_type");
         String dateFrom = request.getParameter("date_from");
         String dateTo = request.getParameter("date_to");
@@ -38,13 +39,13 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
         String transportType = request.getParameter("transport_type");
         String hotel = request.getParameter("hotel");
         String isHot = request.getParameter("is_hot");
-        if(isEmptyString(tourType, dateFrom, dateTo, cost, description, transportType, hotel) || !isValidDouble(cost) || !isValidLong(hotel)){
+        if(isEmptyString(title,tourType, dateFrom, dateTo, cost, description, transportType, hotel) || !isValidDouble(cost) || !isValidLong(hotel)){
            return "/admin/createTour";
         }
         Tour tour;
         try {
             String path = FileUtils.loadFile(request,response);
-            tour = tourService.createTour(tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, path);
+            tour = tourService.createTour(title, tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, path);
         } catch (ServiceException | ServletException | IOException e) {
             request.getSession().setAttribute("error", e);
             LOGGER.warning(e.getMessage());

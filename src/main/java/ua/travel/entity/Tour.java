@@ -21,6 +21,9 @@ public class Tour {
     @Id
     private Long id;
 
+    @Column("title")
+    private String title;
+
     @Column("type")
     @Enum
     private TourType tourType;

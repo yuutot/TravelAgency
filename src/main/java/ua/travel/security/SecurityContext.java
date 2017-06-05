@@ -46,7 +46,7 @@ public class SecurityContext {
             String command = request.getParameter("command");
             credentials = rights.get(command);
             LOGGER.info("User " + user + " try to get access to " + command + " credentials: " + credentials);
-        } else if (url.contains("img/") || url.contains("photo/") || url.contains("style/")) {
+        } else if (url.contains("img/") || url.contains("css/") || url.contains("style/") || url.contains("font/")) {
             return true;
         } else {
             credentials = rights.get(url);

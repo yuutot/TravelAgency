@@ -7,11 +7,90 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="locale"/>
+
+<fmt:message key="home.lan" var="l_language"/>
 <html>
 <head>
-    <title>Home page</title>
+    <title>CNZ</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/font/css/font-awesome.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
 </head>
-<body>
-${user}
+<body class="admin">
+<header>
+    <div class="logo">
+        <a href="/">_Travel<span>Agency</span></a>
+    </div>
+    <a href="/login?logout">Выйти</a>
+</header>
+<aside>
+    <ul>
+        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
+        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
+        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
+        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
+        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
+    </ul>
+</aside>
+<main>
+    <div class="container">
+        <h2>${user.getName()} ${user.getSurname()}</h2>
+        <div class="row">
+            <div class="col-md-12 order-details">
+                <p>
+                    <i class="fa fa-phone" aria-hidden="true"></i> ${user.getPhone()}
+                </p>
+            </div>
+            <div class="col-md-12 order-list">
+                <table>
+                    <tr>
+                        <td>
+                            Название тура
+                        </td>
+                        <td>
+                            Город
+                        </td>
+                        <td>
+                            Дата
+                        </td>
+                        <td>
+                            Стоимость
+                        </td>
+                        <td>
+                            Статус
+                        </td>
+                    </tr>
+                    <c:forEach var="order" items="${orders}">
+                        <tr>
+                            <td>
+                                <a href="<c:url value="/admin/order?id=${order.getTour().getId()}"/>">
+                                        ${order.getTour().getTitle()}
+                                </a>
+
+                            </td>
+                            <td>
+                                    ${order.getTour().getHotel().getCity().getName()}
+                            </td>
+                            <td>
+                                    ${order.getTour().getDateFrom()} - ${order.getTour().getDateTo()}
+                            </td>
+                            <td>
+                                    ${order.getTour().getCost()} UAH
+                            </td>
+                            <td>
+                                    ${order.getOrderStatus()}
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>
