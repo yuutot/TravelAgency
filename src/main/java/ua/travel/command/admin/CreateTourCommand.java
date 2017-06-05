@@ -1,6 +1,5 @@
 package ua.travel.command.admin;
 
-import sun.rmi.runtime.Log;
 import ua.travel.command.ExecuteCommand;
 import ua.travel.command.PageCommand;
 import ua.travel.command.utils.FileUtils;
@@ -20,7 +19,10 @@ import java.util.logging.Logger;
 import static ua.travel.command.utils.ValidatorUtils.*;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin/createTour
+ * command create_tour
+ *
+ * Display page with inputs for tour creations or create tour by params
  */
 public class CreateTourCommand implements ExecuteCommand, PageCommand {
 

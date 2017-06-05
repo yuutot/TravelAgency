@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 6/2/17.
+ * command edit_order_status
+ *
+ * Edit order status for one order by id
  */
 public class EditOrderStatusCommand implements ExecuteCommand {
 

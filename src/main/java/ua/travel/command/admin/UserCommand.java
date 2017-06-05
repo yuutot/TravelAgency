@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin/user?id=<id>
+ *
+ * Display page with user info and user orders by id
  */
 public class UserCommand implements PageCommand {
 

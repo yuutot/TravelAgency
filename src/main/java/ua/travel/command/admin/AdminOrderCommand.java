@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin/order
+ *
+ * Get order by id
  */
 public class AdminOrderCommand implements PageCommand {
 

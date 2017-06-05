@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 5/30/17.
+ * urlPattern /admin/tour, /admin/tour?id=<id>
+ *
+ * Get all or one tour by id
  */
 public class AdminTourCommand implements PageCommand {
 

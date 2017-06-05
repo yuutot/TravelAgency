@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin/city
+ * command create_city
+ *
+ * Get or create city by params
  */
 public class AdminCityCommand implements ExecuteCommand, PageCommand {
 

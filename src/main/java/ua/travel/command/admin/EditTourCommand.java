@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin/editTour
+ *
+ * Edit hot status or delete tour.
+ * Get params delete for deleting and hot for change status.
  */
 public class EditTourCommand implements PageCommand {
 

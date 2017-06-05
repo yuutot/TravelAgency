@@ -22,7 +22,10 @@ import java.util.stream.Collectors;
 import static ua.travel.command.utils.ValidatorUtils.*;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin/hotels
+ * command create_hotels
+ *
+ * Get or create hotels by params
  */
 public class AdminHotelCommand implements ExecuteCommand, PageCommand {
 

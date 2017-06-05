@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by yuuto on 6/2/17.
+ * urlPattern /admin
+ *
+ * Get home admins page.
+ * Includes all/new orders depending on the parameters
  */
 public class AdminHomeCommand implements PageCommand {
 
