@@ -44,17 +44,18 @@ public class CommandHelper {
         pageCommands.put("/order", new OrderCommand());
         pageCommands.put("/admin", new AdminHomeCommand());
         pageCommands.put("/admin/user", new UserCommand());
+        pageCommands.put("/admin/tour", new AdminTourCommand());
         pageCommands.put("/admin/editTour", new EditTourCommand());
-        pageCommands.put("/admin/createCity", new CreateCityCommand());
-        pageCommands.put("/admin/createHotel", new CreateHotelCommand());
+        pageCommands.put("/admin/city", new AdminCityCommand());
+        pageCommands.put("/admin/hotels", new AdminHotelCommand());
         pageCommands.put("/admin/createTour", new CreateTourCommand());
 
         executeCommands = new HashMap<>();
         executeCommands.put("login", new AuthCommand());
         executeCommands.put("register", new RegisterCommand());
         executeCommands.put("edit_order_status", new EditOrderStatusCommand());
-        executeCommands.put("create_city", new CreateCityCommand());
-        executeCommands.put("create_hotel", new CreateHotelCommand());
+        executeCommands.put("create_city", new AdminCityCommand());
+        executeCommands.put("create_hotel", new AdminHotelCommand());
         executeCommands.put("create_tour", new CreateTourCommand());
     }
 

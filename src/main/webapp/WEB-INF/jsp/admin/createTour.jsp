@@ -12,7 +12,7 @@
     <title>Create tour</title>
 </head>
 <body>
-<form action="/execute" method="post">
+<form action="/execute" method="post" enctype="multipart/form-data">
     <input type="hidden" name="command" value="create_tour">
     <select name="tour_type">
         <option value="REST">Rest</option>
@@ -35,7 +35,7 @@
         </c:forEach>
     </select>
     <input type="checkbox" name="is_hot" value="true">
-    <input type="text" name="photo">
+    <input type="file" name="photo">
     <input type="submit" value="Create">
 </form>
 </body>

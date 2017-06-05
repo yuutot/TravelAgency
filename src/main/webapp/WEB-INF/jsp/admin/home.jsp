@@ -14,23 +14,7 @@
 <body>
 Добро пожаловать в админку, ${user.getName()}!
 <br/>
-<c:choose>
-    <c:when test="${allOrders != null}">
-        <c:forEach var="order" items="${allOrders}">
-            ${order}
-            <form action="/execute?id=${order.getId()}" method="post">
-                <input type="hidden" name="command" value="edit_order_status">
-                <select name="status">
-                    <option value="NEW">New</option>
-                    <option value="PAID">Paid</option>
-                    <option value="CANCELED">Cancel</option>
-                </select>
-                <input type="submit" value="Submit">
-            </form>
-            <br/>
-        </c:forEach>
-    </c:when>
-    <c:when test="${newOrders != null}">
+
         <c:forEach var="order" items="${newOrders}">
             ${order}
             <form action="/execute?id=${order.getId()}" method="post">
@@ -47,8 +31,6 @@
         <button type="button">
             <a href="/admin?all=true">Показать все заказы</a>
         </button>
-    </c:when>
-</c:choose>
 
 </body>
 </html>

@@ -31,9 +31,14 @@
 <br/>
 ${tour}
 <c:if test="${user != null}">
-    <button type="button">
-        <a href="/order?id=${tour.getId()}">Заказ</a>
-    </button>
+    <c:if test="${user.getUserType().getType().equals(\"admin\")}">
+        <button type="button">
+            <a href="/admin/editTour?id=${tour.getId()}&type=delete">Delete</a>
+        </button>
+        <button type="button">
+            <a href="/admin/editTour?id=${tour.getId()}&type=hot">Change hot status</a>
+        </button>
+    </c:if>
 </c:if>
 </body>
 </html>

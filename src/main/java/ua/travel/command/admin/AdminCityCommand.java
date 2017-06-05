@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by yuuto on 6/2/17.
  */
-public class CreateCityCommand implements ExecuteCommand, PageCommand {
+public class AdminCityCommand implements ExecuteCommand, PageCommand {
 
     private CityService cityService = CityService.getInstance();
 
@@ -28,6 +28,6 @@ public class CreateCityCommand implements ExecuteCommand, PageCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/jsp/admin/createCity.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/city.jsp").forward(request,response);
     }
 }

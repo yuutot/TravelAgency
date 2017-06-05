@@ -25,7 +25,7 @@ public class EditTourCommand implements PageCommand {
         String type = request.getParameter("type");
 
         if(ValidatorUtils.isEmptyString(id, type) || !ValidatorUtils.isValidLong(id)){
-            response.sendRedirect("/tours");
+            response.sendRedirect("/admin");
             return;
         }
         if(type.equals("delete")){
@@ -40,6 +40,6 @@ public class EditTourCommand implements PageCommand {
                 return;
             }
         }
-        response.sendRedirect("/tours");
+        response.sendRedirect("/admin");
     }
 }

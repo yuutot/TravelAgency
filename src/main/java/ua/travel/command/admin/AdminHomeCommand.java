@@ -24,10 +24,12 @@ public class AdminHomeCommand implements PageCommand {
         if (all != null && !all.isEmpty()) {
             List<Order> allOrders = orderService.getOrders();
             request.setAttribute("allOrders", allOrders);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/tours.jsp").forward(request,response);
         } else {
             List<Order> newOrders = orderService.getOrdersByStatus(OrderStatus.NEW);
             request.setAttribute("newOrders", newOrders);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/home.jsp").forward(request,response);
         }
-        request.getRequestDispatcher("/WEB-INF/jsp/admin/home.jsp").forward(request,response);
+
     }
 }

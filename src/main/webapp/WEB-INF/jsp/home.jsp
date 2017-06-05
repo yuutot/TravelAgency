@@ -16,6 +16,7 @@
 <html>
 <head>
     <title>Home page</title>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/style/style.css"/>">
 </head>
 <body>
 ${l_login}

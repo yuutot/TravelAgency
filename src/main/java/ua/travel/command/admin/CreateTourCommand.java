@@ -1,7 +1,9 @@
 package ua.travel.command.admin;
 
+import sun.rmi.runtime.Log;
 import ua.travel.command.ExecuteCommand;
 import ua.travel.command.PageCommand;
+import ua.travel.command.utils.FileUtils;
 import ua.travel.entity.Hotel;
 import ua.travel.entity.Tour;
 import ua.travel.service.HotelService;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static ua.travel.command.utils.ValidatorUtils.*;
 
@@ -23,6 +26,7 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
 
     private HotelService hotelService = HotelService.getInstance();
     private TourService tourService = TourService.getInstance();
+    private final Logger LOGGER = Logger.getLogger(CreateTourCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -34,15 +38,16 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
         String transportType = request.getParameter("transport_type");
         String hotel = request.getParameter("hotel");
         String isHot = request.getParameter("is_hot");
-        String photo = request.getParameter("photo");
-        if(isEmptyString(tourType, dateFrom, dateTo, cost, description, transportType, hotel, photo) || !isValidDouble(cost) || !isValidLong(hotel)){
+        if(isEmptyString(tourType, dateFrom, dateTo, cost, description, transportType, hotel) || !isValidDouble(cost) || !isValidLong(hotel)){
            return "/admin/createTour";
         }
         Tour tour;
         try {
-            tour = tourService.createTour(tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, photo);
-        } catch (ServiceException e) {
+            String path = FileUtils.loadFile(request,response);
+            tour = tourService.createTour(tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, path);
+        } catch (ServiceException | ServletException | IOException e) {
             request.getSession().setAttribute("error", e);
+            LOGGER.warning(e.getMessage());
             return "/error";
         }
         return "/tours?id=" + tour.getId();

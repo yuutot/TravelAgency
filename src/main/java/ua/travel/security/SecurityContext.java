@@ -17,7 +17,8 @@ public class SecurityContext {
     private static SecurityContext securityContext;
     private Map<String, List<String>> rights = new HashMap<>();
 
-    private SecurityContext() {}
+    private SecurityContext() {
+    }
 
     public static SecurityContext getInstance() {
         SecurityContext localInstance = securityContext;
@@ -32,7 +33,7 @@ public class SecurityContext {
         return localInstance;
     }
 
-    public SecurityContext addCredentials(String command, String... userTypes){
+    public SecurityContext addCredentials(String command, String... userTypes) {
         List<String> credentials = rights.computeIfAbsent(command, k -> new ArrayList<>());
         credentials.addAll(Arrays.asList(userTypes));
         return this;
@@ -45,6 +46,8 @@ public class SecurityContext {
             String command = request.getParameter("command");
             credentials = rights.get(command);
             LOGGER.info("User " + user + " try to get access to " + command + " credentials: " + credentials);
+        } else if (url.contains("img/")) {
+            return true;
         } else {
             credentials = rights.get(url);
             LOGGER.info("User " + user + " try to get access to " + url + " credentials: " + credentials);

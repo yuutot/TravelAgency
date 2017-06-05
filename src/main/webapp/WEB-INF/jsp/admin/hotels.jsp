@@ -12,7 +12,7 @@
     <title>Create hotel</title>
 </head>
 <body>
-<form action="/execute" method="post">
+<form action="/execute" method="post" enctype="multipart/form-data">
     <input type="hidden" name="command" value="create_hotel">
     <select name="city">
         <c:forEach var="city" items="${cities}">
@@ -21,7 +21,7 @@
     </select>
     <input type="text" name="name">
     <input type="number" name="star">
-    <input type="text" name="photo">
+    <input type="file" name="photo">
     <input type="submit" value="Create">
 </form>
 </body>
