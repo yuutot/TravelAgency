@@ -21,9 +21,8 @@ public class ResultSetToObjectConverter {
 
     private static final Logger LOGGER = Logger.getLogger(ResultSetToObjectConverter.class.getName());
 
-    private static Map<String, Integer> columns = new HashMap<>();
-
-    private static void getColumnsFromResultSet(ResultSet rs) throws SQLException {
+    private static Map<String, Integer> getColumnsFromResultSet(ResultSet rs) throws SQLException {
+        Map<String, Integer> columns = new HashMap<>();
         ResultSetMetaData md = rs.getMetaData();
         int count = md.getColumnCount();
 
@@ -31,18 +30,19 @@ public class ResultSetToObjectConverter {
             String columnName = md.getTableName(i) + "." + md.getColumnName(i);
             columns.put(columnName, i);
         }
+        return columns;
     }
 
     public static <T> T parseResultSetToObject(Class<T> clazz, ResultSet rs) throws SQLException {
         LOGGER.info("Start parse rs to object");
-        getColumnsFromResultSet(rs);
+        Map<String, Integer> columns = getColumnsFromResultSet(rs);
         try {
             T object = clazz.newInstance();
             Field[] fields = clazz.getDeclaredFields();
             String tableName = clazz.getAnnotation(Table.class).value();
             Arrays.stream(fields)
                     .peek(f -> f.setAccessible(true))
-                    .forEach(f -> parseResultSetColumn(f, object, rs, tableName));
+                    .forEach(f -> parseResultSetColumn(f, object, rs, tableName, columns));
             LOGGER.info("Parse object complete. " + object);
             return object;
 
@@ -52,14 +52,14 @@ public class ResultSetToObjectConverter {
         }
     }
 
-    private static void parseResultSetColumn(Field field, Object obj, ResultSet rs, String tableName) {
+    private static void parseResultSetColumn(Field field, Object obj, ResultSet rs, String tableName, Map<String, Integer> columns) {
         String columnName = tableName + "." + (field.isAnnotationPresent(Column.class) ? field.getAnnotation(Column.class).value() : "id");
         try {
             Object value;
             if (field.isAnnotationPresent(Enum.class)) {
-                value = parseEnum(field, rs, columnName);
+                value = parseEnum(field, rs, columnName, columns);
             } else if (DaoUtils.isEntity(field)) {
-                value = parseObject(field, rs, columnName);
+                value = parseResultSetToObject(field.getType(), rs);
             } else {
                 Integer columnIndex = columns.get(columnName);
                 if (columnIndex == null) {
@@ -84,20 +84,7 @@ public class ResultSetToObjectConverter {
         }
     }
 
-    //todo NotNull annotation
-    private static Object parseObject(Field field, ResultSet rs, String columnName) {
-        try {
-            Long value = rs.getLong(columnName);
-            Class<?> repository = Class.forName("ua.travel.dao.repositories.impl." + field.getType().getSimpleName() + "Repository");
-            BaseRepository baseRepository = (BaseRepository) repository.getMethod("getInstance").invoke(repository);
-            return baseRepository.findById(value).get();
-        } catch (InvocationTargetException | ClassNotFoundException | IllegalAccessException | SQLException | NoSuchMethodException e) {
-            LOGGER.warning(e.getMessage());
-        }
-        return null;
-    }
-
-    private static Object parseEnum(Field field, ResultSet rs, String columnName) {
+    private static Object parseEnum(Field field, ResultSet rs, String columnName, Map<String, Integer> columns) {
         Class<?> enumClass = field.getType();
         Method valueOf;
         try {

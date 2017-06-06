@@ -6,6 +6,7 @@ import ua.travel.dao.annotations.Table;
 import ua.travel.dao.builders.Condition;
 import ua.travel.dao.builders.DeleteQueryBuilder;
 import ua.travel.dao.builders.SelectQueryBuilder;
+import ua.travel.entity.Tour;
 import ua.travel.entity.User;
 import ua.travel.entity.UserType;
 
@@ -45,5 +46,16 @@ public class QueryBuilderTest {
                 .between("id", 1, 2, User.class)
                 .build();
         Assert.assertEquals(expectedQuery, query.trim());
+    }
+
+    @Test
+    public void joinSelectBuilderTest(){
+        SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
+        selectQueryBuilder
+                .addField("*")
+                .from()
+                .addTable(Tour.class.getAnnotation(Table.class).value())
+                .createJoinForClass(Tour.class);
+        System.out.println(selectQueryBuilder.build());
     }
 }

@@ -1,7 +1,6 @@
 package ua.travel.dao.repositories.impl;
 
 import ua.travel.config.datasource.DataSourceFactory;
-import ua.travel.config.datasource.DataSourceType;
 import ua.travel.dao.annotations.Table;
 import ua.travel.dao.builders.Condition;
 import ua.travel.dao.builders.SelectQueryBuilder;
@@ -49,6 +48,7 @@ public class OrderRepository extends BaseRepository<Order> {
                 .addField("*")
                 .from()
                 .addTable(Order.class.getAnnotation(Table.class).value())
+                .createJoinForClass(Order.class)
                 .where()
                 .addCondition("user_id", Condition.EVEN, user.getId(), Order.class)
                 .build();
@@ -61,6 +61,7 @@ public class OrderRepository extends BaseRepository<Order> {
                 .addField("*")
                 .from()
                 .addTable(Order.class.getAnnotation(Table.class).value())
+                .createJoinForClass(Order.class)
                 .where()
                 .addCondition("status", Condition.EVEN, status.toString(), Order.class)
                 .build();

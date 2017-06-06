@@ -1,8 +1,14 @@
 package ua.travel.dao.builders;
 
+import ua.travel.dao.annotations.Column;
 import ua.travel.dao.annotations.Table;
+import ua.travel.dao.utils.DaoUtils;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Created by yuuto on 5/24/17.
@@ -37,14 +43,44 @@ public class SelectQueryBuilder {
         return this;
     }
 
-    public SelectQueryBuilder where() {
-        query
-                .deleteCharAt(query.length() - 2)
-                .append("where ");
+    public SelectQueryBuilder createJoinForClass(Class<?> clazz) {
+        if (query.charAt(query.length() - 2) == ',') {
+            query.deleteCharAt(query.length() - 2);
+        }
+        Field[] fields = clazz.getDeclaredFields();
+        Arrays.stream(fields).filter(DaoUtils::isEntity).forEach(field -> createJoin(clazz, field));
         return this;
     }
 
-    public SelectQueryBuilder between(String field, Object min, Object max, Class<?> clazz){
+    private void createJoin(Class<?> clazz, Field field){
+        Class<?> fieldClass = field.getType();
+        join(clazz, field.getAnnotation(Column.class).value(), fieldClass);
+        createJoinForClass(fieldClass);
+    }
+
+    public SelectQueryBuilder join(Class<?> classFrom, String field, Class<?> classTo) {
+        query
+                .append("inner join ")
+                .append(classTo.getAnnotation(Table.class).value())
+                .append(" on ")
+                .append(classFrom.getAnnotation(Table.class).value())
+                .append('.')
+                .append(field)
+                .append("=")
+                .append(classTo.getAnnotation(Table.class).value())
+                .append(".id ");
+        return this;
+    }
+
+    public SelectQueryBuilder where() {
+        if (query.charAt(query.length() - 2) == ',') {
+            query.deleteCharAt(query.length() - 2);
+        }
+        query.append("where ");
+        return this;
+    }
+
+    public SelectQueryBuilder between(String field, Object min, Object max, Class<?> clazz) {
         query
                 .append(clazz.getAnnotation(Table.class).value())
                 .append('.')
@@ -70,6 +106,7 @@ public class SelectQueryBuilder {
                 .append(isString ? "' " : " ");
         return this;
     }
+
     public SelectQueryBuilder addCondition(String leftField, Condition condition, String rightField, Class<?> leftClazz, Class<?> rightClazz) {
         query
                 .append(leftClazz.getAnnotation(Table.class).value())
@@ -97,7 +134,7 @@ public class SelectQueryBuilder {
 
     public String build() {
         LOGGER.info("Build select query: " + query.toString());
-        if (query.toString().contains("where")) {
+        if (query.toString().contains("where") || query.charAt(query.length() - 2) != ',') {
             return query.toString();
         } else {
             return query

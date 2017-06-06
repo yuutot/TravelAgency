@@ -49,6 +49,7 @@ public class HotelRepository extends BaseRepository<Hotel> {
                 .addField("*")
                 .from()
                 .addTable(Hotel.class.getAnnotation(Table.class).value())
+                .createJoinForClass(Hotel.class)
                 .where()
                 .addCondition("city", Condition.EVEN, city.getId(), Hotel.class)
                 .build();

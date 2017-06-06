@@ -47,6 +47,7 @@ public class UserRepository extends BaseRepository<User> {
                 .addField("*")
                 .from()
                 .addTable(User.class.getAnnotation(Table.class).value())
+                .createJoinForClass(User.class)
                 .where()
                 .addCondition("login", Condition.EVEN, login, User.class)
                 .build();

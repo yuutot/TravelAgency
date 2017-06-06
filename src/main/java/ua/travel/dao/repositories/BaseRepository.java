@@ -32,6 +32,7 @@ public abstract class BaseRepository<T> {
                 .addField("*")
                 .from()
                 .addTable(clazz.getAnnotation(Table.class).value())
+                .createJoinForClass(clazz)
                 .where()
                 .addCondition("id", Condition.EVEN, id, clazz)
                 .build();
@@ -93,6 +94,7 @@ public abstract class BaseRepository<T> {
                 .addField("*")
                 .from()
                 .addTable(clazz.getAnnotation(Table.class).value())
+                .createJoinForClass(clazz)
                 .build();
         LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource().getConnection();

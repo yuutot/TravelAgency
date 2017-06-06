@@ -46,6 +46,7 @@ public class UserTypeRepository extends BaseRepository<UserType> {
                 .addField("*")
                 .from()
                 .addTable(UserType.class.getAnnotation(Table.class).value())
+                .createJoinForClass(UserType.class)
                 .where()
                 .addCondition("type", Condition.EVEN, type, UserType.class)
                 .build();

@@ -46,6 +46,7 @@ public class CityRepository extends BaseRepository<City> {
                 .addField("*")
                 .from()
                 .addTable(City.class.getAnnotation(Table.class).value())
+                .createJoinForClass(City.class)
                 .where()
                 .addCondition("name", Condition.EVEN, name, City.class)
                 .build();

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import java.util.logging.Logger;
 public class DaoUtils {
 
     private final static Logger LOGGER = Logger.getLogger(DaoUtils.class.getName());
+    private static Set<Class<?>> entities;
 
     public static FieldType getObjectType(Object field) {
 
@@ -34,7 +36,7 @@ public class DaoUtils {
             return FieldType.DOUBLE;
         } else if (field.getClass().equals(Boolean.class)) {
             return FieldType.BOOLEAN;
-        } else if(field.getClass().isEnum()) {
+        } else if (field.getClass().isEnum()) {
             return FieldType.ENUM;
         } else {
             return FieldType.OBJECT;
@@ -42,11 +44,14 @@ public class DaoUtils {
     }
 
     public static Set<Class<?>> getClassesInPackage(String packageToScan) {
-        Reflections reflections = new Reflections(packageToScan);
-        return reflections.getTypesAnnotatedWith(Table.class);
+        if (entities == null) {
+            Reflections reflections = new Reflections(packageToScan);
+            entities = reflections.getTypesAnnotatedWith(Table.class);
+        }
+        return entities;
     }
 
-    public static Boolean isEntity(Field field){
+    public static Boolean isEntity(Field field) {
         return getClassesInPackage(InitializeListener.class.getAnnotation(EntityScan.class).value()).contains(field.getType());
     }
 
@@ -66,7 +71,7 @@ public class DaoUtils {
                     }
                 } else if (DaoUtils.getObjectType(value) == FieldType.DATE) {
                     value = new Timestamp(((Date) value).getTime());
-                } else if(DaoUtils.getObjectType(value) == FieldType.STRING){
+                } else if (DaoUtils.getObjectType(value) == FieldType.STRING) {
                     statement.setString(position++, (String) value);
                     continue;
                 }
