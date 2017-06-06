@@ -97,7 +97,7 @@
 </section>
 
 <section class="container well-sm">
-    <h2>${l_home_best}ния</h2>
+    <h2>${l_home_best}</h2>
     <div class="row">
         <c:forEach var="tour" items="${tours}">
             <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateTo"/>
