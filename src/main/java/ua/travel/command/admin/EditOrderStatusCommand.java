@@ -15,13 +15,17 @@ import java.util.logging.Logger;
  */
 public class EditOrderStatusCommand implements ExecuteCommand {
 
+    private static final Logger LOGGER = Logger.getLogger(EditOrderStatusCommand.class.getName());
+    private static final String PARAM_STATUS = "status";
+    private static final String PARAM_ID = "id";
+    private static final String ATTRIBUTE_ERROR = "error";
+
     private OrderService orderService = OrderService.getInstance();
-    private final Logger LOGGER = Logger.getLogger(EditOrderStatusCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String status = request.getParameter("status");
-        String id = request.getParameter("id");
+        String status = request.getParameter(PARAM_STATUS);
+        String id = request.getParameter(PARAM_ID);
         if(status == null || id == null || id.isEmpty()){
             return "/admin";
         }
@@ -29,7 +33,7 @@ public class EditOrderStatusCommand implements ExecuteCommand {
             orderService.updateOrderStatus(id, status);
         } catch (ServiceException e) {
             LOGGER.warning(e.getMessage());
-            request.setAttribute("error", e);
+            request.setAttribute(ATTRIBUTE_ERROR, e);
             return "/error";
         }
         return "/admin";

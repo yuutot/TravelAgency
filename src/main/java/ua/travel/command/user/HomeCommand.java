@@ -13,10 +13,14 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by yuuto on 5/29/17.
+ * urlPattern /
+ *
+ * Display main page.
  */
 public class HomeCommand implements PageCommand {
 
+    private static final String ATTRIBUTE_CITIES = "cities";
+    private static final String ATTRIBUTE_TOURS = "tours";
     private CityService cityService = CityService.getInstance();
     private TourService tourService = TourService.getInstance();
 
@@ -24,8 +28,8 @@ public class HomeCommand implements PageCommand {
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Tour> tours = tourService.getHotTours();
         List<City> cities = cityService.getAllCities();
-        request.setAttribute("cities", cities);
-        request.setAttribute("tours", tours);
+        request.setAttribute(ATTRIBUTE_CITIES, cities);
+        request.setAttribute(ATTRIBUTE_TOURS, tours);
         request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
     }
 }

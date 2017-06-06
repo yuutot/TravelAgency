@@ -14,32 +14,44 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 5/29/17.
+ * urlPattern /register
+ * command register
+ *
+ * Display page with inputs for register user.
+ * Execute data for register
  */
 public class RegisterCommand implements PageCommand, ExecuteCommand {
 
+    private static final Logger LOGGER = Logger.getLogger(RegisterCommand.class.getName());
+    private static final String PARAM_LOGIN = "login";
+    private static final String PARAM_PASSWORD = "password";
+    private static final String PARAM_NAME = "name";
+    private static final String PARAM_SURNAME = "surname";
+    private static final String PARAM_PHONE = "phone";
+    private static final String ATTRIBUTE_USER = "user";
+    private static final String ATTRIBUTE_ERROR = "error";
+
     private UserService userService = UserService.getInstance();
-    private final Logger LOGGER = Logger.getLogger(RegisterCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String phone = request.getParameter("phone");
+        String login = request.getParameter(PARAM_LOGIN);
+        String password = request.getParameter(PARAM_PASSWORD);
+        String name = request.getParameter(PARAM_NAME);
+        String surname = request.getParameter(PARAM_SURNAME);
+        String phone = request.getParameter(PARAM_PHONE);
         if(ValidatorUtils.isEmptyString(login,password,name,surname,phone)){
-            request.getSession().setAttribute("error", new ServiceException("Не все поля заполнены"));
+            request.getSession().setAttribute(ATTRIBUTE_ERROR, new ServiceException("Не все поля заполнены"));
             return "/register";
         }
         try {
             User user = userService.registerUser(login, password, name, surname, phone);
-            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute(ATTRIBUTE_USER, user);
             return "/";
         } catch (ServiceException e) {
             LOGGER.warning(e.getMessage());
-            request.getSession().setAttribute("error", e);
+            request.getSession().setAttribute(ATTRIBUTE_ERROR, e);
             return "/register";
         }
     }

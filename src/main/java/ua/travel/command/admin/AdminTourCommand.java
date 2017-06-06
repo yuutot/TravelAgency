@@ -20,17 +20,20 @@ import java.util.logging.Logger;
  */
 public class AdminTourCommand implements PageCommand {
 
+    private static final Logger LOGGER = Logger.getLogger(AdminTourCommand.class.getName());
+    private static final String PARAM_ID = "id";
+    private static final String ATTRIBUTE_TOUR = "tour";
+    private static final String ATTRIBUTE_TOURS = "tours";
     private TourService tourService = TourService.getInstance();
-    private final Logger LOGGER = Logger.getLogger(AdminTourCommand.class.getName());
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String id = request.getParameter("id");
+        String id = request.getParameter(PARAM_ID);
         if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
             try {
                 Tour tour = tourService.getTourById(id);
-                request.setAttribute("tour", tour);
+                request.setAttribute(ATTRIBUTE_TOUR, tour);
                 request.getRequestDispatcher("/WEB-INF/jsp/admin/tour.jsp").forward(request, response);
             } catch (ServiceException e) {
                 LOGGER.warning(e.getMessage());
@@ -38,7 +41,7 @@ public class AdminTourCommand implements PageCommand {
             }
         } else {
             List<Tour> tours = tourService.getTours();
-            request.setAttribute("tours", tours);
+            request.setAttribute(ATTRIBUTE_TOURS, tours);
             request.getRequestDispatcher("/WEB-INF/jsp/admin/tours.jsp").forward(request,response);
         }
     }

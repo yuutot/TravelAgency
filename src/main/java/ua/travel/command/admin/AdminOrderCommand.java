@@ -19,16 +19,19 @@ import java.util.logging.Logger;
  */
 public class AdminOrderCommand implements PageCommand {
 
-    private OrderService orderService = OrderService.getInstance();
     private static final Logger LOGGER = Logger.getLogger(AdminOrderCommand.class.getName());
+    private static final String PARAM_ID = "id";
+    private static final String ATTRIBUTE_ORDER = "order";
+
+    private OrderService orderService = OrderService.getInstance();
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String id = request.getParameter("id");
+        String id = request.getParameter(PARAM_ID);
         if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
             try {
                 Order order = orderService.getOrderById(id);
-                request.setAttribute("order", order);
+                request.setAttribute(ATTRIBUTE_ORDER, order);
                 request.getRequestDispatcher("/WEB-INF/jsp/admin/order.jsp").forward(request,response);
                 return;
             } catch (ServiceException e) {

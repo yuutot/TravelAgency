@@ -13,34 +13,44 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 5/29/17.
+ * urlPattern /login
+ * command login
+ *
+ * Display page with inputs for auth user.
+ * Execute data for auth
  */
 public class AuthCommand implements PageCommand, ExecuteCommand {
 
+    private static final Logger LOGGER = Logger.getLogger(AuthCommand.class.getName());
+    private static final String PARAM_LOGIN = "login";
+    private static final String PARAM_PASSWORD = "password";
+    private static final String PARAM_LOGOUT = "logout";
+    private static final String ATTRIBUTE_USER = "user";
+    private static final String ATTRIBUTE_ERROR = "error";
+
     private UserService userService = UserService.getInstance();
-    private final Logger LOGGER = Logger.getLogger(AuthCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String login = request.getParameter(PARAM_LOGIN);
+        String password = request.getParameter(PARAM_PASSWORD);
 
         try {
             User user = userService.authUser(login, password);
-            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute(ATTRIBUTE_USER, user);
             return "/";
         } catch (AuthException e) {
             LOGGER.warning(e.getMessage());
-            request.getSession().setAttribute("error", e);
+            request.getSession().setAttribute(ATTRIBUTE_ERROR, e);
             return "/login";
         }
     }
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if(request.getParameter("logout") != null){
-            request.getSession().removeAttribute("user");
+        if(request.getParameter(PARAM_LOGOUT) != null){
+            request.getSession().removeAttribute(ATTRIBUTE_USER);
             response.sendRedirect("/");
             return;
         }

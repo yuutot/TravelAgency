@@ -20,11 +20,14 @@ import java.util.List;
  */
 public class AdminCityCommand implements ExecuteCommand, PageCommand {
 
+    private static final String PARAM_NAME = "name";
+    private static final String ATTRIBUTE_CITY = "cities";
+
     private CityService cityService = CityService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String name = request.getParameter("name");
+        String name = request.getParameter(PARAM_NAME);
         if(!ValidatorUtils.isEmptyString(name)) {
             cityService.createCity(name);
         }
@@ -34,7 +37,7 @@ public class AdminCityCommand implements ExecuteCommand, PageCommand {
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<City> cities = cityService.getAllCities();
-        request.setAttribute("cities", cities);
+        request.setAttribute(ATTRIBUTE_CITY, cities);
         request.getRequestDispatcher("/WEB-INF/jsp/admin/city.jsp").forward(request,response);
     }
 }

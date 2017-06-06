@@ -29,15 +29,21 @@ import static ua.travel.command.utils.ValidatorUtils.*;
  */
 public class AdminHotelCommand implements ExecuteCommand, PageCommand {
 
+    private static final Logger LOGGER = Logger.getLogger(AdminHotelCommand.class.getName());
+    private static final String PARAM_CITY = "city";
+    private static final String PARAM_NAME = "name";
+    private static final String PARAM_STAR = "star";
+    private static final String ATTRIBUTE_CITIES = "cities";
+    private static final String ATTRIBUTE_HOTELS = "hotels";
+
     private HotelService hotelService = HotelService.getInstance();
     private CityService cityService = CityService.getInstance();
-    private final Logger LOGGER = Logger.getLogger(AdminHotelCommand.class.getName());
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String city = request.getParameter("city");
-        String name = request.getParameter("name");
-        String star = request.getParameter("star");
+        String city = request.getParameter(PARAM_CITY);
+        String name = request.getParameter(PARAM_NAME);
+        String star = request.getParameter(PARAM_STAR);
         if(!isEmptyString(city, name, star) && isValidLong(city) && isValidLong(star)){
             try {
                 String path = FileUtils.loadFile(request,response);
@@ -53,8 +59,8 @@ public class AdminHotelCommand implements ExecuteCommand, PageCommand {
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Hotel> hotels = hotelService.getAllHotel();
         List<City> cities = cityService.getAllCities();
-        request.setAttribute("cities", cities);
-        request.setAttribute("hotels", hotels);
+        request.setAttribute(ATTRIBUTE_CITIES, cities);
+        request.setAttribute(ATTRIBUTE_HOTELS, hotels);
         request.getRequestDispatcher("/WEB-INF/jsp/admin/hotels.jsp").forward(request,response);
     }
 }
