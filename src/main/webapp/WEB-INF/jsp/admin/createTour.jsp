@@ -13,9 +13,29 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.createTour.title" var="l_ct_title"/>
+<fmt:message key="admin.createTour.add" var="l_ct_add"/>
+<fmt:message key="admin.createTour.name" var="l_ct_name"/>
+<fmt:message key="admin.createTour.cost" var="l_ct_cost"/>
+<fmt:message key="admin.createTour.startDate" var="l_ct_startDate"/>
+<fmt:message key="admin.createTour.finishDate" var="l_ct_finishDate"/>
+<fmt:message key="admin.createTour.type" var="l_ct_type"/>
+<fmt:message key="admin.createTour.rest" var="l_ct_type_rest"/>
+<fmt:message key="admin.createTour.excursion" var="l_ct_type_excursion"/>
+<fmt:message key="admin.createTour.shopping" var="l_ct_type_shopping"/>
+<fmt:message key="admin.createTour.transfer" var="l_ct_transfer"/>
+<fmt:message key="admin.createTour.bus" var="l_ct_transfer_bus"/>
+<fmt:message key="admin.createTour.plane" var="l_ct_transfer_plane"/>
+<fmt:message key="admin.createTour.ship" var="l_ct_transfer_ship"/>
+<fmt:message key="admin.createTour.train" var="l_ct_transfer_train"/>
+<fmt:message key="admin.createTour.hotel" var="l_ct_hotel"/>
+<fmt:message key="admin.createTour.description" var="l_ct_desc"/>
+<fmt:message key="admin.createTour.photo" var="l_ct_photo"/>
+<fmt:message key="admin.createTour.hot" var="l_ct_hot"/>
+<fmt:message key="admin.createTour.save" var="l_ct_save"/>
 <html>
 <head>
-    <h:head title="Create tour"/>
+    <h:head title="${l_ct_title}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
@@ -24,45 +44,45 @@
         <form class="row" action="/execute" method="post" enctype="multipart/form-data">
             <input type="hidden" name="command" value="create_tour">
             <div class="col-md-10 order-details add-new-item" style="margin-top: 0;">
-                <h2>Добавить тур</h2>
-                <input style="margin-top: 20px;" type="text" placeholder="Название тура" name="title">
+                <h2>${l_ct_add}</h2>
+                <input style="margin-top: 20px;" type="text" placeholder="${l_ct_name}" name="title">
                 <p>
-                    Цена(грн)
+                    ${l_ct_cost}
                 </p>
                 <input type="number" name="cost">
                 <div class="date" style="width: 49%; margin-right: 2%;">
                     <p>
-                        Дата начала
+                        ${l_ct_startDate}
                     </p>
                     <input type="datetime-local" name="date_from">
 
                 </div>
                 <div class="date" style="width: 49%;">
                     <p>
-                        Дата окончания
+                        ${l_ct_finishDate}
                     </p>
                     <input type="datetime-local" name="date_to">
                 </div>
 
                 <p>
-                    Тип тура
+                    ${l_ct_type}
                 </p>
                 <select name="tour_type">
-                    <option value="REST">Rest</option>
-                    <option value="EXCURSION">Excursion</option>
-                    <option value="SHOPPING">Shopping</option>
+                    <option value="REST">${l_ct_type_rest}</option>
+                    <option value="EXCURSION">${l_ct_type_excursion}</option>
+                    <option value="SHOPPING">${l_ct_type_shopping}</option>
                 </select>
                 <p>
-                    Трансфер
+                    ${l_ct_transfer}
                 </p>
                 <select name="transport_type">
-                    <option value="BUS">Bus</option>
-                    <option value="PLANE">Plane</option>
-                    <option value="TRAIN">Train</option>
-                    <option value="SHIP">Ship</option>
+                    <option value="BUS">${l_ct_transfer_bus}</option>
+                    <option value="PLANE">${l_ct_transfer_plane}</option>
+                    <option value="TRAIN">${l_ct_transfer_train}</option>
+                    <option value="SHIP">${l_ct_transfer_ship}</option>
                 </select>
                 <p>
-                    Гостиница
+                    ${l_ct_hotel}
                 </p>
                 <select name="hotel">
                     <c:forEach var="hotel" items="${hotels}">
@@ -70,18 +90,18 @@
                     </c:forEach>
                 </select>
                 <p>
-                    Описание тура
+                    ${l_ct_desc}
                 </p>
                 <input type="text" name="description">
                 <p style="width: 100%">
-                    Фото тура
+                    ${l_ct_photo}
                 </p>
                 <input style="width: 100%;" type="file" name="photo">
                 <div class="check">
-                    <input style="width: auto" type="checkbox" name="is_hot" value="true">   <p>Горячее предложение</p>
+                    <input style="width: auto" type="checkbox" name="is_hot" value="true">   <p>${l_ct_hot}</p>
                 </div>
                 <hr>
-                <input style="width: 20%;" class="btn-primary btn-new" type="submit" value="Сохранить">
+                <input style="width: 20%;" class="btn-primary btn-new" type="submit" value="${l_ct_save}">
             </div>
         </form>
     </div>

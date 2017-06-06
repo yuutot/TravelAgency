@@ -16,15 +16,24 @@
 <fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
 <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.order.title" var="l_order_title"/>
+<fmt:message key="admin.order.status" var="l_order_status"/>
+<fmt:message key="admin.order.status.new" var="l_order_status_new"/>
+<fmt:message key="admin.order.status.paid" var="l_order_status_paid"/>
+<fmt:message key="admin.order.status.canceled" var="l_order_status_canceled"/>
+<fmt:message key="admin.order.status.change" var="l_order_status_change"/>
+<fmt:message key="admin.order.client" var="l_order_client"/>
+<fmt:message key="admin.order.discount" var="l_order_discount"/>
+<fmt:message key="admin.order.details" var="l_order_details"/>
 <html>
 <head>
-    <h:head title="Order id: ${order.getId()}"/>
+    <h:head title="${l_order_title}${order.getId()}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf" %>
 <main>
     <div class="container">
-        <h2>Заказ № ${order.getId()}</h2>
+        <h2>${l_order_title}${order.getId()}</h2>
         <div class="row">
             <div class="col-md-6 order-details">
                 <h2> ${order.getTour().getTitle()} </h2>
@@ -47,31 +56,31 @@
                     </c:choose>
                 </p>
 
-                <h2> Статус заказа </h2>
+                <h2> ${l_order_status} </h2>
                 <form action="/execute?id=${order.getId()}" method="post">
                     <input type="hidden" name="command" value="edit_order_status">
                     <select name="status">
-                        <option value="NEW">New</option>
-                        <option value="PAID">Paid</option>
-                        <option value="CANCELED">Cancel</option>
+                        <option value="NEW">${l_order_status_new}</option>
+                        <option value="PAID">${l_order_status_paid}</option>
+                        <option value="CANCELED">${l_order_status_canceled}</option>
                     </select>
-                    <input type="submit" value="Изменить" class="btn btn-sm btn-primary btn-new">
+                    <input type="submit" value="${l_order_status_change}" class="btn btn-sm btn-primary btn-new">
                 </form>
             </div>
             <div class="col-md-6 order-details">
-                <h2> О клиенте </h2>
+                <h2> ${l_order_client} </h2>
                 <p>
                     <i class="fa fa-user-circle"
                        aria-hidden="true"></i> ${order.getUser().getName()} ${order.getUser().getSurname()}
                 </p>
                 <p>
-                    <i class="fa fa-gift" aria-hidden="true"></i> Скидка ${order.getUser().getDiscount()} %
+                    <i class="fa fa-gift" aria-hidden="true"></i> ${l_order_discount} ${order.getUser().getDiscount()} %
                 </p>
                 <p>
                     <i class="fa fa-envelope-o" aria-hidden="true"></i> ${order.getUser().getPhone()}
                 </p>
                 <a class="btn btn-sm btn-primary btn-new"
-                   href="<c:url value="/admin/user?id=${order.getUser().getId()}"/>">Подробнее</a>
+                   href="<c:url value="/admin/user?id=${order.getUser().getId()}"/>">${l_order_details}</a>
 
             </div>
         </div>

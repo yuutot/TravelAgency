@@ -13,31 +13,37 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.tours.title" var="l_tours_title"/>
+<fmt:message key="admin.tours.new" var="l_tours_new"/>
+<fmt:message key="admin.tours.city" var="l_tours_city"/>
+<fmt:message key="admin.tours.cost" var="l_tours_cost"/>
+<fmt:message key="admin.tours.name" var="l_tours_name"/>
+<fmt:message key="admin.tours.date" var="l_tours_date"/>
 <html>
 <head>
-    <h:head title="Tours"/>
+    <h:head title="${l_tours_title}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <div class="top-panel">
-        <h2>Все туры</h2>
-        <a class="btn-primary add-new" href="<c:url value="/admin/createTour"/>"> Добавить новый тур</a>
+        <h2>${l_tours_title}</h2>
+        <a class="btn-primary add-new" href="<c:url value="/admin/createTour"/>">${l_tours_new}</a>
     </div>
     <div class="container order-list">
         <table>
             <tr>
                 <td>
-                    Название тура
+                    ${l_tours_name}
                 </td>
                 <td>
-                    Город
+                    ${l_tours_city}
                 </td>
                 <td>
-                    Дата
+                    ${l_tours_date}
                 </td>
                 <td>
-                    Стоимость
+                    ${l_tours_cost}
                 </td>
             </tr>
             <c:forEach var="tour" items="${tours}">

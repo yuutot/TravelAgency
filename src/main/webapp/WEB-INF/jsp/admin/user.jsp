@@ -13,9 +13,15 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.tours.city" var="l_tours_city"/>
+<fmt:message key="admin.tours.cost" var="l_tours_cost"/>
+<fmt:message key="admin.tours.name" var="l_tours_name"/>
+<fmt:message key="admin.tours.date" var="l_tours_date"/>
+<fmt:message key="admin.orders.status" var="l_order_status"/>
+<fmt:message key="admin.user.title" var="l_user_title"/>
 <html>
 <head>
-    <h:head title="User id: ${userProfile.getId()}"/>
+    <h:head title="${l_user_title}${userProfile.getId()}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
@@ -32,19 +38,19 @@
                 <table>
                     <tr>
                         <td>
-                            Название тура
+                            ${l_tours_name}
                         </td>
                         <td>
-                            Город
+                            ${l_tours_city}
                         </td>
                         <td>
-                            Дата
+                            ${l_tours_date}
                         </td>
                         <td>
-                            Стоимость
+                            ${l_tours_cost}
                         </td>
                         <td>
-                            Статус
+                            ${l_order_status}
                         </td>
                     </tr>
                     <c:forEach var="order" items="${orders}">

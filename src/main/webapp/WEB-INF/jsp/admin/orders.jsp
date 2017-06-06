@@ -13,42 +13,52 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.home.name" var="l_admin_name"/>
+<fmt:message key="admin.home.city" var="l_admin_city"/>
+<fmt:message key="admin.home.date" var="l_admin_date"/>
+<fmt:message key="admin.home.cost" var="l_admin_cost"/>
+<fmt:message key="admin.home.discount" var="l_admin_discount"/>
+<fmt:message key="admin.home.new" var="l_admin_new"/>
+<fmt:message key="admin.home.client" var="l_admin_client"/>
+<fmt:message key="admin.orders.title" var="l_admin_title"/>
+<fmt:message key="admin.orders.status" var="l_admin_status"/>
+
 <html>
 <head>
-    <h:head title="Orders"/>
+    <h:head title="${l_admin_title}"/>
 </head>
 <body class="admin">
-<%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
+<%@include file="/WEB-INF/jspf/AdminHeader.jspf" %>
 <main>
-    <h2>Новые заказы</h2>
+    <h2>${l_admin_new}</h2>
     <div class="container order-list">
         <table>
             <tr>
                 <td>
-                    Название тура
+                    ${l_admin_name}
                 </td>
                 <td>
-                    Город
+                    ${l_admin_city}
                 </td>
                 <td>
-                    Дата
+                    ${l_admin_date}
                 </td>
                 <td>
-                    Стоимость
+                    ${l_admin_date}
                 </td>
                 <td>
-                    Клиент
+                    ${l_admin_discount}
                 </td>
                 <td>
-                    Скидка
+                    ${l_admin_client}
                 </td>
                 <td>
-                    Статус
+                    ${l_admin_status}
                 </td>
             </tr>
             <c:forEach var="order" items="${allOrders}">
-                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateFrom()}" var="dateTo" />
-                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateTo()}" var="dateFrom" />
+                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateFrom()}" var="dateTo"/>
+                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.getTour().getDateTo()}" var="dateFrom"/>
                 <fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
                 <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
                 <tr>

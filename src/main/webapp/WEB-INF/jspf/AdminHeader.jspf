@@ -1,16 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:message key="admin.header.logout" var="l_header_logout"/>
+<fmt:message key="admin.header.new" var="l_header_new"/>
+<fmt:message key="admin.header.all" var="l_header_all"/>
+<fmt:message key="admin.header.cities" var="l_header_cities"/>
+<fmt:message key="admin.header.hotels" var="l_header_hotels"/>
+<fmt:message key="admin.header.tours" var="l_header_tours"/>
 <header>
     <div class="logo">
         <a href="/">_Travel<span>Agency</span></a>
     </div>
-    <a href="/login?logout">Выйти</a>
+    <a href="/login?logout">${l_header_logout}</a>
+    <a href="?lan=${l_language}">${l_language}</a>
 </header>
 <aside>
     <ul>
-        <li><a href="<c:url value="/admin"/>"> Новые заказы</a></li>
-        <li><a href="<c:url value="/admin?all=true"/>">Все заказы</a></li>
-        <li><a href="<c:url value="/admin/tours"/>">Туры</a></li>
-        <li><a href="<c:url value="/admin/city"/>">Города</a></li>
-        <li><a href="<c:url value="/admin/hotels"/>">Гостиницы</a></li>
+        <li><a href="<c:url value="/admin"/>">${l_header_new}</a></li>
+        <li><a href="<c:url value="/admin?all=true"/>">${l_header_all}</a></li>
+        <li><a href="<c:url value="/admin/tours"/>">${l_header_tours}</a></li>
+        <li><a href="<c:url value="/admin/city"/>">${l_header_cities}</a></li>
+        <li><a href="<c:url value="/admin/hotels"/>">${l_header_hotels}</a></li>
     </ul>
 </aside>

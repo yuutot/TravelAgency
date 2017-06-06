@@ -13,23 +13,27 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.hotels.title" var="l_hotels_title"/>
+<fmt:message key="admin.hotels.name" var="l_hotels_name"/>
+<fmt:message key="admin.hotels.star" var="l_hotels_star"/>
+<fmt:message key="admin.hotels.city" var="l_hotels_city"/>
 <html>
 <head>
-    <h:head title="Hotels"/>
+    <h:head title="${l_hotels_title}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <div class="top-panel">
-        <h2>Все гостницы</h2>
+        <h2>${l_hotels_title}</h2>
     </div>
 
 
     <div class="container order-list hotel-list">
         <form class="add-city add-hotel" action="/execute" method="post" enctype="multipart/form-data">
             <input type="hidden" name="command" value="create_hotel">
-            <input type="text" placeholder="Название гостиницы" name="name">
-            <input type="text" placeholder="Звезды" name="star">
+            <input type="text" placeholder="${l_hotels_name}" name="name">
+            <input type="text" placeholder="${l_hotels_star}" name="star">
             <select name="city">
                 <c:forEach var="city" items="${cities}">
                     <option value="${city.getId()}">${city.getName()}</option>
@@ -41,14 +45,14 @@
         <table>
             <tr>
                 <td>
-                    Название гостиницы
+                    ${l_hotels_name}
                 </td>
                 <td>
-                    Кол-во звезд
+                    ${l_hotels_star}
                 </td>
 
                 <td>
-                    Город
+                    ${l_hotels_city}
                 </td>
             </tr>
             <c:forEach var="hotel" items="${hotels}">

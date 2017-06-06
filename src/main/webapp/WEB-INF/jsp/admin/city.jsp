@@ -13,26 +13,30 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.city.title" var="l_city"/>
+<fmt:message key="admin.city.all" var="l_all_cities"/>
+<fmt:message key="admin.city.form.name" var="l_form_name"/>
+<fmt:message key="admin.city.form.submit" var="l_form_submit"/>
 <html>
 <head>
-    <h:head title="City"/>
+    <h:head title="${l_city}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <div class="top-panel">
-        <h2>Все города</h2>
+        <h2>${l_all_cities}</h2>
     </div>
     <div class="container order-list">
         <form class="add-city" action="/execute" method="post">
             <input type="hidden" name="command" value="create_city">
-            <input type="text" placeholder="Название города" name="name">
-            <input style="width: 20%;" type="submit" class="btn-primary add-new" value="Добавить">
+            <input type="text" placeholder="${l_form_name}" name="name">
+            <input style="width: 20%;" type="submit" class="btn-primary add-new" value="${l_form_submit}">
         </form>
         <table>
             <tr>
                 <td>
-                    Название города
+                    ${l_form_name}
                 </td>
             </tr>
             <c:forEach var="city" items="${cities}">

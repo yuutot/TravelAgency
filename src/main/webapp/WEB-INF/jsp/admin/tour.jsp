@@ -17,9 +17,17 @@
 <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="admin.tour.title" var="l_tour_title"/>
+<fmt:message key="admin.tour.delete" var="l_tour_delete"/>
+<fmt:message key="admin.tour.change" var="l_tour_change"/>
+<fmt:message key="admin.tour.hot" var="l_tour_hot"/>
+<fmt:message key="admin.tour.bus" var="l_tour_bus"/>
+<fmt:message key="admin.tour.plane" var="l_tour_plane"/>
+<fmt:message key="admin.tour.ship" var="l_tour_ship"/>
+<fmt:message key="admin.tour.train" var="l_tour_train"/>
 <html>
 <head>
-    <h:head title="Tour id: ${tour.getId()}"/>
+    <h:head title="${l_tour_title}${tour.getId()}"/>
 </head>
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
@@ -27,12 +35,12 @@
     <div class="container">
         <div class="top-panel">
             <h2>${tour.getTitle()}</h2>
-            <a class="btn-primary add-new" href="/admin/editTour?id=${tour.getId()}&type=delete"> Удалить тур</a>
+            <a class="btn-primary add-new" href="/admin/editTour?id=${tour.getId()}&type=delete">${l_tour_delete}</a>
         </div>
         <div class="row">
             <div class="col-md-6 order-details">
-                <p class="price-page-p"> <i class="fa fa-fire" aria-hidden="true"></i> Горящий тур: ${tour.getHot()}
-                    <a href="/admin/editTour?id=${tour.getId()}&type=hot" class="btn-primary">Изменить</a>
+                <p class="price-page-p"> <i class="fa fa-fire" aria-hidden="true"></i> ${l_tour_hot}: ${tour.getHot()}
+                    <a href="/admin/editTour?id=${tour.getId()}&type=hot" class="btn-primary">${l_tour_change}</a>
                 </p>
                 <p>
                     <i class="fa fa-clock-o" aria-hidden="true"></i> ${pDateFrom} - ${pDateTo}
@@ -40,7 +48,7 @@
                 <p>
                     <i class="fa fa-map-marker" aria-hidden="true"></i> ${tour.getHotel().getCity().getName()}
                 </p>
-                <p class="price-page-p"> <i class="fa fa-usd" aria-hidden="true"></i> ${tour.getCost()} UAN</p>
+                <p class="price-page-p"> <i class="fa fa-usd" aria-hidden="true"></i> ${tour.getCost()} UAH</p>
                 <p class="price-page-p"> <i class="fa fa-check-circle-o" aria-hidden="true"></i> ${tour.getTourType()}</p>
 
                 <p>
@@ -48,16 +56,16 @@
                 </p>
                 <c:choose>
                     <c:when test="${tour.getTransportType().toString().equals('BUS')}">
-                        <p><i class="fa fa-bus" aria-hidden="true"></i> Автобус</p>
+                        <p><i class="fa fa-bus" aria-hidden="true"></i> ${l_tour_bus}</p>
                     </c:when>
                     <c:when test="${tour.getTransportType().toString().equals('TRAIN')}">
-                        <p><i class="fa fa-train" aria-hidden="true"></i> Поезд</p>
+                        <p><i class="fa fa-train" aria-hidden="true"></i> ${l_tour_train}</p>
                     </c:when>
                     <c:when test="${tour.getTransportType().toString().equals('PLANE')}">
-                        <p><i class="fa fa-plane" aria-hidden="true"></i> Авиаперелет</p>
+                        <p><i class="fa fa-plane" aria-hidden="true"></i> ${l_tour_plane}</p>
                     </c:when>
                     <c:when test="${tour.getTransportType().toString().equals('SHIP')}">
-                        <p><i class="fa fa-ship" aria-hidden="true"></i> Корабль</p>
+                        <p><i class="fa fa-ship" aria-hidden="true"></i> ${l_tour_ship}</p>
                     </c:when>
                 </c:choose>
 
