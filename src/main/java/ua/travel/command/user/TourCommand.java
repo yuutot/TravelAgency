@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import static ua.travel.command.utils.ValidatorUtils.isEmptyString;
 import static ua.travel.command.utils.ValidatorUtils.isHaveValidString;
+import static ua.travel.command.utils.ValidatorUtils.isValidString;
 
 /**
  * urlPattern /tours
@@ -56,7 +57,7 @@ public class TourCommand implements PageCommand {
         String costMin = request.getParameter(PARAM_MIN_COST);
         String costMax = request.getParameter(PARAM_MAX_COST);
         String type = request.getParameter(PARAM_TYPE);
-        if (!isHaveValidString(city, costMin, costMax, type)) {
+        if (!isHaveValidString(city, costMin, costMax, type) || !isValidString(city, costMin, costMax, type)) {
             tours = tourService.getTours();
         } else {
             try {

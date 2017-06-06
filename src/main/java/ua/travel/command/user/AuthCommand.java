@@ -2,6 +2,7 @@ package ua.travel.command.user;
 
 import ua.travel.command.ExecuteCommand;
 import ua.travel.command.PageCommand;
+import ua.travel.command.utils.ValidatorUtils;
 import ua.travel.entity.User;
 import ua.travel.service.UserService;
 import ua.travel.service.exceptions.AuthException;
@@ -36,6 +37,9 @@ public class AuthCommand implements PageCommand, ExecuteCommand {
         String login = request.getParameter(PARAM_LOGIN);
         String password = request.getParameter(PARAM_PASSWORD);
 
+        if(!ValidatorUtils.isValidString(login, password)){
+            return "/login";
+        }
         try {
             User user = userService.authUser(login, password);
             request.getSession().setAttribute(ATTRIBUTE_USER, user);

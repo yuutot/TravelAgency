@@ -9,7 +9,6 @@ import ua.travel.service.exceptions.ServiceException;
 /**
  * Created by yuuto on 5/26/17.
  */
-//todo severe log
 public class UserService {
 
     private static UserService userService;

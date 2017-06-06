@@ -44,7 +44,7 @@ public class AdminHotelCommand implements ExecuteCommand, PageCommand {
         String city = request.getParameter(PARAM_CITY);
         String name = request.getParameter(PARAM_NAME);
         String star = request.getParameter(PARAM_STAR);
-        if(!isEmptyString(city, name, star) && isValidLong(city) && isValidLong(star)){
+        if(!isEmptyString(city, name, star) && isValidLong(city) && isValidLong(star) && isValidString(city,name,star)){
             try {
                 String path = FileUtils.loadFile(request,response);
                 hotelService.createHotel(city, name, star, path);

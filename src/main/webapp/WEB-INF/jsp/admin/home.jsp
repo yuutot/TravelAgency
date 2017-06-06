@@ -58,7 +58,7 @@
     <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
             <tr>
                 <td>
-                    <a href="<c:url value="/admin/order?id=${order.getTour().getId()}"/>">
+                    <a href="<c:url value="/admin/order?id=${order.getId()}"/>">
                             ${order.getTour().getTitle()}
                     </a>
 

@@ -34,7 +34,7 @@ public class EditTourCommand implements PageCommand {
         String id = request.getParameter(PARAM_ID);
         String type = request.getParameter(PARAM_TYPE);
 
-        if(ValidatorUtils.isEmptyString(id, type) || !ValidatorUtils.isValidLong(id)){
+        if(ValidatorUtils.isEmptyString(id, type) || !ValidatorUtils.isValidLong(id) || !ValidatorUtils.isValidString(type)){
             response.sendRedirect("/admin");
             return;
         }

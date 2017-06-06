@@ -58,7 +58,6 @@ public class ValidatorUtils {
      * @param str
      * @return true if all string valid
      */
-    //todo impl
     public static boolean isValidString(String... str){
         if(str.length == 0) return true;
         for(String param : str){

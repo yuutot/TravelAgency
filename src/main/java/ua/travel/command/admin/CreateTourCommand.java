@@ -53,7 +53,9 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
         String transportType = request.getParameter(PARAM_TRANSPORT_TYPE);
         String hotel = request.getParameter(PARAM_HOTEL);
         String isHot = request.getParameter(PARAM_IS_HOT);
-        if(isEmptyString(title,tourType, dateFrom, dateTo, cost, description, transportType, hotel) || !isValidDouble(cost) || !isValidLong(hotel)){
+        if(isEmptyString(title,tourType, dateFrom, dateTo, cost, description, transportType, hotel)
+                || !isValidDouble(cost) || !isValidLong(hotel)
+                || !isValidString(title, tourType, dateFrom, dateTo, cost, description, transportType, hotel)){
            return "/admin/createTour";
         }
         Tour tour;

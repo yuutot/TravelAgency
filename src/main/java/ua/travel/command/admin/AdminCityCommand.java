@@ -28,7 +28,7 @@ public class AdminCityCommand implements ExecuteCommand, PageCommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter(PARAM_NAME);
-        if(!ValidatorUtils.isEmptyString(name)) {
+        if(!ValidatorUtils.isEmptyString(name) && ValidatorUtils.isValidString(name)) {
             cityService.createCity(name);
         }
         return "/admin/city";

@@ -1,6 +1,7 @@
 package ua.travel.command.admin;
 
 import ua.travel.command.ExecuteCommand;
+import ua.travel.command.utils.ValidatorUtils;
 import ua.travel.service.OrderService;
 import ua.travel.service.exceptions.ServiceException;
 
@@ -26,7 +27,7 @@ public class EditOrderStatusCommand implements ExecuteCommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String status = request.getParameter(PARAM_STATUS);
         String id = request.getParameter(PARAM_ID);
-        if(status == null || id == null || id.isEmpty()){
+        if(status == null || id == null || id.isEmpty() || !ValidatorUtils.isValidString(status, id)){
             return "/admin";
         }
         try {
