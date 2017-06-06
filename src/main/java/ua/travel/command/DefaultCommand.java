@@ -17,6 +17,11 @@ import java.io.IOException;
  */
 public class DefaultCommand implements ExecuteCommand, PageCommand {
 
+    private static final String IMG = "img/";
+    private static final String CSS = "css/";
+    private static final String STYLE = "style/";
+    private static final String FONT = "font/";
+    private static final String PHOTO = "photo/";
     private String command;
 
     public DefaultCommand(String command) {
@@ -30,7 +35,7 @@ public class DefaultCommand implements ExecuteCommand, PageCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (command.contains("img/") || command.contains("css/") || command.contains("photo/") || command.contains("font/")) {
+        if (command.contains(IMG) || command.contains(CSS) || command.contains(PHOTO) || command.contains(STYLE) || command.contains(FONT)) {
             try (ServletOutputStream out = response.getOutputStream();
                  FileInputStream fin = new FileInputStream("/home/yuuto/IdeaProjects/TravelAgency/src/main/webapp" + PathUtils.getContextPath(request));
                  BufferedInputStream bin = new BufferedInputStream(fin);

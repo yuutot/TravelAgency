@@ -8,11 +8,18 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 5/31/17.
+ * Implements security
  */
 public class SecurityContext {
 
-    private final Logger LOGGER = Logger.getLogger(SecurityContext.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SecurityContext.class.getName());
+    private static final String PAGE = "/execute";
+    private static final String COMMAND = "command";
+    private static final String IMG = "img/";
+    private static final String CSS = "css/";
+    private static final String STYLE = "style/";
+    private static final String FONT = "font/";
+    private static final String PHOTO = "photo/";
 
     private static SecurityContext securityContext;
     private Map<String, List<String>> rights = new HashMap<>();
@@ -33,6 +40,13 @@ public class SecurityContext {
         return localInstance;
     }
 
+    /**
+     * Add Necessary credentials for command/page
+     *
+     * @param command
+     * @param userTypes
+     * @return builder
+     */
     public SecurityContext addCredentials(String command, String... userTypes) {
         List<String> credentials = rights.computeIfAbsent(command, k -> new ArrayList<>());
         credentials.addAll(Arrays.asList(userTypes));
@@ -42,11 +56,11 @@ public class SecurityContext {
     public boolean checkUserCredentials(HttpServletRequest request, User user) {
         String url = PathUtils.getContextPath(request);
         List<String> credentials;
-        if (url.equals("/execute")) {
-            String command = request.getParameter("command");
+        if (url.equals(PAGE)) {
+            String command = request.getParameter(COMMAND);
             credentials = rights.get(command);
             LOGGER.info("User " + user + " try to get access to " + command + " credentials: " + credentials);
-        } else if (url.contains("img/") || url.contains("css/") || url.contains("style/") || url.contains("font/")) {
+        } else if (url.contains(IMG) || url.contains(PHOTO) || url.contains(CSS) || url.contains(STYLE) || url.contains(FONT)) {
             return true;
         } else {
             credentials = rights.get(url);

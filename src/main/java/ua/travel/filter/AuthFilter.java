@@ -10,10 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by yuuto on 6/2/17.
+ * Controls user access to pages
  */
 @WebFilter(servletNames = {"pageController", "executeController"})
 public class AuthFilter implements Filter {
+
+    private static final String ATTRIBUTE_USER = "user";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -22,7 +25,7 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
         SecurityContext securityContext = SecurityContext.getInstance();
         if(securityContext.checkUserCredentials(request, user)){
             filterChain.doFilter(servletRequest, servletResponse);

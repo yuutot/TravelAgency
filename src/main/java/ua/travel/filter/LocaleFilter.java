@@ -7,10 +7,16 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Created by yuuto on 6/2/17.
+ * Set locale for user.
+ * Get locale from session. If params is empty set default locale
  */
 @WebFilter(servletNames = {"pageController", "executeController"})
 public class LocaleFilter implements Filter {
+
+    private static final String UTF = "UTF-8";
+    private static final String PARAM_LAN = "lan";
+    private static final String ATTRIBUTE_LOCALE = "locale";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -19,18 +25,18 @@ public class LocaleFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
-        request.setCharacterEncoding("UTF-8");
-        String localeParam = request.getParameter("lan");
+        request.setCharacterEncoding(UTF);
+        String localeParam = request.getParameter(PARAM_LAN);
         if(localeParam != null){
             if(localeParam.equals("UA")){
-                request.getSession().setAttribute("locale", new Locale("ua", "UA"));
+                request.getSession().setAttribute(ATTRIBUTE_LOCALE, new Locale("ua", "UA"));
             }else {
-                request.getSession().setAttribute("locale", Locale.ENGLISH);
+                request.getSession().setAttribute(ATTRIBUTE_LOCALE, Locale.ENGLISH);
             }
         }
-        Locale userLocale = (Locale) request.getSession().getAttribute("locale");
+        Locale userLocale = (Locale) request.getSession().getAttribute(ATTRIBUTE_LOCALE);
         if(userLocale == null){
-            request.getSession().setAttribute("locale", Locale.ENGLISH);
+            request.getSession().setAttribute(ATTRIBUTE_LOCALE, Locale.ENGLISH);
         }
         filterChain.doFilter(request,servletResponse);
     }
