@@ -121,7 +121,7 @@ public class TourRepository extends BaseRepository<Tour> {
     private List<Tour> executeSelectQuery(String query){
         List<Tour> entities = new LinkedList<>();
         LOGGER.info(query);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {

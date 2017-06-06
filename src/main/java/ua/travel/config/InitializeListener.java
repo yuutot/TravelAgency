@@ -1,5 +1,6 @@
 package ua.travel.config;
 
+import ua.travel.config.datasource.DataSourceFactory;
 import ua.travel.config.datasource.DataSourceType;
 import ua.travel.dao.creator.TableCreator;
 import ua.travel.dao.creator.TableCreatorFactory;
@@ -28,8 +29,11 @@ public class InitializeListener implements ServletContextListener {
             e.printStackTrace();
         }
 
+        DataSourceFactory
+                .setDataSourceType(DataSourceType.MYSQL);
+
         TableCreatorFactory
-                .getTableCreator(DataSourceType.MYSQL, getClass().getAnnotation(EntityScan.class).value())
+                .getTableCreator(getClass().getAnnotation(EntityScan.class).value())
                 .createTableForEntity();
 
         SecurityContext.getInstance()

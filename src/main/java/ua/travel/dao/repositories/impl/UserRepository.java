@@ -51,7 +51,7 @@ public class UserRepository extends BaseRepository<User> {
                 .addCondition("login", Condition.EVEN, login, User.class)
                 .build();
         LOGGER.info(query);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 

@@ -95,7 +95,7 @@ public abstract class TableCreator {
     }
 
     public void createTableForEntity() {
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement()) {
             for (Class<?> entity : DaoUtils.getClassesInPackage(packageToScan)) {
                 statement.addBatch(createSqlQuery(entity));

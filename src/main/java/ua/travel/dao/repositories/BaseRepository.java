@@ -36,7 +36,7 @@ public abstract class BaseRepository<T> {
                 .addCondition("id", Condition.EVEN, id, clazz)
                 .build();
         LOGGER.info(query);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -51,7 +51,7 @@ public abstract class BaseRepository<T> {
 
     public Long save(T entity) {
         Map<String, Object> map = ObjectToMapConverter.parse(entity, clazz);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection()) {
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection()) {
             InsertQueryBuilder insertQueryBuilder = new InsertQueryBuilder(connection);
             return insertQueryBuilder
                     .addTable(clazz.getAnnotation(Table.class).value())
@@ -73,7 +73,7 @@ public abstract class BaseRepository<T> {
             LOGGER.warning(e.getMessage());
         }
         Map<String, Object> map = ObjectToMapConverter.parse(entity, clazz);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection()) {
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection()) {
             UpdateQueryBuilder updateQueryBuilder = new UpdateQueryBuilder(connection);
             updateQueryBuilder
                     .addTable(clazz.getAnnotation(Table.class).value())
@@ -95,7 +95,7 @@ public abstract class BaseRepository<T> {
                 .addTable(clazz.getAnnotation(Table.class).value())
                 .build();
         LOGGER.info(query);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -127,7 +127,7 @@ public abstract class BaseRepository<T> {
                 .addCondition("id", Condition.EVEN, id)
                 .build();
         LOGGER.info(query);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement()) {
             statement.execute(query);
         } catch (SQLException e) {

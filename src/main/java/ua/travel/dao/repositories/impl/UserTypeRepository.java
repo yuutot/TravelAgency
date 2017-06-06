@@ -50,7 +50,7 @@ public class UserTypeRepository extends BaseRepository<UserType> {
                 .addCondition("type", Condition.EVEN, type, UserType.class)
                 .build();
         LOGGER.info(query);
-        try (Connection connection = DataSourceFactory.getDataSource(DataSourceType.MYSQL).getConnection();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
