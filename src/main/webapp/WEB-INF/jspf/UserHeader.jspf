@@ -1,18 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:message key="header.tours" var="l_header_tours"/>
+<fmt:message key="header.login" var="l_header_login"/>
+<fmt:message key="header.logout" var="l_header_logout"/>
+<fmt:message key="header.orders" var="l_header_orders"/>
+
 <header class="container header-page">
     <div class="logo">
         <a href="/">_Travel<span>Agency</span></a>
     </div>
     <nav class="client-menu">
         <ul>
-            <li><a href="/tours">Туры</a></li>
+            <li><a href="/tours">${l_header_tours}</a></li>
             <c:choose>
                 <c:when test="${user != null}">
-                    <li><a href="/order">Заказы</a></li>
-                    <li><a href="/login?logout">Выход</a></li>
+                    <li><a href="/order">${l_header_orders}</a></li>
+                    <li><a href="/login?logout">${l_header_logout}</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="/login">Авторизация</a></li>
+                    <li><a href="/login">${l_header_login}</a></li>
                 </c:otherwise>
             </c:choose>
             <li><a href="?lan=${l_language}">${l_language}</a></li>

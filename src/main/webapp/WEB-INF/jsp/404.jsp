@@ -13,9 +13,10 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="404.title" var="l_404"/>
 <html>
 <head>
-    <h:head title="Page not found"/>
+    <h:head title="${l_404}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf"%>

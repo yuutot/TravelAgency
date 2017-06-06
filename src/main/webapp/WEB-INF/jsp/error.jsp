@@ -12,41 +12,24 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
-<fmt:message key="home.login" var="l_login"/>
-<fmt:message key="home.password" var="l_password"/>
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="error.title" var="l_error_title"/>
+<fmt:message key="error.oops" var="l_error_oops"/>
+<fmt:message key="error.description" var="l_error_desc"/>
+<fmt:message key="error.contact" var="l_error_contact"/>
 <html>
 <head>
-    <h:head title="Error page"/>
+    <h:head title="${l_error_title}"/>
 </head>
 <body>
-<header class="container header-page">
-    <div class="logo">
-        <a href="/">_Travel<span>Agency</span></a>
-    </div>
-    <nav class="client-menu">
-        <ul>
-            <li><a href="/tours">Туры</a></li>
-            <c:choose>
-                <c:when test="${user != null}">
-                    <li><a href="/order">Заказы</a></li>
-                    <li><a href="/login?logout">Выход</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="/login">Авторизация</a></li>
-                </c:otherwise>
-            </c:choose>
-            <li><a href="?lan=${l_language}">${l_language}</a></li>
-        </ul>
-    </nav>
-</header>
+<%@include file="/WEB-INF/jspf/UserHeader.jspf" %>
 <main class="page-404">
     <div class="flex-cont">
         <div class="block-title-cell">
-            <h1 style="text-align: center;">Упс, произошла ошибка</h1>
-            <h5>Обратитесь в техподдержку</h5>
+            <h1 style="text-align: center;">${l_error_oops}</h1>
+            <h5>${l_error_contact}</h5>
             <c:if test="${error != null}">
-                <h6 onclick="showSpoiler()">Описание проблемы</h6>
+                <h6 onclick="showSpoiler()">${l_error_desc}</h6>
                 <p id="problem">${error}</p>
             </c:if>
         </div>
