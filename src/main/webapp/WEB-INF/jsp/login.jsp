@@ -15,9 +15,12 @@
 <fmt:message key="home.login" var="l_login"/>
 <fmt:message key="home.password" var="l_password"/>
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="login.no" var="l_login_no"/>
+<fmt:message key="login.title" var="l_login_title"/>
+
 <html>
 <head>
-    <h:head title="Login page"/>
+    <h:head title="${l_login_title}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf"%>
@@ -26,7 +29,7 @@
         <img src="img/2.jpg" alt="">
         <div class="flex-cont">
             <div class="block-title-cell">
-                <h1>Авторизация</h1>
+                <h1>${l_header_login}</h1>
             </div>
         </div>
     </div>
@@ -38,10 +41,10 @@
         <input id="login" type="text" placeholder="${l_login}" name="login">
         <label for="passw">${l_password}</label>
         <input id="passw" type="password" placeholder="${l_password}" name="password">
-        <input class="btn btn-sm btn-primary" type="submit" value="Войти">
+        <input class="btn btn-sm btn-primary" type="submit" value="${l_header_login}">
 
     </form>
-    <a class="link-to-reg" href="/register">Не зарегистрированы?</a>
+    <a class="link-to-reg" href="/register">${l_login_no}</a>
 </section>
 <%@include file="/WEB-INF/jspf/UserFooter.jspf"%>
 </body>

@@ -12,10 +12,17 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
+<fmt:message key="home.lan" var="l_language"/>
 <fmt:message key="home.login" var="l_login"/>
+<fmt:message key="home.password" var="l_password"/>
+<fmt:message key="register.name" var="l_register_name"/>
+<fmt:message key="register.phone" var="l_register_phone"/>
+<fmt:message key="register.submit" var="l_register_submit"/>
+<fmt:message key="register.surname" var="l_register_surname"/>
+<fmt:message key="register.title" var="l_resiter_title"/>
 <html>
 <head>
-    <h:head title="Register page"/>
+    <h:head title="${l_resiter_title}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf"%>
@@ -24,7 +31,7 @@
         <img src="/img/2.jpg" alt="">
         <div class="flex-cont">
             <div class="block-title-cell">
-                <h1>Регистрация</h1>
+                <h1>${l_resiter_title}</h1>
             </div>
         </div>
     </div>
@@ -35,17 +42,17 @@
     </c:if>
     <form class="auth" action="/execute" method="post">
         <input type="hidden" name="command" value="register">
-        <label for="name">Имя</label>
-        <input id="name" type="text" placeholder="Имя" name="name">
-        <label for="surname">Фамилия</label>
-        <input id="surname" type="text" placeholder="Фамилия" name="surname">
-        <label for="login">Логин</label>
-        <input id="login" type="text" placeholder="Логин" name="login">
-        <label for="pass">Пароль</label>
-        <input id="pass" type="password" placeholder="Пароль" name="password">
-        <label for="tel">Телефон</label>
-        <input id="tel" type="tel" placeholder="Телефон" name="phone">
-        <input class="btn btn-sm btn-primary" type="submit" value="Регистрация">
+        <label for="name">${l_register_name}</label>
+        <input id="name" type="text" placeholder="${l_register_name}" name="name">
+        <label for="surname">${l_register_surname}</label>
+        <input id="surname" type="text" placeholder="${l_register_surname}" name="surname">
+        <label for="login">${l_login}</label>
+        <input id="login" type="text" placeholder="${l_login}" name="login">
+        <label for="pass">${l_password}</label>
+        <input id="pass" type="password" placeholder="${l_password}" name="password">
+        <label for="tel">${l_register_phone}</label>
+        <input id="tel" type="tel" placeholder="${l_register_phone}" name="phone">
+        <input class="btn btn-sm btn-primary" type="submit" value="${l_register_submit}">
     </form>
 </section>
 <%@include file="/WEB-INF/jspf/UserFooter.jspf"%>

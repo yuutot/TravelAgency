@@ -12,12 +12,17 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
-<fmt:message key="home.login" var="l_login"/>
-<fmt:message key="home.password" var="l_password"/>
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="home.login" var="l_login"/>
+<fmt:message key="orders.city" var="l_orders_city"/>
+<fmt:message key="orders.cost" var="l_orders_cost"/>
+<fmt:message key="orders.date" var="l_orders_date"/>
+<fmt:message key="orders.name" var="l_orders_name"/>
+<fmt:message key="orders.status" var="l_orders_status"/>
+<fmt:message key="orders.title" var="l_orders_title"/>
 <html>
 <head>
-    <h:head title="Orders"/>
+    <h:head title="${l_orders_title}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf"%>
@@ -27,7 +32,7 @@
         <div class="large-bg"></div>
         <div class="flex-cont">
             <div class="block-title-cell">
-                <h1>Ваши заказы</h1>
+                <h1>${l_orders_title}</h1>
             </div>
         </div>
     </div>
@@ -36,19 +41,19 @@
     <table>
         <tr>
             <td>
-                Название тура
+                ${l_orders_name}
             </td>
             <td>
-                Город
+                ${l_orders_city}
             </td>
             <td>
-                Дата
+                ${l_orders_date}
             </td>
             <td>
-                Стоимость
+                ${l_orders_cost}
             </td>
             <td>
-                Статус
+                ${l_orders_status}
             </td>
         </tr>
         <c:forEach var="order" items="${orders}">

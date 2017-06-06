@@ -13,9 +13,24 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="home.intro" var="l_home_intro"/>
+<fmt:message key="home.title" var="l_home_title"/>
+<fmt:message key="home.searchTour" var="l_home_searchTour"/>
+<fmt:message key="home.city" var="l_home_city"/>
+<fmt:message key="home.type" var="l_home_type"/>
+<fmt:message key="home.rest" var="l_home_rest"/>
+<fmt:message key="home.excursion" var="l_home_excursion"/>
+<fmt:message key="home.shopping" var="l_home_shopping"/>
+<fmt:message key="home.min" var="l_home_min"/>
+<fmt:message key="home.max" var="l_home_max"/>
+<fmt:message key="home.search" var="l_home_search"/>
+<fmt:message key="home.welcome" var="l_home_welcome"/>
+<fmt:message key="home.fIntro" var="l_home_fIntro"/>
+<fmt:message key="home.best" var="l_home_best"/>
+<fmt:message key="home.discount" var="l_home_discount"/>
 <html>
 <head>
-    <h:head title="Main page"/>
+    <h:head title="${l_home_title}"/>
 </head>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf" %>
 <body class="main__body">
@@ -23,8 +38,8 @@
     <div class="container">
         <form action="/tours" method="get" class="tr-form">
             <fieldset>
-                <h4 class="text-bold"> Найти путевку
-                    <p>По пункту прибытия</p>
+                <h4 class="text-bold"> ${l_home_searchTour}
+                    <p>${l_home_city}</p>
                 </h4>
                 <input type="hidden" name="command" value="tours">
                 <select name="city">
@@ -32,17 +47,17 @@
                         <option value="${city.getId()}"> ${city.getName()}</option>
                     </c:forEach>
                 </select>
-                <p>По типу</p>
+                <p>${l_home_type}</p>
                 <select name="type">
-                    <option value="REST">Rest</option>
-                    <option value="EXCURSION">Excursion</option>
-                    <option value="SHOPPING">Shopping</option>
+                    <option value="REST">${l_home_rest}</option>
+                    <option value="EXCURSION">${l_home_excursion}</option>
+                    <option value="SHOPPING">${l_home_shopping}</option>
                 </select>
-                <p>Минимальная цена</p>
+                <p>${l_home_min}</p>
                 <input type="number" name="min_cost">
-                <p>Максимальная цена</p>
+                <p>${l_home_max}</p>
                 <input type="number" name="max_cost">
-                <input class="btn btn-sm btn-primary" type="submit" value="Найти">
+                <input class="btn btn-sm btn-primary" type="submit" value="${l_home_search}">
             </fieldset>
         </form>
     </div>
@@ -50,17 +65,12 @@
 <section class="container well-md">
     <div class="row">
         <div class="col-md-4">
-            <h2>Welcome</h2>
+            <h2>${l_home_welcome}</h2>
             <h4>
-                Arrange an unforgettable
-                adventure for your family.
+                ${l_home_fIntro}
             </h4>
             <p>
-
-                There is nothing better than spending your free time with family or friends while traveling. Book one of
-                our tours and save more than $200 on each member. Our turnkey travel solutions include full insurance,
-                guided and escorted tour vacations, accommodation in best hotels and custom features that you can choose
-                yourself.
+                ${l_home_intro}
             </p>
         </div>
         <div class="col-md-3 col-xs-6 col-md-preffix-1">
@@ -75,11 +85,11 @@
         <div class="col-md-3 col-xs-6 col-md-preffix-1">
             <ul class="marked-list">
 
-                <li><a href="<c:url value="/tours?command=tours&city=&type=REST&min_cost=&max_cost="/>">— Rest</a></li>
+                <li><a href="<c:url value="/tours?command=tours&city=&type=REST&min_cost=&max_cost="/>">— ${l_home_rest}</a></li>
                 <li><a href="<c:url value="/tours?command=tours&city=&type=EXCURSION&min_cost=&max_cost="/>">—
-                    Excursion</a></li>
+                    ${l_home_excursion}</a></li>
                 <li><a href="<c:url value="/tours?command=tours&city=&type=SHOPPING&min_cost=&max_cost="/>">—
-                    Shopping</a></li>
+                    ${l_home_shopping}</a></li>
             </ul>
         </div>
     </div>
@@ -87,11 +97,11 @@
 </section>
 
 <section class="container well-sm">
-    <h2>Лучшие предложения</h2>
+    <h2>${l_home_best}ния</h2>
     <div class="row">
         <c:forEach var="tour" items="${tours}">
-            <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateTo" />
-            <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateTo()}" var="dateFrom" />
+            <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateTo"/>
+            <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateTo()}" var="dateFrom"/>
             <fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
             <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
             <div class="col-md-4 item__tour">
@@ -119,7 +129,7 @@
                     </div>
                     <c:if test="${user != null}">
                         <p>
-                            <i class="fa fa-gift" aria-hidden="true"></i> Скидка ${user.getDiscount()} %
+                            <i class="fa fa-gift" aria-hidden="true"></i> ${l_home_discount} ${user.getDiscount()} %
                         </p>
                     </c:if>
                 </a>

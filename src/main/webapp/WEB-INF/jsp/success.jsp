@@ -12,10 +12,12 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale"/>
 
-<fmt:message key="home.login" var="l_login"/>
+<fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="success.mes" var="l_success_mes"/>
+<fmt:message key="success.title" var="l_success_title"/>
 <html>
 <head>
-    <h:head title="Succes"/>
+    <h:head title="${l_success_title}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf"%>
@@ -29,7 +31,7 @@
     <div class="row">
         <div class="col-md-12 tour_options">
             <p class="title-page">
-                Ваш заказ принят. Номер заказа: ${success}
+                ${l_success_mes} ${success}
             </p>
         </div>
     </div>

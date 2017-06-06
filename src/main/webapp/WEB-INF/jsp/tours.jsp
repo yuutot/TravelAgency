@@ -13,9 +13,22 @@
 <fmt:setBundle basename="locale"/>
 
 <fmt:message key="home.lan" var="l_language"/>
+<fmt:message key="tours.title" var="l_tours_title"/>
+<fmt:message key="tours.fIntro" var="l_tours_fIntro"/>
+<fmt:message key="tours.sIntro" var="l_tours_sIntro"/>
+<fmt:message key="tours.city" var="l_tours_city"/>
+<fmt:message key="tours.type" var="l_tours_type"/>
+<fmt:message key="tours.rest" var="l_tours_rest"/>
+<fmt:message key="tours.excursion" var="l_tours_excursion"/>
+<fmt:message key="tours.shopping" var="l_tours_shopping"/>
+<fmt:message key="tours.from" var="l_tours_from"/>
+<fmt:message key="tours.to" var="l_tours_to"/>
+<fmt:message key="tours.search" var="l_tours_search"/>
+<fmt:message key="tours.our" var="l_tours_our"/>
+<fmt:message key="tours.discount" var="l_tours_discount"/>
 <html>
 <head>
-    <h:head title="Tours"/>
+    <h:head title="${l_tours_title}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jspf/UserHeader.jspf"%>
@@ -24,8 +37,8 @@
         <img src="img/2.jpg" alt="">
         <div class="flex-cont">
             <div class="block-title-cell">
-                <h1>Лучший отдых</h1>
-                <h2>Путешевствия украшают</h2>
+                <h1>${l_tours_fIntro}</h1>
+                <h2>${l_tours_sIntro}</h2>
             </div>
         </div>
     </div>
@@ -37,7 +50,7 @@
     <form class="hr-form" action="/tours" method="get">
         <input type="hidden" name="command" value="tours">
         <div class="block-input">
-            <p>Город: </p>
+            <p>${l_tours_city}: </p>
             <select name="city">
                 <c:forEach var="city" items="${cities}">
                     <option value="${city.getId()}"> ${city.getName()}</option>
@@ -45,27 +58,27 @@
             </select>
         </div>
         <div class="block-input">
-            <p>Тип отдыха: </p>
+            <p>${l_tours_type}: </p>
             <select name="type">
-                <option value="REST">Rest</option>
-                <option value="EXCURSION">Excursion</option>
-                <option value="SHOPPING">Shopping</option>
+                <option value="REST">${l_tours_rest}</option>
+                <option value="EXCURSION">${l_tours_excursion}</option>
+                <option value="SHOPPING">${l_tours_shopping}</option>
             </select>
         </div>
 
         <div class="block-input">
-            <p>От: </p>
+            <p>${l_tours_from}: </p>
             <input type="number" placeholder="0" name="min_cost">
         </div>
         <div class="block-input">
-            <p>До: </p>
+            <p>${l_tours_to}: </p>
             <input type="number" placeholder="1000" name="max_cost">
         </div>
-        <input class="btn btn-sm btn-primary" type="submit" value="Найти">
+        <input class="btn btn-sm btn-primary" type="submit" value="${l_tours_search}">
     </form>
 </section>
 <section class="container well-sm">
-    <h2>Наши туры</h2>
+    <h2>${l_tours_our}</h2>
     <div class="row">
         <c:forEach var="tour" items="${tours}">
             <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateTo" />
@@ -97,7 +110,7 @@
                     </div>
                     <c:if test="${user != null}">
                         <p>
-                            <i class="fa fa-gift" aria-hidden="true"></i> Скидка ${user.getDiscount()} %
+                            <i class="fa fa-gift" aria-hidden="true"></i> ${l_tours_discount} ${user.getDiscount()} %
                         </p>
                     </c:if>
                 </a>
