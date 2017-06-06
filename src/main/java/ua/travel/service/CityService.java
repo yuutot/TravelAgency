@@ -32,6 +32,13 @@ public class CityService {
         return localInstance;
     }
 
+    /**
+     * Checks for the availability of a city in the database.
+     * If found - returns the object, otherwise it saves the current city in the database
+     *
+     * @param name
+     * @return
+     */
     public City createCity(String name){
         Optional<City> cityOptional = cityRepository.findByName(name);
         if(cityOptional.isPresent()){
@@ -44,6 +51,10 @@ public class CityService {
         return city;
     }
 
+    /**
+     *
+     * @return all cities
+     */
     public List<City> getAllCities(){
         return cityRepository.findAll();
     }

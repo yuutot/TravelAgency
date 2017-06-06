@@ -9,6 +9,7 @@ import ua.travel.service.exceptions.ServiceException;
 /**
  * Created by yuuto on 5/26/17.
  */
+//todo severe log
 public class UserService {
 
     private static UserService userService;
@@ -30,6 +31,13 @@ public class UserService {
         return localInstance;
     }
 
+    /**
+     * Auth user by login and password
+     * @param login
+     * @param password
+     * @return user if login passed
+     * @throws AuthException
+     */
     public User authUser(String login, String password) throws AuthException {
         User user = userRepository.findByLogin(login).orElseThrow(()->new AuthException("Cant find user by login: " + login));
         if(user.getPassword().equals(DigestUtils.md5Hex(password))){
@@ -39,6 +47,16 @@ public class UserService {
         }
     }
 
+    /**
+     * Register user
+     * @param login
+     * @param password
+     * @param name
+     * @param surname
+     * @param phone
+     * @return users object if register passed
+     * @throws ServiceException
+     */
     public User registerUser(String login, String password, String name, String surname, String phone) throws ServiceException {
         if(userRepository.findByLogin(login).isPresent()){
             throw new ServiceException("User already exists. Login: " + login);
@@ -55,6 +73,12 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Get user by id
+     * @param id
+     * @return user
+     * @throws ServiceException
+     */
     public User getUserById(String id) throws ServiceException {
         return userRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find user by id: " + id));
     }

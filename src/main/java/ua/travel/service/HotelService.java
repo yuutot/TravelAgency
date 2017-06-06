@@ -35,6 +35,15 @@ public class HotelService {
         return localInstance;
     }
 
+    /**
+     * Save hotels in bd
+     * @param cityId
+     * @param name
+     * @param star
+     * @param photoUrl
+     * @return id of a hotel
+     * @throws ServiceException
+     */
     public Hotel createHotel(String cityId, String name, String star, String photoUrl) throws ServiceException {
         City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(()->new ServiceException("Cant find city by id: " + cityId));
         Hotel hotel = new Hotel();
@@ -47,11 +56,21 @@ public class HotelService {
         return hotel;
     }
 
+    /**
+     * Get hotels by city
+     * @param cityId
+     * @return list of hotels
+     * @throws ServiceException
+     */
     public List<Hotel> getHotelsByCity(Long cityId) throws ServiceException {
         City city = cityRepository.findById(cityId).orElseThrow(()->new ServiceException("Cant find city by id " + cityId));
         return hotelRepository.findByCity(city);
     }
 
+    /**
+     * get all hotels
+     * @return
+     */
     public List<Hotel> getAllHotel(){
         return hotelRepository.findAll();
     }

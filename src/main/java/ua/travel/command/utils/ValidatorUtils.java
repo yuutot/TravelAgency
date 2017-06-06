@@ -52,4 +52,26 @@ public class ValidatorUtils {
         }
         return false;
     }
+
+    /**
+     * Check string on special html chars
+     * @param str
+     * @return true if all string valid
+     */
+    //todo impl
+    public static boolean isValidString(String... str){
+        if(str.length == 0) return true;
+        for(String param : str){
+            if(param.contains("<")
+                    || param.contains(">")
+                    || param.contains(";")
+                    || param.contains("onclick")
+                    || param.contains("onload")
+                    || param.contains("\'")
+                    || param.contains("\"")){
+                return false;
+            }
+        }
+        return true;
+    }
 }

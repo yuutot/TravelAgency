@@ -28,6 +28,11 @@ public class UserTypeService {
         return localInstance;
     }
 
+    /**
+     * Check user status in db. If user status present return existing user status, else create new
+     * @param type
+     * @return user status
+     */
     public UserType createUserType(String type){
         Optional<UserType> userTypeOptional = userTypeRepository.findByType(type);
         if(userTypeOptional.isPresent()){

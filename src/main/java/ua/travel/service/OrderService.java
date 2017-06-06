@@ -48,10 +48,23 @@ public class OrderService {
         return localInstance;
     }
 
+    /**
+     * Get one order by id
+     * @param id
+     * @return order
+     * @throws ServiceException
+     */
     public Order getOrderById(String id) throws ServiceException {
         return orderRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ServiceException("Cant find order by id: " + id));
     }
 
+    /**
+     * Book tour for user and save it to db
+     * @param tourId
+     * @param user
+     * @return id of order
+     * @throws ServiceException
+     */
     public Long bookTour(Long tourId, User user) throws ServiceException {
         Tour tour = tourRepository.findById(tourId).orElseThrow(()->new ServiceException("Cant find tour by id: "+ tourId));
         Order order = new Order();
@@ -63,19 +76,41 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    /**
+     * Get orders by user
+     * @param userId
+     * @return list of orders
+     * @throws ServiceException
+     */
     public List<Order> getOrdersByUser(Long userId) throws ServiceException {
         User user = userRepository.findById(userId).orElseThrow(()->new ServiceException("Cant find user by id: " + userId));
         return orderRepository.findByUser(user);
     }
 
+    /**
+     * Get orders by status
+     * @param status
+     * @return list of orders
+     */
     public List<Order> getOrdersByStatus(OrderStatus status){
         return orderRepository.findByStatus(status);
     }
 
+    /**
+     * Get all orders
+     * @return list of orders
+     */
     public List<Order> getOrders() {
         return orderRepository.findAll();
     }
 
+
+    /**
+     * Update order status
+     * @param orderId
+     * @param status order status for update
+     * @throws ServiceException
+     */
     public void updateOrderStatus(String orderId, String status) throws ServiceException {
         if(!ValidatorUtils.isValidLong(orderId)){
             throw new ServiceException("Invalid order id: " + orderId);

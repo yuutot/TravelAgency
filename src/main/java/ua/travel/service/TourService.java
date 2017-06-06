@@ -44,6 +44,22 @@ public class TourService {
         return localInstance;
     }
 
+    /**
+     * Create tour by params
+     * @param title
+     * @param tourType
+     * @param dateFrom
+     * @param dateTo
+     * @param cost
+     * @param description
+     * @param transportType
+     * @param hotelId
+     * @param isHot
+     * @param photoUrl
+     * @return if of tour
+     * @throws ServiceException
+     */
+
     public Tour createTour(String title, String tourType, String dateFrom, String dateTo, String cost, String description, String transportType, String hotelId, String isHot, String photoUrl) throws ServiceException {
         Hotel hotel = hotelRepository.findById(Long.parseLong(hotelId)).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
         Tour tour = new Tour();
@@ -62,10 +78,23 @@ public class TourService {
         return tour;
     }
 
+    /**
+     * Get all tours
+     * @return list of tours
+     */
     public List<Tour> getTours() {
         return tourRepository.findAll();
     }
 
+    /**
+     * Get tours by params
+     * @param cityId
+     * @param costMin
+     * @param costMax
+     * @param type
+     * @return list of tours
+     * @throws ServiceException
+     */
     public List<Tour> getToursByParams(String cityId, String costMin, String costMax, String type) throws ServiceException {
         if ((isEmptyString(costMin) && !isEmptyString(costMax)) || (!isEmptyString(costMin) && isEmptyString(costMax))) {
             throw new ServiceException("You must specify the minimum and maximum price");
@@ -98,24 +127,48 @@ public class TourService {
         return tourRepository.findByType(tourType);
     }
 
+    /**
+     * Get tour by id
+     * @param id
+     * @return tour
+     * @throws ServiceException
+     */
     public Tour getTourById(String id) throws ServiceException {
         return tourRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ServiceException("Cant find tour by id: " + id));
     }
 
+    /**
+     * Delete tour by ud
+     * @param id
+     */
     public void deleteTour(String id){
         tourRepository.delete(Long.parseLong(id));
     }
 
+    /**
+     * Change tour status
+     * @param id
+     * @throws ServiceException
+     */
     public void changeTourStatus(String id) throws ServiceException {
         Tour tour = tourRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find tour by id: " + id));
         tour.setHot(!tour.getHot());
         tourRepository.update(tour);
     }
 
+    /**
+     * Get list of hot tours
+     * @return list of tours
+     */
     public List<Tour> getHotTours(){
         return tourRepository.findHotTours();
     }
 
+    /**
+     * util method for convert html timestamp to date
+     * @param time
+     * @return java new Date()
+     */
     private Date localTimeToDate(String time){
         return new Date(Timestamp.valueOf(time.replace("T", " ").concat(":00")).getTime());
     }

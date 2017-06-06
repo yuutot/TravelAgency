@@ -9,6 +9,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * Custom tag. Write title and name of page.
+ */
 public class HeadTag extends TagSupport {
 
     private static final Logger LOGGER = Logger.getLogger(HeadTag.class.getName());
