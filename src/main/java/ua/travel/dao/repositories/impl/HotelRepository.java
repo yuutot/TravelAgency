@@ -42,6 +42,11 @@ public class HotelRepository extends BaseRepository<Hotel> {
         return localInstance;
     }
 
+    /**
+     * Find hotels by city
+     * @param city
+     * @return list of hotels
+     */
     public List<Hotel> findByCity(City city){
         List<Hotel> hotels = new LinkedList<>();
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();

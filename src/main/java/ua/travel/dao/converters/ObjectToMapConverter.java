@@ -16,6 +16,13 @@ public class ObjectToMapConverter {
 
     private final static Logger LOGGER = Logger.getLogger(ObjectToMapConverter.class.getName());
 
+    /**
+     * Parse object to HashMap
+     *
+     * @param object object for parse
+     * @param clazz class of object
+     * @return HashMap. key - field name, value - field value
+     */
     public static <T> Map<String, Object> parse(T object, Class<?> clazz) {
         Map<String, Object> result = new HashMap<>();
         Field[] fields = clazz.getDeclaredFields();
@@ -39,7 +46,7 @@ public class ObjectToMapConverter {
 
             result.put(columnName, value);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 
@@ -47,6 +54,7 @@ public class ObjectToMapConverter {
         try {
             return ((Enum) field.get(obj)).name();
         } catch (IllegalArgumentException | IllegalAccessException e) {
+            LOGGER.warning(e.getMessage());
             throw new RuntimeException();
         }
     }

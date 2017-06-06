@@ -42,6 +42,12 @@ public class OrderRepository extends BaseRepository<Order> {
         return localInstance;
     }
 
+    /**
+     * Find order by user
+     *
+     * @param user
+     * @return list of orders
+     */
     public List<Order> findByUser(User user){
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -55,6 +61,11 @@ public class OrderRepository extends BaseRepository<Order> {
         return executeSelectQuery(query);
     }
 
+    /**
+     * Find orders by status
+     * @param status
+     * @return list of orders
+     */
     public List<Order> findByStatus(OrderStatus status){
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -69,6 +80,11 @@ public class OrderRepository extends BaseRepository<Order> {
 
     }
 
+    /**
+     * Execute select sql query
+     * @param query
+     * @return list of orders
+     */
     private List<Order> executeSelectQuery(String query){
         List<Order> entities = new LinkedList<>();
         LOGGER.info(query);

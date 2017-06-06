@@ -40,6 +40,11 @@ public class UserTypeRepository extends BaseRepository<UserType> {
         return localInstance;
     }
 
+    /**
+     * Find user by type
+     * @param type
+     * @return User type
+     */
     public Optional<UserType> findByType(String type) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder

@@ -6,7 +6,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Created by yuuto on 5/19/17.
+ * Config for h2 db
  */
 public class MySQLDataSourceConfig {
 

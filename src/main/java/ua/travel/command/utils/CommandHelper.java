@@ -10,9 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-/**
- * Created by yuuto on 5/29/17.
- */
 public class CommandHelper {
 
     private static CommandHelper commandHelper;
@@ -61,6 +58,11 @@ public class CommandHelper {
         executeCommands.put("create_tour", new CreateTourCommand());
     }
 
+    /**
+     *
+     * @param request
+     * @return page command if the command is found by url or default command.
+     */
     public PageCommand getPageCommand(HttpServletRequest request) {
         String url = PathUtils.getContextPath(request);
         PageCommand commandInstance = pageCommands.get(url);
@@ -71,6 +73,11 @@ public class CommandHelper {
         return commandInstance;
     }
 
+    /**
+     *
+     * @param request
+     * @return page command if the command is found by hidden input field or default command.
+     */
     public ExecuteCommand getExecuteCommand(HttpServletRequest request) {
         String command = request.getParameter("command");
         ExecuteCommand commandInstance = executeCommands.get(command);

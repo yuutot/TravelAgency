@@ -41,6 +41,11 @@ public class UserRepository extends BaseRepository<User> {
         return localInstance;
     }
 
+    /**
+     * Find user by login for auth
+     * @param login
+     * @return user
+     */
     public Optional<User> findByLogin(String login) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder

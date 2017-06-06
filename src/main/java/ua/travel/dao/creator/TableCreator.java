@@ -21,14 +21,14 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Created by yuuto on 5/20/17.
+ * Create table based of classes with an annotation Table
  */
 public abstract class TableCreator {
 
     private final static Logger LOGGER = Logger.getLogger(TableCreator.class.getName());
 
     private List<Field> fKeys;
-    final String CHARSET = "utf8";
+    static final String CHARSET = "utf8";
 
     private final String packageToScan;
 
@@ -39,6 +39,12 @@ public abstract class TableCreator {
 
     protected abstract String createSqlQuery(Class<?> entity);
 
+
+    /**
+     *
+     * @param entity link to class for parse
+     * @return List of fields
+     */
     List<String> getFields(Class<?> entity) {
         Field[] fields = entity.getDeclaredFields();
         List<String> fieldsName = Arrays.stream(fields)
@@ -49,6 +55,11 @@ public abstract class TableCreator {
         return fieldsName;
     }
 
+    /**
+     * Parse class for reference on other entity
+     *
+     * @return List of query
+     */
     private List<String> createForeignKeysForEntity() {
         return fKeys
                 .stream()

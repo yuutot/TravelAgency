@@ -3,9 +3,14 @@ package ua.travel.command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by yuuto on 5/29/17.
- */
 public interface ExecuteCommand {
+
+    /**
+     * Executes the command sent by the post-request
+     *
+     * @param request
+     * @param response
+     * @return page for redirect
+     */
     String execute(HttpServletRequest request, HttpServletResponse response);
 }

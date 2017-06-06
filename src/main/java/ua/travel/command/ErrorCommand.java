@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by yuuto on 5/30/17.
+ * Display error page
  */
 public class ErrorCommand implements PageCommand {
     @Override

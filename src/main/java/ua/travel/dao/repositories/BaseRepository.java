@@ -20,12 +20,18 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * Created by yuuto on 5/19/17.
+ * Base repository has a basic functionality.
  */
 public abstract class BaseRepository<T> {
+
     private final Class<?> clazz = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     private final Logger LOGGER = Logger.getLogger(getClass().getName());
 
+    /**
+     *
+     * @param id
+     * @return entity received from the database
+     */
     public Optional<T> findById(Long id) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -50,6 +56,12 @@ public abstract class BaseRepository<T> {
         return Optional.empty();
     }
 
+    /**
+     * Save entity to db
+     *
+     * @param entity
+     * @return id for saved entity
+     */
     public Long save(T entity) {
         Map<String, Object> map = ObjectToMapConverter.parse(entity, clazz);
         try (Connection connection = DataSourceFactory.getDataSource().getConnection()) {
@@ -64,6 +76,11 @@ public abstract class BaseRepository<T> {
         return null;
     }
 
+    /**
+     * Update entity and save it to db
+     *
+     * @param entity
+     */
     public void update(T entity){
         Long id = null;
         try {
@@ -87,6 +104,10 @@ public abstract class BaseRepository<T> {
         }
     }
 
+    /**
+     *
+     * @return list of entity received from the database
+     */
     public List<T> findAll() {
         List<T> entities = new LinkedList<>();
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
@@ -110,6 +131,10 @@ public abstract class BaseRepository<T> {
         return entities;
     }
 
+    /**
+     * delete entity
+     * @param entity
+     */
     public void delete(T entity) {
         try {
             Field field = entity.getClass().getDeclaredField("id");
@@ -121,6 +146,10 @@ public abstract class BaseRepository<T> {
         }
     }
 
+    /**
+     * delete entity by id
+     * @param id
+     */
     public void delete(Long id) {
         DeleteQueryBuilder deleteQueryBuilder = new DeleteQueryBuilder();
         String query = deleteQueryBuilder

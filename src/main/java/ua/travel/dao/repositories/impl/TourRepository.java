@@ -44,6 +44,12 @@ public class TourRepository extends BaseRepository<Tour> {
         return localInstance;
     }
 
+    /**
+     * Find Tour by city and tour type
+     * @param city
+     * @param tourType
+     * @return list of tours
+     */
     public List<Tour> findByCity(City city, TourType tourType) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -61,6 +67,13 @@ public class TourRepository extends BaseRepository<Tour> {
         return executeSelectQuery(query);
     }
 
+    /**
+     * Find tours by cost
+     * @param minCost
+     * @param maxCost
+     * @param tourType
+     * @return list tours
+     */
     public List<Tour> findByCost(Double minCost, Double maxCost, TourType tourType) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -76,6 +89,11 @@ public class TourRepository extends BaseRepository<Tour> {
         return executeSelectQuery(query);
     }
 
+    /**
+     * Find tours by type
+     * @param tourType
+     * @return list of tours
+     */
     public List<Tour> findByType(TourType tourType) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -88,6 +106,11 @@ public class TourRepository extends BaseRepository<Tour> {
                 .build();
         return executeSelectQuery(query);
     }
+
+    /**
+     * Find hot tours
+     * @return list of tours
+     */
 
     public List<Tour> findHotTours() {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
@@ -102,6 +125,14 @@ public class TourRepository extends BaseRepository<Tour> {
         return executeSelectQuery(query);
     }
 
+    /**
+     * Find tours by city, cost, tour type
+     * @param city
+     * @param minCost
+     * @param maxCost
+     * @param tourType
+     * @return list of tours
+     */
     public List<Tour> findByCityAndCost(City city, Double minCost, Double maxCost, TourType tourType){
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
@@ -121,6 +152,11 @@ public class TourRepository extends BaseRepository<Tour> {
         return executeSelectQuery(query);
     }
 
+    /**
+     * execute select sql query
+     * @param query
+     * @return list of tours
+     */
     private List<Tour> executeSelectQuery(String query){
         List<Tour> entities = new LinkedList<>();
         LOGGER.info(query);

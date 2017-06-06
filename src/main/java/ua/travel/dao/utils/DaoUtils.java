@@ -24,6 +24,12 @@ public class DaoUtils {
     private final static Logger LOGGER = Logger.getLogger(DaoUtils.class.getName());
     private static Set<Class<?>> entities;
 
+    /**
+     * Get object type based enum
+     *
+     * @param field
+     * @return FieldType
+     */
     public static FieldType getObjectType(Object field) {
 
         if (field.getClass().equals(Integer.class) || field.getClass().equals(Long.class)) {

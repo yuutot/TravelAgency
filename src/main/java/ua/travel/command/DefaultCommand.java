@@ -12,7 +12,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * Created by yuuto on 5/30/17.
+ * Default command.
+ * If its a picture or style write on jsp else display page 404.
  */
 public class DefaultCommand implements ExecuteCommand, PageCommand {
 

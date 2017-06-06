@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by yuuto on 5/30/17.
+ * Get the relative path for the file from request
  */
 public class PathUtils {
     public static String getContextPath(HttpServletRequest request) {

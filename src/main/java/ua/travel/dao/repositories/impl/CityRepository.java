@@ -40,6 +40,11 @@ public class CityRepository extends BaseRepository<City> {
         return localInstance;
     }
 
+    /**
+     * Find city by name
+     * @param name
+     * @return city
+     */
     public Optional<City> findByName(String name) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder

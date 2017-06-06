@@ -21,6 +21,12 @@ public class ResultSetToObjectConverter {
 
     private static final Logger LOGGER = Logger.getLogger(ResultSetToObjectConverter.class.getName());
 
+    /**
+     *
+     * @param rs - ResultSet
+     * @return HashMap key columnName, value - number
+     * @throws SQLException
+     */
     private static Map<String, Integer> getColumnsFromResultSet(ResultSet rs) throws SQLException {
         Map<String, Integer> columns = new HashMap<>();
         ResultSetMetaData md = rs.getMetaData();
@@ -32,6 +38,14 @@ public class ResultSetToObjectConverter {
         }
         return columns;
     }
+
+    /**
+     *
+     * @param clazz Link for class for parse
+     * @param rs ResultSet
+     * @return Instance of object with data from ResultSet
+     * @throws SQLException
+     */
 
     public static <T> T parseResultSetToObject(Class<T> clazz, ResultSet rs) throws SQLException {
         LOGGER.info("Start parse rs to object");
@@ -51,6 +65,16 @@ public class ResultSetToObjectConverter {
             return null;
         }
     }
+
+    /**
+     * Set values to the field from ResultSet
+     *
+     * @param field link to field
+     * @param obj Object
+     * @param rs ResultSet
+     * @param tableName Name of table for parse
+     * @param columns Map with column names
+     */
 
     private static void parseResultSetColumn(Field field, Object obj, ResultSet rs, String tableName, Map<String, Integer> columns) {
         String columnName = tableName + "." + (field.isAnnotationPresent(Column.class) ? field.getAnnotation(Column.class).value() : "id");

@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Created by yuuto on 5/20/17.
+ * Data source factory. Return data source by enum
  */
 public class DataSourceFactory {
 
