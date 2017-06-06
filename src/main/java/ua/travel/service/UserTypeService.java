@@ -29,9 +29,9 @@ public class UserTypeService {
     }
 
     /**
-     * Check user status in db. If user status present return existing user status, else create new
+     * Check user type in db. If user status present return existing user type, else create new
      * @param type
-     * @return user status
+     * @return user type
      */
     public UserType createUserType(String type){
         Optional<UserType> userTypeOptional = userTypeRepository.findByType(type);
