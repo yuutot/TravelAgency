@@ -24,7 +24,7 @@
     <h:head title="${l_tours_title}"/>
 </head>
 <body class="admin">
-<%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
+<%@include file="/WEB-INF/jspf/AdminHeader.jspf" %>
 <main>
     <div class="top-panel">
         <h2>${l_tours_title}</h2>
@@ -47,8 +47,8 @@
                 </td>
             </tr>
             <c:forEach var="tour" items="${tours}">
-                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateFrom" />
-                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateTo()}" var="dateTo" />
+                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateFrom()}" var="dateFrom"/>
+                <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${tour.getDateTo()}" var="dateTo"/>
                 <fmt:formatDate value="${dateTo}" var="pDateTo" pattern="dd.MM.yy HH:mm"/>
                 <fmt:formatDate value="${dateFrom}" var="pDateFrom" pattern="dd.MM.yy HH:mm"/>
                 <tr>
@@ -69,7 +69,6 @@
                     </td>
                 </tr>
             </c:forEach>
-
         </table>
     </div>
 </main>

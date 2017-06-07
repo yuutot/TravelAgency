@@ -172,5 +172,4 @@ public class TourService {
     private Date localTimeToDate(String time){
         return new Date(Timestamp.valueOf(time.replace("T", " ").concat(":00")).getTime());
     }
-
 }

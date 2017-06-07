@@ -14,6 +14,7 @@ public class CityService {
 
     private final Logger LOGGER = Logger.getLogger(CityService.class.getName());
     private static CityService cityService;
+
     private CityRepository cityRepository = CityRepository.getInstance();
 
     private CityService() {
@@ -39,9 +40,9 @@ public class CityService {
      * @param name
      * @return
      */
-    public City createCity(String name){
+    public City createCity(String name) {
         Optional<City> cityOptional = cityRepository.findByName(name);
-        if(cityOptional.isPresent()){
+        if (cityOptional.isPresent()) {
             return cityOptional.get();
         }
         City city = new City();
@@ -52,10 +53,9 @@ public class CityService {
     }
 
     /**
-     *
      * @return all cities
      */
-    public List<City> getAllCities(){
+    public List<City> getAllCities() {
         return cityRepository.findAll();
     }
 }

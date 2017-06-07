@@ -703,3 +703,12 @@ footer {
   background: black;
   outline: none;
 }
+
+.pagination{ justify-content: center;}
+.pagination a{
+  display: block;
+  width: 20px;
+  text-align: center;
+  color: #f65a3a;}
+
+.pagination a:hover{color: black;}

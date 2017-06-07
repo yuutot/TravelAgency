@@ -1,5 +1,6 @@
 package ua.travel.dao.repositories.impl;
 
+import org.h2.store.Page;
 import ua.travel.config.datasource.DataSourceFactory;
 import ua.travel.dao.annotations.Table;
 import ua.travel.dao.builders.Condition;
@@ -27,7 +28,8 @@ public class OrderRepository extends BaseRepository<Order> {
 
     private static OrderRepository orderRepository;
 
-    private OrderRepository(){}
+    private OrderRepository() {
+    }
 
     public static OrderRepository getInstance() {
         OrderRepository localInstance = orderRepository;
@@ -48,7 +50,7 @@ public class OrderRepository extends BaseRepository<Order> {
      * @param user
      * @return list of orders
      */
-    public List<Order> findByUser(User user){
+    public List<Order> findByUser(User user) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
                 .addField("*")
@@ -63,10 +65,11 @@ public class OrderRepository extends BaseRepository<Order> {
 
     /**
      * Find orders by status
+     *
      * @param status
      * @return list of orders
      */
-    public List<Order> findByStatus(OrderStatus status){
+    public List<Order> findByStatus(OrderStatus status) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
                 .addField("*")
@@ -80,12 +83,44 @@ public class OrderRepository extends BaseRepository<Order> {
 
     }
 
+    public List<Order> findByPage(Long page, Long itemsOnPage) {
+        SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
+        String query = selectQueryBuilder
+                .addField("*")
+                .from()
+                .addTable(Order.class.getAnnotation(Table.class).value())
+                .createJoinForClass(Order.class)
+                .limit(itemsOnPage, (page - 1) * itemsOnPage)
+                .build();
+        return executeSelectQuery(query);
+    }
+
+    public Long getCount() {
+        SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
+        String query = selectQueryBuilder
+                .addField("count(*)")
+                .from()
+                .addTable(Order.class.getAnnotation(Table.class).value())
+                .build();
+        try (Connection connection = DataSourceFactory.getDataSource().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOGGER.warning(e.getMessage());
+        }
+        return 0L;
+    }
+
     /**
      * Execute select sql query
+     *
      * @param query
      * @return list of orders
      */
-    private List<Order> executeSelectQuery(String query){
+    private List<Order> executeSelectQuery(String query) {
         List<Order> entities = new LinkedList<>();
         LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource().getConnection();

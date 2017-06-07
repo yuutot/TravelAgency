@@ -15,7 +15,8 @@ public class UserService {
     private UserRepository userRepository = UserRepository.getInstance();
     private UserTypeService userTypeService = UserTypeService.getInstance();
 
-    private UserService(){}
+    private UserService() {
+    }
 
     public static UserService getInstance() {
         UserService localInstance = userService;
@@ -32,22 +33,24 @@ public class UserService {
 
     /**
      * Auth user by login and password
+     *
      * @param login
      * @param password
      * @return user if login passed
      * @throws AuthException
      */
     public User authUser(String login, String password) throws AuthException {
-        User user = userRepository.findByLogin(login).orElseThrow(()->new AuthException("Cant find user by login: " + login));
-        if(user.getPassword().equals(DigestUtils.md5Hex(password))){
+        User user = userRepository.findByLogin(login).orElseThrow(() -> new AuthException("Cant find user by login: " + login));
+        if (user.getPassword().equals(DigestUtils.md5Hex(password))) {
             return user;
-        } else{
+        } else {
             throw new AuthException(login, password);
         }
     }
 
     /**
      * Register user
+     *
      * @param login
      * @param password
      * @param name
@@ -57,7 +60,7 @@ public class UserService {
      * @throws ServiceException
      */
     public User registerUser(String login, String password, String name, String surname, String phone) throws ServiceException {
-        if(userRepository.findByLogin(login).isPresent()){
+        if (userRepository.findByLogin(login).isPresent()) {
             throw new ServiceException("User already exists. Login: " + login);
         }
         User user = new User();
@@ -74,11 +77,12 @@ public class UserService {
 
     /**
      * Get user by id
+     *
      * @param id
      * @return user
      * @throws ServiceException
      */
     public User getUserById(String id) throws ServiceException {
-        return userRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find user by id: " + id));
+        return userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ServiceException("Cant find user by id: " + id));
     }
 }

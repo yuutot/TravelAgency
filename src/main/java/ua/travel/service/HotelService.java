@@ -20,7 +20,8 @@ public class HotelService {
     private CityRepository cityRepository = CityRepository.getInstance();
     private HotelRepository hotelRepository = HotelRepository.getInstance();
 
-    private HotelService(){}
+    private HotelService() {
+    }
 
     public static HotelService getInstance() {
         HotelService localInstance = hotelService;
@@ -37,6 +38,7 @@ public class HotelService {
 
     /**
      * Save hotels in bd
+     *
      * @param cityId
      * @param name
      * @param star
@@ -45,7 +47,7 @@ public class HotelService {
      * @throws ServiceException
      */
     public Hotel createHotel(String cityId, String name, String star, String photoUrl) throws ServiceException {
-        City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(()->new ServiceException("Cant find city by id: " + cityId));
+        City city = cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> new ServiceException("Cant find city by id: " + cityId));
         Hotel hotel = new Hotel();
         hotel.setCity(city);
         hotel.setName(name);
@@ -58,20 +60,22 @@ public class HotelService {
 
     /**
      * Get hotels by city
+     *
      * @param cityId
      * @return list of hotels
      * @throws ServiceException
      */
     public List<Hotel> getHotelsByCity(Long cityId) throws ServiceException {
-        City city = cityRepository.findById(cityId).orElseThrow(()->new ServiceException("Cant find city by id " + cityId));
+        City city = cityRepository.findById(cityId).orElseThrow(() -> new ServiceException("Cant find city by id " + cityId));
         return hotelRepository.findByCity(city);
     }
 
     /**
      * get all hotels
+     *
      * @return
      */
-    public List<Hotel> getAllHotel(){
+    public List<Hotel> getAllHotel() {
         return hotelRepository.findAll();
     }
 }

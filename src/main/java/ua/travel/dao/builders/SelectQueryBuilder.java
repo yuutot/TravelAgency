@@ -132,6 +132,18 @@ public class SelectQueryBuilder {
         return this;
     }
 
+    public SelectQueryBuilder limit(Long limit, Long offset){
+        if (query.charAt(query.length() - 2) == ',') {
+            query.deleteCharAt(query.length() - 2);
+        }
+        query
+                .append(" LIMIT ")
+                .append(limit)
+                .append(" OFFSET ")
+                .append(offset);
+        return this;
+    }
+
     public String build() {
         LOGGER.info("Build select query: " + query.toString());
         if (query.toString().contains("where") || query.charAt(query.length() - 2) != ',') {
