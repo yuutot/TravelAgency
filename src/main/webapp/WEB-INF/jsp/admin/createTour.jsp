@@ -40,6 +40,9 @@
 <body class="admin">
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
+    <c:if test="${error != null}">
+        <p>${error}</p>
+    </c:if>
     <div class="container">
         <form class="row" action="/execute" method="post" enctype="multipart/form-data">
             <input type="hidden" name="command" value="create_tour">

@@ -8,6 +8,7 @@ import ua.travel.entity.Hotel;
 import ua.travel.entity.Tour;
 import ua.travel.entity.enums.TourType;
 import ua.travel.entity.enums.TransportType;
+import ua.travel.service.exceptions.InvalidDateException;
 import ua.travel.service.exceptions.ServiceException;
 
 import java.sql.Timestamp;
@@ -60,13 +61,18 @@ public class TourService {
      * @throws ServiceException
      */
 
-    public Tour createTour(String title, String tourType, String dateFrom, String dateTo, String cost, String description, String transportType, String hotelId, String isHot, String photoUrl) throws ServiceException {
+    public Tour createTour(String title, String tourType, String dateFrom, String dateTo, String cost, String description, String transportType, String hotelId, String isHot, String photoUrl) throws ServiceException, InvalidDateException {
         Hotel hotel = hotelRepository.findById(Long.parseLong(hotelId)).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
+        Date from = localTimeToDate(dateFrom);
+        Date to = localTimeToDate(dateTo);
+        if(from.after(to) || from.before(new Date())) {
+            throw new InvalidDateException("Invalid date");
+        }
         Tour tour = new Tour();
         tour.setTitle(title);
         tour.setTourType(TourType.valueOf(tourType));
-        tour.setDateTo(localTimeToDate(dateTo));
-        tour.setDateFrom(localTimeToDate(dateFrom));
+        tour.setDateTo(to);
+        tour.setDateFrom(from);
         tour.setCost(Double.parseDouble(cost));
         tour.setDescription(description);
         tour.setTransportType(TransportType.valueOf(transportType));

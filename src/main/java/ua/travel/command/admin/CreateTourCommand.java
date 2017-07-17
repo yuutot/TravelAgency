@@ -7,6 +7,7 @@ import ua.travel.entity.Hotel;
 import ua.travel.entity.Tour;
 import ua.travel.service.HotelService;
 import ua.travel.service.TourService;
+import ua.travel.service.exceptions.InvalidDateException;
 import ua.travel.service.exceptions.ServiceException;
 
 import javax.servlet.ServletException;
@@ -66,6 +67,10 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
             request.getSession().setAttribute(ATTRIBUTE_ERROR, e);
             LOGGER.warning(e.getMessage());
             return "/error";
+        } catch (InvalidDateException e) {
+            request.getSession().setAttribute(ATTRIBUTE_ERROR, e.getMessage());
+            LOGGER.warning(e.getMessage());
+            return "/admin/createTour";
         }
         return "/tours?id=" + tour.getId();
     }
