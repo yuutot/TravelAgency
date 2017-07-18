@@ -17,6 +17,8 @@
 <fmt:message key="admin.hotels.name" var="l_hotels_name"/>
 <fmt:message key="admin.hotels.star" var="l_hotels_star"/>
 <fmt:message key="admin.hotels.city" var="l_hotels_city"/>
+<fmt:message key="admin.city.form.submit" var="l_form_submit"/>
+
 <html>
 <head>
     <h:head title="${l_hotels_title}"/>
@@ -40,7 +42,7 @@
                 </c:forEach>
             </select>
             <input style="width: 23%;" type="file" name="photo">
-            <input type="submit" value="Добавить" class="btn-primary add-new">
+            <input type="submit" value="${l_form_submit}" class="btn-primary add-new">
         </form>
         <table>
             <tr>

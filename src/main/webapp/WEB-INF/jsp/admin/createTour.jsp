@@ -41,7 +41,7 @@
 <%@include file="/WEB-INF/jspf/AdminHeader.jspf"%>
 <main>
     <c:if test="${error != null}">
-        <p>${error}</p>
+        <p class="error-message">${error}</p>
     </c:if>
     <div class="container">
         <form class="row" action="/execute" method="post" enctype="multipart/form-data">

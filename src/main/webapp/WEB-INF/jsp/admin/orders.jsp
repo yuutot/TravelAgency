@@ -98,11 +98,13 @@
                 </tr>
             </c:forEach>
         </table>
-        <div class="pagination">
-            <c:forEach begin="1" end="${countPage}" varStatus="loop">
-                <a href="/admin?all=true&page=${loop.index}">${loop.index}</a>
-            </c:forEach>
-        </div>
+        <c:if test="${countPage > 1}">
+            <div class="pagination">
+                <c:forEach begin="1" end="${countPage}" varStatus="loop">
+                    <a href="/admin?all=true&page=${loop.index}">${loop.index}</a>
+                </c:forEach>
+            </div>
+        </c:if>
     </div>
 </main>
 </body>
