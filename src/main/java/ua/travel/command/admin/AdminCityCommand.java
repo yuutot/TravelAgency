@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * urlPattern /admin/city
  * command create_city
- *
+ * <p>
  * Get or create city by params
  */
 public class AdminCityCommand implements ExecuteCommand, PageCommand {
@@ -28,7 +28,7 @@ public class AdminCityCommand implements ExecuteCommand, PageCommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter(PARAM_NAME);
-        if(!ValidatorUtils.isEmptyString(name) && ValidatorUtils.isValidString(name)) {
+        if (!ValidatorUtils.isEmptyString(name) && ValidatorUtils.isValidString(name)) {
             cityService.createCity(name);
         }
         return "/admin/city";
@@ -38,6 +38,6 @@ public class AdminCityCommand implements ExecuteCommand, PageCommand {
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<City> cities = cityService.getAllCities();
         request.setAttribute(ATTRIBUTE_CITY, cities);
-        request.getRequestDispatcher("/WEB-INF/jsp/admin/city.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/city.jsp").forward(request, response);
     }
 }

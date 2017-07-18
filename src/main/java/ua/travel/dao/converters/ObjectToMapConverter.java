@@ -20,7 +20,7 @@ public class ObjectToMapConverter {
      * Parse object to HashMap
      *
      * @param object object for parse
-     * @param clazz class of object
+     * @param clazz  class of object
      * @return HashMap. key - field name, value - field value
      */
     public static <T> Map<String, Object> parse(T object, Class<?> clazz) {

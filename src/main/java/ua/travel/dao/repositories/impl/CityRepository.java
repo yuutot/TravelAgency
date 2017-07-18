@@ -25,7 +25,8 @@ public class CityRepository extends BaseRepository<City> {
 
     private static CityRepository cityRepository;
 
-    private CityRepository(){}
+    private CityRepository() {
+    }
 
     public static CityRepository getInstance() {
         CityRepository localInstance = cityRepository;
@@ -42,6 +43,7 @@ public class CityRepository extends BaseRepository<City> {
 
     /**
      * Find city by name
+     *
      * @param name
      * @return city
      */

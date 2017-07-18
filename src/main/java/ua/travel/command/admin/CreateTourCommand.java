@@ -22,7 +22,7 @@ import static ua.travel.command.utils.ValidatorUtils.*;
 /**
  * urlPattern /admin/createTour
  * command create_tour
- *
+ * <p>
  * Display page with inputs for tour creations or create tour by params
  */
 public class CreateTourCommand implements ExecuteCommand, PageCommand {
@@ -54,14 +54,14 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
         String transportType = request.getParameter(PARAM_TRANSPORT_TYPE);
         String hotel = request.getParameter(PARAM_HOTEL);
         String isHot = request.getParameter(PARAM_IS_HOT);
-        if(isEmptyString(title,tourType, dateFrom, dateTo, cost, description, transportType, hotel)
+        if (isEmptyString(title, tourType, dateFrom, dateTo, cost, description, transportType, hotel)
                 || !isValidDouble(cost) || !isValidLong(hotel)
-                || !isValidString(title, tourType, dateFrom, dateTo, cost, description, transportType, hotel)){
-           return "/admin/createTour";
+                || !isValidString(title, tourType, dateFrom, dateTo, cost, description, transportType, hotel)) {
+            return "/admin/createTour";
         }
         Tour tour;
         try {
-            String path = FileUtils.loadFile(request,response);
+            String path = FileUtils.loadFile(request, response);
             tour = tourService.createTour(title, tourType, dateFrom, dateTo, cost, description, transportType, hotel, isHot, path);
         } catch (ServiceException | ServletException | IOException e) {
             request.getSession().setAttribute(ATTRIBUTE_ERROR, e);
@@ -79,6 +79,6 @@ public class CreateTourCommand implements ExecuteCommand, PageCommand {
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Hotel> hotels = hotelService.getAllHotel();
         request.setAttribute(ATTRIBUTE_HOTELS, hotels);
-        request.getRequestDispatcher("/WEB-INF/jsp/admin/createTour.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/createTour.jsp").forward(request, response);
     }
 }

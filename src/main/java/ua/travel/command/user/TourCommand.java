@@ -21,7 +21,7 @@ import static ua.travel.command.utils.ValidatorUtils.isValidString;
 
 /**
  * urlPattern /tours
- *
+ * <p>
  * Display page with all tours or tours by parameters
  */
 public class TourCommand implements PageCommand {
@@ -44,10 +44,10 @@ public class TourCommand implements PageCommand {
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String id = request.getParameter(PARAM_ID);
-        if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
+        if (id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)) {
             idPresent(id, request, response);
-        }else {
-            filterTour(request,response);
+        } else {
+            filterTour(request, response);
         }
     }
 

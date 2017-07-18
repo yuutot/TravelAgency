@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  * urlPattern /admin/tour, /admin/tour?id=<id>
- *
+ * <p>
  * Get all or one tour by id
  */
 public class AdminTourCommand implements PageCommand {
@@ -30,7 +30,7 @@ public class AdminTourCommand implements PageCommand {
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String id = request.getParameter(PARAM_ID);
-        if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
+        if (id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)) {
             try {
                 Tour tour = tourService.getTourById(id);
                 request.setAttribute(ATTRIBUTE_TOUR, tour);
@@ -42,7 +42,7 @@ public class AdminTourCommand implements PageCommand {
         } else {
             List<Tour> tours = tourService.getTours();
             request.setAttribute(ATTRIBUTE_TOURS, tours);
-            request.getRequestDispatcher("/WEB-INF/jsp/admin/tours.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/tours.jsp").forward(request, response);
         }
     }
 }

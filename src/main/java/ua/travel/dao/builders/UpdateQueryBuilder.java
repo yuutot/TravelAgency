@@ -25,7 +25,7 @@ public class UpdateQueryBuilder {
         query.append("update ");
     }
 
-    public UpdateQueryBuilder addTable(String tableName){
+    public UpdateQueryBuilder addTable(String tableName) {
         query
                 .append(tableName)
                 .append(" ");
@@ -36,16 +36,16 @@ public class UpdateQueryBuilder {
         this.map = map;
         query.append("set ");
         map.keySet().forEach(s -> query.append(s).append('=').append('?').append(','));
-        query.deleteCharAt(query.length()-1);
+        query.deleteCharAt(query.length() - 1);
         return this;
     }
 
-    public UpdateQueryBuilder where(){
+    public UpdateQueryBuilder where() {
         query.append(" where ");
         return this;
     }
 
-    public UpdateQueryBuilder addCondition(String field, Condition condition, Object value){
+    public UpdateQueryBuilder addCondition(String field, Condition condition, Object value) {
         boolean isString = value instanceof String;
         query
                 .append(field)
@@ -57,18 +57,18 @@ public class UpdateQueryBuilder {
         return this;
     }
 
-    public UpdateQueryBuilder and(){
+    public UpdateQueryBuilder and() {
         query.append("and ");
         return this;
     }
 
-    public UpdateQueryBuilder or(){
+    public UpdateQueryBuilder or() {
         query.append("or ");
         return this;
     }
 
     public void execute() throws SQLException {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS)) {
             DaoUtils.putValuesToStatement(map, preparedStatement);
             preparedStatement.executeUpdate();
             LOGGER.info("Execute update query: " + query.toString());

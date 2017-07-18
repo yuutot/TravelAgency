@@ -41,7 +41,6 @@ public abstract class TableCreator {
 
 
     /**
-     *
      * @param entity link to class for parse
      * @return List of fields
      */

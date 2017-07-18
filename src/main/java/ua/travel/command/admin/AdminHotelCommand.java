@@ -24,7 +24,7 @@ import static ua.travel.command.utils.ValidatorUtils.*;
 /**
  * urlPattern /admin/hotels
  * command create_hotels
- *
+ * <p>
  * Get or create hotels by params
  */
 public class AdminHotelCommand implements ExecuteCommand, PageCommand {
@@ -44,9 +44,9 @@ public class AdminHotelCommand implements ExecuteCommand, PageCommand {
         String city = request.getParameter(PARAM_CITY);
         String name = request.getParameter(PARAM_NAME);
         String star = request.getParameter(PARAM_STAR);
-        if(!isEmptyString(city, name, star) && isValidLong(city) && isValidLong(star) && isValidString(city,name,star)){
+        if (!isEmptyString(city, name, star) && isValidLong(city) && isValidLong(star) && isValidString(city, name, star)) {
             try {
-                String path = FileUtils.loadFile(request,response);
+                String path = FileUtils.loadFile(request, response);
                 hotelService.createHotel(city, name, star, path);
             } catch (ServiceException | ServletException | IOException e) {
                 LOGGER.warning(e.getMessage());
@@ -61,6 +61,6 @@ public class AdminHotelCommand implements ExecuteCommand, PageCommand {
         List<City> cities = cityService.getAllCities();
         request.setAttribute(ATTRIBUTE_CITIES, cities);
         request.setAttribute(ATTRIBUTE_HOTELS, hotels);
-        request.getRequestDispatcher("/WEB-INF/jsp/admin/hotels.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/hotels.jsp").forward(request, response);
     }
 }

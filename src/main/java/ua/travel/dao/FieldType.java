@@ -3,7 +3,7 @@ package ua.travel.dao;
 /**
  * Created by yuuto on 5/19/17.
  */
-public enum  FieldType {
+public enum FieldType {
     INTEGER {
         @Override
         public String getTypeNameForLength(Integer... length) {
@@ -19,22 +19,22 @@ public enum  FieldType {
         public String getTypeNameForLength(Integer... length) {
             return "int(" + length[0] + ")";
         }
-    }, DATE{
+    }, DATE {
         @Override
         public String getTypeNameForLength(Integer... length) {
             return "datetime";
         }
-    }, DOUBLE{
+    }, DOUBLE {
         @Override
         public String getTypeNameForLength(Integer... length) {
             return "float(" + length[0] + ")";
         }
-    }, ENUM{
+    }, ENUM {
         @Override
         public String getTypeNameForLength(Integer... length) {
             return "varchar(" + length[0] + ")";
         }
-    }, BOOLEAN{
+    }, BOOLEAN {
         @Override
         public String getTypeNameForLength(Integer... length) {
             return "int(2)";

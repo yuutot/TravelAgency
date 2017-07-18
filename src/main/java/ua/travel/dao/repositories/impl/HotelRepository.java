@@ -27,7 +27,8 @@ public class HotelRepository extends BaseRepository<Hotel> {
 
     private static HotelRepository hotelRepository;
 
-    private HotelRepository(){}
+    private HotelRepository() {
+    }
 
     public static HotelRepository getInstance() {
         HotelRepository localInstance = hotelRepository;
@@ -44,10 +45,11 @@ public class HotelRepository extends BaseRepository<Hotel> {
 
     /**
      * Find hotels by city
+     *
      * @param city
      * @return list of hotels
      */
-    public List<Hotel> findByCity(City city){
+    public List<Hotel> findByCity(City city) {
         List<Hotel> hotels = new LinkedList<>();
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder

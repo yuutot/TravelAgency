@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * urlPattern /login
  * command login
- *
+ * <p>
  * Display page with inputs for auth user.
  * Execute data for auth
  */
@@ -37,7 +37,7 @@ public class AuthCommand implements PageCommand, ExecuteCommand {
         String login = request.getParameter(PARAM_LOGIN);
         String password = request.getParameter(PARAM_PASSWORD);
 
-        if(!ValidatorUtils.isValidString(login, password)){
+        if (!ValidatorUtils.isValidString(login, password)) {
             return "/login";
         }
         try {
@@ -53,7 +53,7 @@ public class AuthCommand implements PageCommand, ExecuteCommand {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if(request.getParameter(PARAM_LOGOUT) != null){
+        if (request.getParameter(PARAM_LOGOUT) != null) {
             request.getSession().removeAttribute(ATTRIBUTE_USER);
             response.sendRedirect("/");
             return;

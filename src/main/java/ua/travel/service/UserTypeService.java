@@ -13,7 +13,8 @@ public class UserTypeService {
     private static UserTypeService userTypeService;
     private UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
 
-    private UserTypeService(){}
+    private UserTypeService() {
+    }
 
     public static UserTypeService getInstance() {
         UserTypeService localInstance = userTypeService;
@@ -30,12 +31,13 @@ public class UserTypeService {
 
     /**
      * Check user type in db. If user status present return existing user type, else create new
+     *
      * @param type
      * @return user type
      */
-    public UserType createUserType(String type){
+    public UserType createUserType(String type) {
         Optional<UserType> userTypeOptional = userTypeRepository.findByType(type);
-        if(userTypeOptional.isPresent()){
+        if (userTypeOptional.isPresent()) {
             return userTypeOptional.get();
         } else {
             UserType userType = new UserType();

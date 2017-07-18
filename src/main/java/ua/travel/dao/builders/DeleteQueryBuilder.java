@@ -15,19 +15,19 @@ public class DeleteQueryBuilder {
         query.append("delete from ");
     }
 
-    public DeleteQueryBuilder addTable(String tableName){
+    public DeleteQueryBuilder addTable(String tableName) {
         query
                 .append(tableName)
                 .append(" ");
         return this;
     }
 
-    public DeleteQueryBuilder where(){
+    public DeleteQueryBuilder where() {
         query.append("where ");
         return this;
     }
 
-    public DeleteQueryBuilder addCondition(String field, Condition condition, Object value){
+    public DeleteQueryBuilder addCondition(String field, Condition condition, Object value) {
         boolean isString = value instanceof String;
         query
                 .append(field)
@@ -39,17 +39,17 @@ public class DeleteQueryBuilder {
         return this;
     }
 
-    public DeleteQueryBuilder and(){
+    public DeleteQueryBuilder and() {
         query.append("and ");
         return this;
     }
 
-    public DeleteQueryBuilder or(){
+    public DeleteQueryBuilder or() {
         query.append("or ");
         return this;
     }
 
-    public String build(){
+    public String build() {
         LOGGER.info("Build query: " + query.toString());
         return query.toString();
     }

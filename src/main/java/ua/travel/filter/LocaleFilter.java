@@ -24,21 +24,21 @@ public class LocaleFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         request.setCharacterEncoding(UTF);
         String localeParam = request.getParameter(PARAM_LAN);
-        if(localeParam != null){
-            if(localeParam.equals("UA")){
+        if (localeParam != null) {
+            if (localeParam.equals("UA")) {
                 request.getSession().setAttribute(ATTRIBUTE_LOCALE, new Locale("ua", "UA"));
-            }else {
+            } else {
                 request.getSession().setAttribute(ATTRIBUTE_LOCALE, Locale.ENGLISH);
             }
         }
         Locale userLocale = (Locale) request.getSession().getAttribute(ATTRIBUTE_LOCALE);
-        if(userLocale == null){
+        if (userLocale == null) {
             request.getSession().setAttribute(ATTRIBUTE_LOCALE, Locale.ENGLISH);
         }
-        filterChain.doFilter(request,servletResponse);
+        filterChain.doFilter(request, servletResponse);
     }
 
     @Override

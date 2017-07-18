@@ -30,7 +30,8 @@ public class TourService {
     private TourRepository tourRepository = TourRepository.getInstance();
     private CityRepository cityRepository = CityRepository.getInstance();
 
-    private TourService(){}
+    private TourService() {
+    }
 
     public static TourService getInstance() {
         TourService localInstance = tourService;
@@ -47,6 +48,7 @@ public class TourService {
 
     /**
      * Create tour by params
+     *
      * @param title
      * @param tourType
      * @param dateFrom
@@ -65,7 +67,7 @@ public class TourService {
         Hotel hotel = hotelRepository.findById(Long.parseLong(hotelId)).orElseThrow(() -> new ServiceException("Cant find hotel by id: " + hotelId));
         Date from = localTimeToDate(dateFrom);
         Date to = localTimeToDate(dateTo);
-        if(from.after(to) || from.before(new Date())) {
+        if (from.after(to) || from.before(new Date())) {
             throw new InvalidDateException("Invalid date");
         }
         Tour tour = new Tour();
@@ -86,6 +88,7 @@ public class TourService {
 
     /**
      * Get all tours
+     *
      * @return list of tours
      */
     public List<Tour> getTours() {
@@ -94,6 +97,7 @@ public class TourService {
 
     /**
      * Get tours by params
+     *
      * @param cityId
      * @param costMin
      * @param costMax
@@ -107,9 +111,9 @@ public class TourService {
         }
         boolean isCostValid = isValidDouble(costMin) && isValidDouble(costMax);
         TourType tourType;
-        try{
+        try {
             tourType = TourType.valueOf(type);
-        } catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             throw new ServiceException("Invalid tour type value: " + type);
         }
         if (!isEmptyString(cityId) && isValidLong(cityId)) {
@@ -135,6 +139,7 @@ public class TourService {
 
     /**
      * Get tour by id
+     *
      * @param id
      * @return tour
      * @throws ServiceException
@@ -145,37 +150,41 @@ public class TourService {
 
     /**
      * Delete tour by ud
+     *
      * @param id
      */
-    public void deleteTour(String id){
+    public void deleteTour(String id) {
         tourRepository.delete(Long.parseLong(id));
     }
 
     /**
      * Change tour status
+     *
      * @param id
      * @throws ServiceException
      */
     public void changeTourStatus(String id) throws ServiceException {
-        Tour tour = tourRepository.findById(Long.parseLong(id)).orElseThrow(()->new ServiceException("Cant find tour by id: " + id));
+        Tour tour = tourRepository.findById(Long.parseLong(id)).orElseThrow(() -> new ServiceException("Cant find tour by id: " + id));
         tour.setHot(!tour.getHot());
         tourRepository.update(tour);
     }
 
     /**
      * Get list of hot tours
+     *
      * @return list of tours
      */
-    public List<Tour> getHotTours(){
+    public List<Tour> getHotTours() {
         return tourRepository.findHotTours();
     }
 
     /**
      * util method for convert html timestamp to date
+     *
      * @param time
      * @return java new Date()
      */
-    private Date localTimeToDate(String time){
+    private Date localTimeToDate(String time) {
         return new Date(Timestamp.valueOf(time.replace("T", " ").concat(":00")).getTime());
     }
 }

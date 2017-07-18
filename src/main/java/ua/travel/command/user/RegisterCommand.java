@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * urlPattern /register
  * command register
- *
+ * <p>
  * Display page with inputs for register user.
  * Execute data for register
  */
@@ -41,8 +41,8 @@ public class RegisterCommand implements PageCommand, ExecuteCommand {
         String name = request.getParameter(PARAM_NAME);
         String surname = request.getParameter(PARAM_SURNAME);
         String phone = request.getParameter(PARAM_PHONE);
-        if(ValidatorUtils.isEmptyString(login,password,name,surname,phone)
-                || !ValidatorUtils.isValidString(login, password, name, surname, phone)){
+        if (ValidatorUtils.isEmptyString(login, password, name, surname, phone)
+                || !ValidatorUtils.isValidString(login, password, name, surname, phone)) {
             request.getSession().setAttribute(ATTRIBUTE_ERROR, new ServiceException("Не все поля заполнены"));
             return "/register";
         }

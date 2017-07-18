@@ -22,7 +22,6 @@ public class ResultSetToObjectConverter {
     private static final Logger LOGGER = Logger.getLogger(ResultSetToObjectConverter.class.getName());
 
     /**
-     *
      * @param rs - ResultSet
      * @return HashMap key columnName, value - number
      * @throws SQLException
@@ -40,9 +39,8 @@ public class ResultSetToObjectConverter {
     }
 
     /**
-     *
      * @param clazz Link for class for parse
-     * @param rs ResultSet
+     * @param rs    ResultSet
      * @return Instance of object with data from ResultSet
      * @throws SQLException
      */
@@ -69,11 +67,11 @@ public class ResultSetToObjectConverter {
     /**
      * Set values to the field from ResultSet
      *
-     * @param field link to field
-     * @param obj Object
-     * @param rs ResultSet
+     * @param field     link to field
+     * @param obj       Object
+     * @param rs        ResultSet
      * @param tableName Name of table for parse
-     * @param columns Map with column names
+     * @param columns   Map with column names
      */
 
     private static void parseResultSetColumn(Field field, Object obj, ResultSet rs, String tableName, Map<String, Integer> columns) {

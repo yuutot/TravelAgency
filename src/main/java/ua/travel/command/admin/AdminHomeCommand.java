@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * urlPattern /admin
- *
+ * <p>
  * Get home admins page.
  * Includes all/new orders depending on the parameters
  */
@@ -38,11 +38,11 @@ public class AdminHomeCommand implements PageCommand {
             Long count = orderService.getPageForOrders();
             request.setAttribute(ATTRIBUTE_ALL_ORDERS, allOrders);
             request.setAttribute(ATTRIBUTE_COUNT_PAGE, count);
-            request.getRequestDispatcher("/WEB-INF/jsp/admin/orders.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/orders.jsp").forward(request, response);
         } else {
             List<Order> newOrders = orderService.getOrdersByStatus(OrderStatus.NEW);
             request.setAttribute(ATTRIBUTE_NEW_ORDERS, newOrders);
-            request.getRequestDispatcher("/WEB-INF/jsp/admin/home.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/home.jsp").forward(request, response);
         }
 
     }

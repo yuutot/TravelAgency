@@ -52,7 +52,7 @@ public class SelectQueryBuilder {
         return this;
     }
 
-    private void createJoin(Class<?> clazz, Field field){
+    private void createJoin(Class<?> clazz, Field field) {
         Class<?> fieldClass = field.getType();
         join(clazz, field.getAnnotation(Column.class).value(), fieldClass);
         createJoinForClass(fieldClass);
@@ -132,7 +132,7 @@ public class SelectQueryBuilder {
         return this;
     }
 
-    public SelectQueryBuilder limit(Long limit, Long offset){
+    public SelectQueryBuilder limit(Long limit, Long offset) {
         if (query.charAt(query.length() - 2) == ',') {
             query.deleteCharAt(query.length() - 2);
         }

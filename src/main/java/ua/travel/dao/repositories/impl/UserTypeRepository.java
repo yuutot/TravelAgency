@@ -25,7 +25,8 @@ public class UserTypeRepository extends BaseRepository<UserType> {
 
     private static UserTypeRepository userTypeRepository;
 
-    private UserTypeRepository(){}
+    private UserTypeRepository() {
+    }
 
     public static UserTypeRepository getInstance() {
         UserTypeRepository localInstance = userTypeRepository;
@@ -42,6 +43,7 @@ public class UserTypeRepository extends BaseRepository<UserType> {
 
     /**
      * Find user by type
+     *
      * @param type
      * @return User type
      */

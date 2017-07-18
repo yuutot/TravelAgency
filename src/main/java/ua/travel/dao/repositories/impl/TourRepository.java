@@ -29,7 +29,8 @@ public class TourRepository extends BaseRepository<Tour> {
 
     private static TourRepository tourRepository;
 
-    private TourRepository(){}
+    private TourRepository() {
+    }
 
     public static TourRepository getInstance() {
         TourRepository localInstance = tourRepository;
@@ -46,6 +47,7 @@ public class TourRepository extends BaseRepository<Tour> {
 
     /**
      * Find Tour by city and tour type
+     *
      * @param city
      * @param tourType
      * @return list of tours
@@ -69,6 +71,7 @@ public class TourRepository extends BaseRepository<Tour> {
 
     /**
      * Find tours by cost
+     *
      * @param minCost
      * @param maxCost
      * @param tourType
@@ -91,6 +94,7 @@ public class TourRepository extends BaseRepository<Tour> {
 
     /**
      * Find tours by type
+     *
      * @param tourType
      * @return list of tours
      */
@@ -109,6 +113,7 @@ public class TourRepository extends BaseRepository<Tour> {
 
     /**
      * Find hot tours
+     *
      * @return list of tours
      */
 
@@ -127,13 +132,14 @@ public class TourRepository extends BaseRepository<Tour> {
 
     /**
      * Find tours by city, cost, tour type
+     *
      * @param city
      * @param minCost
      * @param maxCost
      * @param tourType
      * @return list of tours
      */
-    public List<Tour> findByCityAndCost(City city, Double minCost, Double maxCost, TourType tourType){
+    public List<Tour> findByCityAndCost(City city, Double minCost, Double maxCost, TourType tourType) {
         SelectQueryBuilder selectQueryBuilder = new SelectQueryBuilder();
         String query = selectQueryBuilder
                 .addField("*")
@@ -154,10 +160,11 @@ public class TourRepository extends BaseRepository<Tour> {
 
     /**
      * execute select sql query
+     *
      * @param query
      * @return list of tours
      */
-    private List<Tour> executeSelectQuery(String query){
+    private List<Tour> executeSelectQuery(String query) {
         List<Tour> entities = new LinkedList<>();
         LOGGER.info(query);
         try (Connection connection = DataSourceFactory.getDataSource().getConnection();

@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * urlPattern /
- *
+ * <p>
  * Display main page.
  */
 public class HomeCommand implements PageCommand {

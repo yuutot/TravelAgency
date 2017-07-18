@@ -26,7 +26,7 @@ public class HeadTag extends TagSupport {
 
         try {
             JspWriter out = pageContext.getOut();
-            out.write("<title>" +title+ "</title>");
+            out.write("<title>" + title + "</title>");
             out.write("<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet'>");
             out.write("<link rel='stylesheet' href='../../font/css/font-awesome.min.css'>");
             out.write("<link rel='stylesheet' href='/css/bootstrap.min.css'>");

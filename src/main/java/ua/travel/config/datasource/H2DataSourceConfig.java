@@ -8,12 +8,12 @@ import java.sql.SQLException;
 /**
  * Config for mysql db
  */
-public class H2DataSourceConfig{
+public class H2DataSourceConfig {
 
     private static DataSource dataSource;
 
     static DataSource getDataSource() throws SQLException {
-        if(dataSource == null) {
+        if (dataSource == null) {
             try {
                 InitialContext initContext = new InitialContext();
                 dataSource = (DataSource) initContext.lookup("java:comp/env/jdbc/test");

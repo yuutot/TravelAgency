@@ -16,7 +16,6 @@ public class FileUtils {
     private static final String PATH = "/home/yuuto/IdeaProjects/TravelAgency/src/main/webapp/photo";
 
     /**
-     *
      * @param part
      * @return random name with file extension
      */
@@ -57,7 +56,6 @@ public class FileUtils {
     }
 
     /**
-     *
      * @return generated random string
      */
     private static String nextFileName() {

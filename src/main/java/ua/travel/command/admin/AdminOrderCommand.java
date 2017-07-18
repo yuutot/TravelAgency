@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * urlPattern /admin/order
- *
+ * <p>
  * Get order by id
  */
 public class AdminOrderCommand implements PageCommand {
@@ -28,14 +28,14 @@ public class AdminOrderCommand implements PageCommand {
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String id = request.getParameter(PARAM_ID);
-        if(id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)){
+        if (id != null && !id.isEmpty() && ValidatorUtils.isValidLong(id)) {
             try {
                 Order order = orderService.getOrderById(id);
                 request.setAttribute(ATTRIBUTE_ORDER, order);
-                request.getRequestDispatcher("/WEB-INF/jsp/admin/order.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/admin/order.jsp").forward(request, response);
                 return;
             } catch (ServiceException e) {
-               LOGGER.warning(e.getMessage());
+                LOGGER.warning(e.getMessage());
             }
         }
         response.sendRedirect("/admin");

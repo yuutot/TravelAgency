@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * urlPattern /admin/editTour
- *
+ * <p>
  * Edit hot status or delete tour.
  * Get params delete for deleting and hot for change status.
  */
@@ -34,19 +34,19 @@ public class EditTourCommand implements PageCommand {
         String id = request.getParameter(PARAM_ID);
         String type = request.getParameter(PARAM_TYPE);
 
-        if(ValidatorUtils.isEmptyString(id, type) || !ValidatorUtils.isValidLong(id) || !ValidatorUtils.isValidString(type)){
+        if (ValidatorUtils.isEmptyString(id, type) || !ValidatorUtils.isValidLong(id) || !ValidatorUtils.isValidString(type)) {
             response.sendRedirect("/admin");
             return;
         }
-        if(type.equals(PARAM_DELETE)){
+        if (type.equals(PARAM_DELETE)) {
             tourService.deleteTour(id);
-        } else if(type.equals(PARAM_HOT)){
+        } else if (type.equals(PARAM_HOT)) {
             try {
                 tourService.changeTourStatus(id);
             } catch (ServiceException e) {
                 LOGGER.warning(e.getMessage());
                 request.setAttribute(ATTRIBUTE_ERROR, e);
-                request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
                 return;
             }
         }

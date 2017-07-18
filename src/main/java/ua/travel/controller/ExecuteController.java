@@ -14,10 +14,10 @@ import java.io.IOException;
 /**
  * Created by yuuto on 5/26/17.
  */
-@WebServlet(name = "executeController",urlPatterns = "/execute")
-@MultipartConfig(fileSizeThreshold=1024*1024*2,
-        maxFileSize=1024*1024*10,
-        maxRequestSize=1024*1024*50)
+@WebServlet(name = "executeController", urlPatterns = "/execute")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50)
 public class ExecuteController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

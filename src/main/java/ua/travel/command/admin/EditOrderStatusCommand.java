@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  * command edit_order_status
- *
+ * <p>
  * Edit order status for one order by id
  */
 public class EditOrderStatusCommand implements ExecuteCommand {
@@ -27,7 +27,7 @@ public class EditOrderStatusCommand implements ExecuteCommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String status = request.getParameter(PARAM_STATUS);
         String id = request.getParameter(PARAM_ID);
-        if(status == null || id == null || id.isEmpty() || !ValidatorUtils.isValidString(status, id)){
+        if (status == null || id == null || id.isEmpty() || !ValidatorUtils.isValidString(status, id)) {
             return "/admin";
         }
         try {

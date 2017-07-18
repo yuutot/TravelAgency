@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  * urlPattern /admin/user?id=<id>
- *
+ * <p>
  * Display page with user info and user orders by id
  */
 public class UserCommand implements PageCommand {
@@ -40,11 +40,11 @@ public class UserCommand implements PageCommand {
                 List<Order> orders = orderService.getOrdersByUser(user.getId());
                 request.setAttribute(PARAM_ORDERS, orders);
                 request.setAttribute(PARAM_USER_PROFILE, user);
-                request.getRequestDispatcher("/WEB-INF/jsp/admin/user.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/admin/user.jsp").forward(request, response);
             } catch (ServiceException e) {
                 LOGGER.warning(e.getMessage());
                 request.setAttribute(ATTRIBUTE_ERROR, e);
-                request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
             }
             return;
         }

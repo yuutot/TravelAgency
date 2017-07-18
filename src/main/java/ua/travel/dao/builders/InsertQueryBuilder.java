@@ -22,7 +22,7 @@ public class InsertQueryBuilder {
         query.append("insert into ");
     }
 
-    public InsertQueryBuilder addTable(String tableName){
+    public InsertQueryBuilder addTable(String tableName) {
         query
                 .append(tableName)
                 .append(" ");
@@ -41,7 +41,7 @@ public class InsertQueryBuilder {
     }
 
     public Long execute() throws SQLException {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS)) {
             DaoUtils.putValuesToStatement(map, preparedStatement);
             preparedStatement.executeUpdate();
             LOGGER.info("Execute insert query: " + query.toString());

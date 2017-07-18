@@ -43,6 +43,7 @@ public class UserRepository extends BaseRepository<User> {
 
     /**
      * Find user by login for auth
+     *
      * @param login
      * @return user
      */

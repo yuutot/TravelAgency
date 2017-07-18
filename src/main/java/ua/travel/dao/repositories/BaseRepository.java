@@ -28,7 +28,6 @@ public abstract class BaseRepository<T> {
     private final Logger LOGGER = Logger.getLogger(getClass().getName());
 
     /**
-     *
      * @param id
      * @return entity received from the database
      */
@@ -81,7 +80,7 @@ public abstract class BaseRepository<T> {
      *
      * @param entity
      */
-    public void update(T entity){
+    public void update(T entity) {
         Long id = null;
         try {
             Field field = entity.getClass().getDeclaredField("id");
@@ -105,7 +104,6 @@ public abstract class BaseRepository<T> {
     }
 
     /**
-     *
      * @return list of entity received from the database
      */
     public List<T> findAll() {
@@ -133,6 +131,7 @@ public abstract class BaseRepository<T> {
 
     /**
      * delete entity
+     *
      * @param entity
      */
     public void delete(T entity) {
@@ -148,6 +147,7 @@ public abstract class BaseRepository<T> {
 
     /**
      * delete entity by id
+     *
      * @param id
      */
     public void delete(Long id) {

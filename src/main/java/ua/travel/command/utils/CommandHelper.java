@@ -59,7 +59,6 @@ public class CommandHelper {
     }
 
     /**
-     *
      * @param request
      * @return page command if the command is found by url or default command.
      */
@@ -74,7 +73,6 @@ public class CommandHelper {
     }
 
     /**
-     *
      * @param request
      * @return page command if the command is found by hidden input field or default command.
      */

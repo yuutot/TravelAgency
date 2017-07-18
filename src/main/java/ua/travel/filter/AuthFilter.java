@@ -24,13 +24,13 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         User user = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
         SecurityContext securityContext = SecurityContext.getInstance();
-        if(securityContext.checkUserCredentials(request, user)){
+        if (securityContext.checkUserCredentials(request, user)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse)servletResponse).sendRedirect("/login");
+            ((HttpServletResponse) servletResponse).sendRedirect("/login");
         }
     }
 

@@ -11,7 +11,7 @@ public class DataSourceFactory {
     private static DataSourceType dataSourceType;
 
     public static DataSource getDataSource() throws SQLException {
-        if(dataSourceType.equals(DataSourceType.MYSQL)){
+        if (dataSourceType.equals(DataSourceType.MYSQL)) {
             return MySQLDataSourceConfig.getDataSource();
         } else {
             return H2DataSourceConfig.getDataSource();
